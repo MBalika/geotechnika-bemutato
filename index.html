@@ -142,6 +142,12 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 .vbox iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 .vbar{display:flex; justify-content:space-between; align-items:center; margin-top:12px; color:#cfd3d7; font:500 13px/1.3 var(--fb); gap:12px}
 .vbar button{border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06); color:#fff; border-radius:999px; padding:9px 14px; cursor:pointer; font:700 13px/1 var(--fb)}
+/* teljes képernyő ott is, ahol a böngésző nem engedi (iPhone): a modális ablak kitölti a kijelzőt, álló telefonon a kép fekvőbe fordul */
+.vmodal.pfs{padding:0; background:#000}
+.vmodal.pfs .vbox{width:100vw; height:100vh; height:100dvh}
+.vmodal.pfs .vf{aspect-ratio:auto; width:100%; height:100%; border-radius:0; box-shadow:none}
+.vmodal.pfs .vbar{display:none}
+.vmodal.pfs.rot .vbox iframe{inset:auto; left:50%; top:50%; width:100vh; width:100dvh; height:100vw; transform:translate(-50%, -50%) rotate(90deg); transform-origin:50% 50%}
 /* reszponzív */
 @media (max-width: 1100px){
   :root{--pad:24px}
@@ -237,12 +243,23 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 /* ================= VIDEÓ ================= */
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
-  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=4#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
-  const close = () => { m.hidden = true; f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
+  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=5#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
+  let pseudo = false; const fit = () => m.classList.toggle('rot', pseudo && innerHeight > innerWidth);
+  const setPseudo = (on) => { pseudo = on; m.classList.toggle('pfs', on); fit(); };
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const lockLand = () => { try { const o = screen.orientation; if (o && o.lock) o.lock('landscape').catch(() => {}); } catch (er) {} };
+  addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 120));
+  let real = false; const onFs = () => { if (fsEl()) { real = true; lockLand(); fit(); } else if (real) { real = false; setPseudo(false); } };
+  document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
+  // a lejátszó a teljes képernyőt az oldalra bízza: a modális ablak megy teljes képernyőre (ha a böngésző engedi), álló telefonon a kép elfordul
+  const host = () => { try { f.contentWindow.postMessage('vfs-host', '*'); } catch (er) {} }; f.addEventListener('load', () => { host(); setTimeout(host, 1500); setTimeout(host, 4000); });
+  const enterFS = () => { setPseudo(true); const req = m.requestFullscreen || m.webkitRequestFullscreen; if (!req) return; try { const pr = req.call(m); if (pr && pr.then) pr.then(lockLand).catch(() => {}); } catch (er) {} };
+  const exitFS = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } real = false; setPseudo(false); };
+  const close = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } setPseudo(false); m.hidden = true; f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) close(); });
-  addEventListener('message', (e) => { if ((e.data === 'vclose' || e.data === 'ka-close-video') && !m.hidden) close(); if (e.data === 'vfs') { const de = f, req = de.requestFullscreen || de.webkitRequestFullscreen; if (req) try { req.call(de); } catch (er) {} } }); }
+  addEventListener('message', (e) => { if ((e.data === 'vclose' || e.data === 'ka-close-video') && !m.hidden) close(); if (e.data === 'vfs-hello') host(); if (e.data === 'vfs') { (pseudo || fsEl()) ? exitFS() : enterFS(); } }); }
 /* ================= FORMÁZÁS: nem törő egységek + magyar elválasztás ================= */
 const GUARD = (() => {
   const NB = '\u00A0', WJ = '\u2060', NNB = '\u202F', NBH = '\u2011';
