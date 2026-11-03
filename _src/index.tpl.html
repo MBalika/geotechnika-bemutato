@@ -243,7 +243,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 /* ================= VIDEÓ ================= */
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
-  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=5#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
+  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=6#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
   let pseudo = false; const fit = () => m.classList.toggle('rot', pseudo && innerHeight > innerWidth);
   const setPseudo = (on) => { pseudo = on; m.classList.toggle('pfs', on); fit(); };
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
