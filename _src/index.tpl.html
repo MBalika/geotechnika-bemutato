@@ -7,7 +7,7 @@
 <meta name="description" content="Bemutató animáció a geotechnikáról 17–20 éveseknek: mi van a város alatt, miért talajon építünk itthon, és mit csinál a geotechnikus. BME Építőmérnöki Kar.">
 <meta name="theme-color" content="#0b0e12">
 <meta property="og:title" content="Ami a felszín alatt van – Geotechnika">
-<meta property="og:description" content="Mi tartja meg a 143 méteres tornyot? Rövid animáció arról, mi van a felszín alatt – és ki tervezi.">
+<meta property="og:description" content="Mi tartja meg a 143 méteres tornyot? 3 perces animáció arról, mi van a felszín alatt – és ki tervezi.">
 <meta property="og:image" content="img/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0e12'/%3E%3Crect x='24' y='8' width='16' height='26' rx='2' fill='%23eef1ea'/%3E%3Crect x='8' y='34' width='48' height='8' fill='%238f7a55'/%3E%3Crect x='8' y='44' width='48' height='12' fill='%233c4450'/%3E%3Crect x='27' y='34' width='3' height='18' fill='%23c6f432'/%3E%3Crect x='34' y='34' width='3' height='18' fill='%23c6f432'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -91,20 +91,20 @@ section{padding:84px 0}
 .sh{display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:34px}
 h2{font:800 clamp(38px, 4.2vw, 60px)/.95 var(--fh); text-transform:uppercase; margin:10px 0 0}
 .sh p{max-width:none; color:var(--muted); margin:0}
-.chapters{display:grid; grid-template-columns:repeat(2, 1fr); gap:18px}
+.chapters{display:grid; grid-template-columns:repeat(4, 1fr); gap:18px}
 .todo-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:18px}
 .ch{position:relative; display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden}
 .ch .im{position:relative; display:block; width:100%; padding:0; border:0; aspect-ratio:16/9; background:#0d1116; overflow:hidden; cursor:pointer}
 .ch .im img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease}
 .ch .im:hover img{transform:scale(1.03)}
-.ch .im .n{position:absolute; left:18px; top:12px; font:800 56px/1 var(--fh); color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.ch .im .n{position:absolute; left:16px; top:10px; font:800 46px/1 var(--fh); color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.7)}
 .ch .im .pl{position:absolute; right:16px; bottom:16px; width:54px; height:54px; border-radius:50%; background:rgba(11,14,18,.72); border:2px solid var(--lime); display:grid; place-items:center}
 .ch .im .pl::after{content:""; margin-left:5px; border-left:16px solid var(--lime); border-top:10px solid transparent; border-bottom:10px solid transparent}
 .ch .tx{padding:20px 24px 22px; display:flex; flex-direction:column; gap:8px; flex:1}
-.ch .tx h3{font:800 28px/1.05 var(--fh); text-transform:uppercase; margin:0; display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+.ch .tx h3{font:800 25px/1.05 var(--fh); text-transform:uppercase; margin:0; display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
 .pill{flex:none; font:800 12px/1 var(--fh); letter-spacing:.12em; text-transform:uppercase; border-radius:999px; padding:6px 10px; border:1px solid var(--line2); color:var(--muted)}
 .pill.ok{background:var(--lime); color:#0b0e12; border-color:var(--lime)}
-.ch .tx p{margin:0; color:#cfd5cd; font-size:16px; line-height:1.55}
+.ch .tx p{margin:0; color:#cfd5cd; font-size:15.5px; line-height:1.5}
 .ch .tm{margin-top:auto; padding-top:6px; font:700 14px/1 var(--fh); letter-spacing:.1em; color:var(--muted); text-transform:uppercase}
 .ch.todo{flex-direction:row; align-items:stretch; background:linear-gradient(90deg, rgba(198,244,50,.05), transparent 40%), var(--card)}
 .ch.todo .n{flex:none; width:78px; display:grid; place-items:center; font:800 52px/1 var(--fh); color:rgba(198,244,50,.42); border-right:1.5px dashed rgba(255,255,255,.12)}
@@ -131,6 +131,7 @@ h2{font:800 clamp(38px, 4.2vw, 60px)/.95 var(--fh); text-transform:uppercase; ma
 footer{border-top:1px solid var(--line); padding:44px 0 56px; background:var(--bg2); color:var(--muted)}
 footer .wrap{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:start}
 footer p{margin:0 0 10px; max-width:none}
+footer .cred{font-size:13.5px; line-height:1.5; color:#7f8892}
 footer b{color:var(--ink); font:800 22px/1.1 var(--fh); text-transform:uppercase; letter-spacing:.03em}
 footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(--fh); letter-spacing:.06em; text-transform:uppercase; text-decoration:none}
 /* videó-modális */
@@ -145,11 +146,10 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 @media (max-width: 1100px){
   :root{--pad:24px}
   .hero .wrap{grid-template-columns:1fr; gap:28px}
-  .todo-grid{grid-template-columns:repeat(2, 1fr)}
+  .chapters{grid-template-columns:repeat(2, 1fr)}
 }
 @media (max-width: 880px){
   .h-lead{columns:1}
-  .chapters{grid-template-columns:1fr}
   .stats .wrap{grid-template-columns:1fr} .stat{border-left:0; border-top:1px solid var(--line); padding:22px 0} .stat:first-child{border-top:0}
   .three{grid-template-columns:1fr}
   .sh{flex-direction:column; align-items:flex-start}
@@ -159,7 +159,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 @media (max-width: 560px){
   :root{--pad:16px}
   body{font-size:16px}
-  .chapters, .todo-grid{grid-template-columns:1fr}
+  .chapters{grid-template-columns:1fr}
   .ch.todo .n{width:62px; font-size:42px}
   .hero{padding-top:36px}
   .motto{font-size:20px}
@@ -176,13 +176,13 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 <main id="top">
 <div class="hero"><div class="wrap">
   <div class="h-txt">
-    <div class="kick">BME Építőmérnöki Kar <span class="bdg">1. vázlat · 0:42</span></div>
+    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 3:12</span></div>
     <h1>Ami a felszín <em>alatt</em> van</h1>
     <div class="motto">Geotechnika: a földben, a földre, a földből</div>
-    <div class="ctas"><button class="btn pri" data-video type="button">▶ Nézd meg <small>0:42</small></button><a class="btn" href="#fejezetek">Mi készül még?</a></div>
+    <div class="ctas"><button class="btn pri" data-video type="button">▶ Nézd meg <small>3:12</small></button><a class="btn" href="#fejezetek">Fejezetek</a></div>
   </div>
   <button class="vcard" data-video type="button" aria-label="A bemutató animáció lejátszása">
-    <img src="img/poster.jpg" alt="Éjszakai irodatorony, alatta röntgenmetszetben a mélygarázs és a cölöpök" width="1600" height="900">
+    <img src="img/poster.jpg" alt="Budapest éjjel drónról: a MOL Campus tornya, a Duna a hidakkal, háttérben a Gellért-hegy" width="1600" height="900">
     <span class="scan"></span><span class="corners"></span><span class="play"></span>
     <span class="cap"><span>Mi tartja meg?</span><span>▶ lejátszás</span></span>
   </button>
@@ -199,18 +199,16 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </div></div>
 
 <section id="fejezetek"><div class="wrap">
-  <div class="sh"><div><div class="kick">A videó</div><h2>Fejezetek</h2></div><p>Az első két rész kész, a többi a forgatókönyv szerint készül. A teljes videó kb. 2:40 lesz.</p></div>
+  <div class="sh"><div><div class="kick">A videó</div><h2>Fejezetek</h2></div><p>Nyolc rész, összesen 3:12 – hang nélkül is érthető.</p></div>
   <div class="chapters">
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Mi tartja meg?"><img src="img/nyitas.jpg" alt="Röntgenmetszet a mélygarázsról és a cölöpökről" loading="lazy" width="960" height="540"><span class="n">0</span><span class="pl"></span></button><div class="tx"><h3>Mi tartja meg? <span class="pill ok">Kész</span></h3><p>Éjszakai toronyház a Duna-parton. A kép megáll, a talajszkenner átvilágítja a teret, és láthatóvá válik, ami a felszín alatt van: a négyszintes mélygarázs, a résfal és 135 cölöp a kiscelli agyagban.</p><div class="tm">0:00–0:20</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Egy medence"><img src="img/medence.jpg" alt="A Kárpát-medence domborzati makettje talajtérképpel" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Egy medence <span class="pill ok">Kész</span></h3><p>Miért talajon építünk itthon? A Kárpát-medence makettjén előbb a talajtérkép rajzolódik ki, aztán egy metszet megmutatja, hogyan töltötték fel a medencét a folyók és a szél.</p><div class="tm">0:20–0:40</div></div></article>
-  </div>
-  <div class="todo-grid">
-    <article class="ch todo"><span class="n">2</span><div class="tx"><h3>Mit csinálnál? <span class="pill">Készül</span></h3><p>Öt szint: felderít, mér, modellez, tervez, figyel – a fúrástól a szenzorokig.</p><div class="tm">0:40–1:05</div></div></article>
-    <article class="ch todo"><span class="n">3</span><div class="tx"><h3>A helye <span class="pill">Készül</span></h3><p>Földben, földre, földből: alagút, ház, gát – és minden más szakág alatt is ott van.</p><div class="tm">1:05–1:20</div></div></article>
-    <article class="ch todo"><span class="n">4</span><div class="tx"><h3>Itthon <span class="pill">Készül</span></h3><p>Tisza-gát, a dunaszekcsői löszfal, alföldi ház aszályban, a Fővám téri metróállomás és Paks II.</p><div class="tm">1:20–2:00</div></div></article>
-    <article class="ch todo"><span class="n">5</span><div class="tx"><h3>Iskola <span class="pill">Készül</span></h3><p>1928, Műegyetem: Jáky József laborja és egy képlet, amelyet ma is az egész világ használ.</p><div class="tm">2:00–2:10</div></div></article>
-    <article class="ch todo"><span class="n">6</span><div class="tx"><h3>Neked való, ha… <span class="pill">Készül</span></h3><p>Terep, labor, modellezés – és az, hogy minden telek más. A specializáció a 4. félév után választható.</p><div class="tm">2:10–2:25</div></div></article>
-    <article class="ch todo"><span class="n">✓</span><div class="tx"><h3>Zárás <span class="pill">Készül</span></h3><p>Vissza a toronyhoz – „ami a föld alatt van, az varázslat”.</p><div class="tm">2:25–2:42</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Mi tartja meg?"><img src="img/nyitas.jpg" alt="Mi tartja meg? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">0</span><span class="pl"></span></button><div class="tx"><h3>Mi tartja meg?</h3><p class="rag">Budapest éjjel, a MOL Campus tornya, aztán a talajszkenner a föld alá lát.</p><div class="tm">0:00–0:25</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Egy medence"><img src="img/medence.jpg" alt="Egy medence – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Egy medence</h3><p class="rag">Miért talajon építünk itthon? Talajtérkép és a medence feltöltődése.</p><div class="tm">0:25–0:45</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Mit csinálnál?"><img src="img/felderit.jpg" alt="Mit csinálnál? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Mit csinálnál?</h3><p class="rag">Öt szint egy dunaparti telken: felderít, mér, modellez, tervez, figyel.</p><div class="tm">0:45–1:20</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: A helye"><img src="img/helye.jpg" alt="A helye – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>A helye</h3><p class="rag">Földben, földre, földből – és minden más szakág alatt is ott van.</p><div class="tm">1:20–1:35</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Itthon"><img src="img/itthon.jpg" alt="Itthon – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Itthon</h3><p class="rag">Tisza-gát, Dunaszekcső, aszály, Fővám tér, Paks II.</p><div class="tm">1:35–2:25</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Iskola"><img src="img/iskola.jpg" alt="Iskola – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Iskola</h3><p class="rag">1928, Műegyetem: Jáky József és a K<sub>0</sub> képlet.</p><div class="tm">2:25–2:37</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Neked való, ha…"><img src="img/neked.jpg" alt="Neked való, ha… – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">6</span><span class="pl"></span></button><div class="tx"><h3>Neked való, ha…</h3><p class="rag">Terep, labor, modellezés – és az, hogy minden telek más.</p><div class="tm">2:37–2:52</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Zárás"><img src="img/zaras.jpg" alt="Zárás – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">✓</span><span class="pl"></span></button><div class="tx"><h3>Zárás</h3><p class="rag">Összegzés, és vissza a toronyhoz: lent kezdődik.</p><div class="tm">2:52–3:12</div></div></article>
   </div>
 </div></section>
 
@@ -224,14 +222,14 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </div></section>
 </main>
 <footer><div class="wrap">
-  <div><p><b>Geotechnika specializáció</b></p><p>BME Építőmérnöki Kar · BSc-n a 4. félév után választható. Saját 3D animáció, első vázlat – 2026. november.</p></div>
+  <div><p><b>Geotechnika specializáció</b></p><p>BME Építőmérnöki Kar · BSc-n a 4. félév után választható. Saját 3D animáció – 2026. november.</p><p class="cred">Zene: valódi hangszerek felvett mintáiból – Salamander Grand Piano (Alexander Holm), tonejs-instruments (VSCO2, Karoryfer, Iowa, Freesound), CC BY 3.0.</p></div>
   <div class="r"><p><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></p></div>
 </div></footer>
 
 <div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-label="Ami a felszín alatt van – animáció">
   <div class="vbox">
     <div class="vf"><iframe id="vmFrame" title="Ami a felszín alatt van – geotechnika bemutató animáció" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
-    <div class="vbar"><span>Ami a felszín alatt van · 1. vázlat · 0:42 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
+    <div class="vbar"><span>Ami a felszín alatt van · 3:12 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
   </div>
 </div>
 <script>
@@ -239,7 +237,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 /* ================= VIDEÓ ================= */
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
-  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=1#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
+  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=2#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
   const close = () => { m.hidden = true; f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
