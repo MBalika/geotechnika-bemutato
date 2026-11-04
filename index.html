@@ -139,7 +139,8 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 .vmodal[hidden]{display:none}
 .vbox{width:min(1280px, 100%, calc((100vh - 120px) * 16 / 9))}
 .vbox .vf{position:relative; aspect-ratio:16/9; background:#000; border-radius:14px; overflow:hidden; box-shadow:0 30px 90px rgba(0,0,0,.6)}
-.vbox iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+.vbox iframe, .vbox video{position:absolute; inset:0; width:100%; height:100%; border:0; background:#000}
+.vbox video[hidden], .vbox iframe[hidden]{display:none}
 .vbar{display:flex; justify-content:space-between; align-items:center; margin-top:12px; color:#cfd3d7; font:500 13px/1.3 var(--fb); gap:12px}
 .vbar button{border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06); color:#fff; border-radius:999px; padding:9px 14px; cursor:pointer; font:700 13px/1 var(--fb)}
 /* teljes képernyő ott is, ahol a böngésző nem engedi (iPhone): a modális ablak kitölti a kijelzőt, álló telefonon a kép fekvőbe fordul */
@@ -182,10 +183,10 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 <main id="top">
 <div class="hero"><div class="wrap">
   <div class="h-txt">
-    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 3:12</span></div>
+    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 3:20</span></div>
     <h1>Ami a felszín <em>alatt</em> van</h1>
     <div class="motto">Geotechnika: a talaj, amire, amibe és amiből építünk</div>
-    <div class="ctas"><button class="btn pri" data-video type="button">▶ Nézd meg <small>3:12</small></button><a class="btn" href="#fejezetek">Fejezetek</a></div>
+    <div class="ctas"><button class="btn pri" data-video type="button">▶ Nézd meg <small>3:20</small></button><a class="btn" href="#fejezetek">Fejezetek</a></div>
   </div>
   <button class="vcard" data-video type="button" aria-label="A bemutató animáció lejátszása">
     <img src="img/poster.jpg?v=3" alt="Budapest éjjel drónról: a MOL Campus tornya, a Duna a hidakkal, háttérben a Gellért-hegy" width="1600" height="900">
@@ -205,16 +206,16 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </div></div>
 
 <section id="fejezetek"><div class="wrap">
-  <div class="sh"><div><div class="kick">A videó</div><h2>Fejezetek</h2></div><p>Nyolc rész, összesen 3:12 – hang nélkül is érthető.</p></div>
+  <div class="sh"><div><div class="kick">A videó</div><h2>Fejezetek</h2></div><p>Nyolc rész, összesen 3:20 – hang nélkül is érthető.</p></div>
   <div class="chapters">
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Hogyan áll meg egy ekkora épület?"><img src="img/nyitas.jpg?v=3" alt="Hogyan áll meg egy ekkora épület? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">0</span><span class="pl"></span></button><div class="tx"><h3>Hogyan áll meg?</h3><p class="rag">Budapest éjjel, a MOL Campus tornya, aztán a talajszkenner a föld alá lát.</p><div class="tm">0:00–0:25</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Egy medence"><img src="img/medence.jpg" alt="Egy medence – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Egy medence</h3><p class="rag">Miért talajon építünk itthon? Talajtérkép és a medence feltöltődése.</p><div class="tm">0:25–0:45</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Mit csinál a geotechnikus?"><img src="img/felderit.jpg" alt="Mit csinál a geotechnikus? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Mit csinál a geotechnikus?</h3><p class="rag">Öt szint egy dunaparti telken: felderít, triaxiális vizsgálattal mér, modellez, tervez, műszerekkel figyel.</p><div class="tm">0:45–1:20</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: A helye"><img src="img/helye.jpg?v=4" alt="A helye – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>A helye</h3><p class="rag">Földben, földre, földből – híd, autópálya, vasút, metró, gát: minden szakág alatt ott van.</p><div class="tm">1:20–1:35</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Itthon"><img src="img/itthon.jpg?v=4" alt="Itthon – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Itthon</h3><p class="rag">Tisza-gát, Tomori Pál Duna-híd, M4 a Duna alatt, Fővám tér, Paks II.</p><div class="tm">1:35–2:25</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Iskola"><img src="img/iskola.jpg" alt="Iskola – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Iskola</h3><p class="rag">1928, Műegyetem: Jáky József és a K<sub>0</sub> képlet.</p><div class="tm">2:25–2:37</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Neked való, ha…"><img src="img/neked.jpg" alt="Neked való, ha… – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">6</span><span class="pl"></span></button><div class="tx"><h3>Neked való, ha…</h3><p class="rag">Terep, labor, modellezés – és ha szereted a változatosságot.</p><div class="tm">2:37–2:52</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Zárás"><img src="img/zaras.jpg?v=3" alt="Zárás – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">✓</span><span class="pl"></span></button><div class="tx"><h3>Zárás</h3><p class="rag">Mindenki a tornyot fotózza – te azt, ami megtartja. Lent kezdődik.</p><div class="tm">2:52–3:12</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Hogyan áll meg egy ekkora épület?"><img src="img/nyitas.jpg?v=3" alt="Hogyan áll meg egy ekkora épület? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">0</span><span class="pl"></span></button><div class="tx"><h3>Hogyan áll meg?</h3><p class="rag">Házak, hidak, alagutak, gátak – mind a talajon múlnak. Aztán Budapest éjjel, a MOL Campus tornya, és a talajszkenner a föld alá lát.</p><div class="tm">0:00–0:32</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Hazai geológiai adottságok"><img src="img/medence.jpg" alt="Hazai geológiai adottságok – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Hazai geológiai adottságok</h3><p class="rag">Miért talajon építünk itthon? Talajtérkép és a medence feltöltődése.</p><div class="tm">0:32–0:52</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Mit csinál a geotechnikus?"><img src="img/felderit.jpg" alt="Mit csinál a geotechnikus? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Mit csinál a geotechnikus?</h3><p class="rag">Öt szint egy dunaparti telken: felderít, triaxiális vizsgálattal mér, modellez, tervez, műszerekkel figyel.</p><div class="tm">0:52–1:27</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: A helye"><img src="img/helye.jpg?v=4" alt="A helye – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>A helye</h3><p class="rag">Földben, földre, földből – híd, autópálya, vasút, metró, gát: minden szakág alatt ott van.</p><div class="tm">1:27–1:42</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Nagyobb hazai projektek"><img src="img/itthon.jpg?v=4" alt="Nagyobb hazai projektek – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Nagyobb hazai projektek</h3><p class="rag">Tisza-gát, Tomori Pál Duna-híd, M4 a Duna alatt, Fővám tér, Paks II.</p><div class="tm">1:42–2:32</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Iskola"><img src="img/iskola.jpg" alt="Iskola – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Iskola</h3><p class="rag">1928, Műegyetem: Jáky József és a K<sub>0</sub> képlet.</p><div class="tm">2:32–2:45</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Neked való, ha…"><img src="img/neked.jpg" alt="Neked való, ha… – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">6</span><span class="pl"></span></button><div class="tx"><h3>Neked való, ha…</h3><p class="rag">Terep, labor, modellezés – és ha szereted a változatosságot.</p><div class="tm">2:45–3:00</div></div></article>
+    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Zárás"><img src="img/zaras.jpg?v=3" alt="Zárás – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">✓</span><span class="pl"></span></button><div class="tx"><h3>Zárás</h3><p class="rag">Mindenki a tornyot fotózza – te azt, ami megtartja. Minden a mélyben kezdődik.</p><div class="tm">3:00–3:20</div></div></article>
   </div>
 </div></section>
 
@@ -234,8 +235,8 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 
 <div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-label="Ami a felszín alatt van – animáció">
   <div class="vbox">
-    <div class="vf"><iframe id="vmFrame" title="Ami a felszín alatt van – geotechnika bemutató animáció" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
-    <div class="vbar"><span>Ami a felszín alatt van · 3:12 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
+    <div class="vf"><iframe id="vmFrame" title="Ami a felszín alatt van – geotechnika bemutató animáció" allow="autoplay; fullscreen" allowfullscreen></iframe><video id="vmVideo" playsinline controls preload="none" poster="img/poster.jpg?v=3" hidden></video></div>
+    <div class="vbar"><span>Ami a felszín alatt van · 3:20 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
   </div>
 </div>
 <script>
@@ -243,7 +244,11 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 /* ================= VIDEÓ ================= */
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
-  const open = () => { last = document.activeElement; f.src = 'video/geotechnika.html?v=6#autoplay'; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => f.focus(), 300); };
+  // iPhone-on a böngésző csak videóelemet enged teljes képernyőre: ott a videó MP4-es változata megy a telefon saját lejátszójával
+  const v = $('#vmVideo'), noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled), MP4_READY = false, useMP4 = MP4_READY && noElFS && (/iPhone|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && !/Android/.test(navigator.userAgent) && /Mac|iP/.test(navigator.platform || '')));
+  const open = () => { last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden';
+    if (useMP4) { f.hidden = true; v.hidden = false; if (!v.getAttribute('src')) v.src = 'video/geotechnika.mp4?v=1'; try { v.currentTime = 0; } catch (er) {} const p = v.play(); if (p && p.catch) p.catch(() => {}); return; }
+    f.src = 'video/geotechnika.html?v=7#autoplay'; setTimeout(() => f.focus(), 300); };
   let pseudo = false; const fit = () => m.classList.toggle('rot', pseudo && innerHeight > innerWidth);
   const setPseudo = (on) => { pseudo = on; m.classList.toggle('pfs', on); fit(); };
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
@@ -255,7 +260,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const host = () => { try { f.contentWindow.postMessage('vfs-host', '*'); } catch (er) {} }; f.addEventListener('load', () => { host(); setTimeout(host, 1500); setTimeout(host, 4000); });
   const enterFS = () => { setPseudo(true); const req = m.requestFullscreen || m.webkitRequestFullscreen; if (!req) return; try { const pr = req.call(m); if (pr && pr.then) pr.then(lockLand).catch(() => {}); } catch (er) {} };
   const exitFS = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } real = false; setPseudo(false); };
-  const close = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } setPseudo(false); m.hidden = true; f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
+  const close = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } setPseudo(false); m.hidden = true; if (useMP4) { try { v.pause(); } catch (er) {} } else f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) close(); });
