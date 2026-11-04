@@ -245,7 +245,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
 /* ================= VIDEÓ ================= */
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
   // iPhone-on a böngésző csak videóelemet enged teljes képernyőre: ott a videó MP4-es változata megy a telefon saját lejátszójával
-  const v = $('#vmVideo'), noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled), MP4_READY = false, useMP4 = MP4_READY && noElFS && (/iPhone|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && !/Android/.test(navigator.userAgent) && /Mac|iP/.test(navigator.platform || '')));
+  const v = $('#vmVideo'), noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled), MP4_READY = true, useMP4 = MP4_READY && noElFS && (/iPhone|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && !/Android/.test(navigator.userAgent) && /Mac|iP/.test(navigator.platform || '')));
   const open = () => { last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden';
     if (useMP4) { f.hidden = true; v.hidden = false; if (!v.getAttribute('src')) v.src = 'video/geotechnika.mp4?v=1'; try { v.currentTime = 0; } catch (er) {} const p = v.play(); if (p && p.catch) p.catch(() => {}); return; }
     f.src = 'video/geotechnika.html?v=10#autoplay'; setTimeout(() => f.focus(), 300); };
