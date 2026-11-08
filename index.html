@@ -92,6 +92,10 @@ section{padding:84px 0}
 h2{font:800 clamp(38px, 4.2vw, 60px)/.95 var(--fh); text-transform:uppercase; margin:10px 0 0}
 .sh p{max-width:none; color:var(--muted); margin:0}
 .chapters{display:grid; grid-template-columns:repeat(4, 1fr); gap:18px}
+.chapters.c3{grid-template-columns:repeat(3, 1fr); margin-top:28px}
+.kar{background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.k-top{display:grid; grid-template-columns:1.15fr 1fr; gap:48px; align-items:center}
+.k-txt .lead{margin:0 0 14px; color:#d6dbd3}
 .todo-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:18px}
 .ch{position:relative; display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden}
 .ch .im{position:relative; display:block; width:100%; padding:0; border:0; aspect-ratio:16/9; background:#0d1116; overflow:hidden; cursor:pointer}
@@ -154,6 +158,8 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
   :root{--pad:24px}
   .hero .wrap{grid-template-columns:1fr; gap:28px}
   .chapters{grid-template-columns:repeat(2, 1fr)}
+  .chapters.c3{grid-template-columns:repeat(2, 1fr)}
+  .k-top{grid-template-columns:1fr; gap:28px}
 }
 @media (max-width: 880px){
   .h-lead{columns:1}
@@ -178,7 +184,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="#top"><i></i>Geotechnika <span>· BME ÉMK</span></a>
-  <nav><a href="#fejezetek">Fejezetek</a><a href="#mi-ez">Mi ez?</a><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></nav>
+  <nav><a href="#fejezetek">Fejezetek</a><a href="#kar">A kar</a><a href="#mi-ez">Mi ez?</a><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></nav>
 </div></header>
 <main id="top">
 <div class="hero"><div class="wrap">
@@ -205,6 +211,30 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
   <div class="stat"><b>1928</b><span>ekkor nyílt az első talajmechanikai labor a Műegyetemen</span></div>
 </div></div>
 
+<section id="kar" class="kar"><div class="wrap">
+  <div class="sh"><div><div class="kick">Másik videó <span class="bdg">Új · 3:31</span></div><h2>Mit építenél? – Az Építőmérnöki Kar</h2></div><p>Hat szakirány egyetlen városban, a hídtól a BIM-ig.</p></div>
+  <div class="k-top">
+    <button class="vcard" data-video="kar" type="button" aria-label="A kari bemutató animáció lejátszása">
+      <img src="img/kar_poster.jpg?v=1" alt="Makettszerű városmetszet: ferdekábeles híd, toronyház cölöpalapon, metró, autópálya, vasút, víztorony, daru" loading="lazy" width="1600" height="900">
+      <span class="scan"></span><span class="corners"></span><span class="play"></span>
+      <span class="cap"><span>Mit építenél, ha nem lennének határok?</span><span>▶ lejátszás</span></span>
+    </button>
+    <div class="k-txt">
+      <p class="lead">Minden híd, alagút és út mögött egy mérnöki elme áll. A videó egy makettszerű város metszetén mutatja meg, mit csinál az építőmérnök: a felszínen és alatta.</p>
+      <p class="lead">Az első négy félév közös, utána hat irány közül választasz. Nem kell most tudnod, melyik a tiéd.</p>
+      <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>3:31</small></button></div>
+    </div>
+  </div>
+  <div class="chapters c3">
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Tartószerkezetek"><img src="img/kar_1.jpg?v=1" alt="Tartószerkezetek – ferdekábeles híd a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Tartószerkezetek</h3><p class="rag">Hidak és tornyok, amelyek évszázadokig állnak: kábelerők, szélteher, merevítő mag.</p><div class="tm">0:37–0:57</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geotechnika"><img src="img/kar_2.jpg?v=1" alt="Geotechnika – mélygarázs cölöpökkel a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Geotechnika</h3><p class="rag">Ami a felszín alatt van: cölöpök, résfal, talajrétegek.</p><div class="tm">0:57–1:16</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Közlekedési létesítmények"><img src="img/kar_3.jpg?v=1" alt="Közlekedési létesítmények – fúrópajzs a metróalagútban a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>Közlekedési létesítmények</h3><p class="rag">Utak, vasutak, alagutak: fúrópajzs, útrétegek, ágyazat.</p><div class="tm">1:16–1:36</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geodézia és térinformatika"><img src="img/kar_4.jpg?v=1" alt="Geodézia és térinformatika – pontfelhő a városról a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Geodézia és térinformatika</h3><p class="rag">Drón, lézerszkenner, műholdak: pontfelhő és digitális iker.</p><div class="tm">1:36–1:56</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Vízmérnöki"><img src="img/kar_5.jpg?v=1" alt="Vízmérnöki – víz- és szennyvízhálózat a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Vízmérnöki</h3><p class="rag">Árvízvédelem, ivóvíz, szennyvíz: a gáttól a csapig.</p><div class="tm">1:56–2:15</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Építéstechnológia és BIM"><img src="img/kar_6.jpg?v=1" alt="Építéstechnológia és BIM – épülő ház daruval a videóból" loading="lazy" width="960" height="540"><span class="n">6</span><span class="pl"></span></button><div class="tx"><h3>Építéstechnológia és BIM</h3><p class="rag">Előbb virtuálisan épül fel, aztán a valóságban: 4D ütemterv, ütközés, energia.</p><div class="tm">2:15–2:35</div></div></article>
+  </div>
+</div></section>
+
 <section id="fejezetek"><div class="wrap">
   <div class="sh"><div><div class="kick">A videó</div><h2>Fejezetek</h2></div><p>Nyolc rész, összesen 3:20 – hang nélkül is érthető.</p></div>
   <div class="chapters">
@@ -229,14 +259,14 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </div></section>
 </main>
 <footer><div class="wrap">
-  <div><p><b>Geotechnika specializáció</b></p><p>BME Építőmérnöki Kar · BSc-n a 4. félév után választható. Saját 3D animáció – 2026. november.</p><p class="cred">Zene: valódi hangszerek felvett mintáiból – Salamander Grand Piano (Alexander Holm), tonejs-instruments (VSCO2, Karoryfer, Iowa, Freesound), CC BY 3.0.</p></div>
+  <div><p><b>Geotechnika specializáció</b></p><p>BME Építőmérnöki Kar · BSc-n a 4. félév után választható. Saját 3D animációk – 2026. november: „Ami a felszín alatt van” és „Mit építenél?”.</p><p class="cred">Zene: valódi hangszerek felvett mintáiból – Salamander Grand Piano (Alexander Holm), tonejs-instruments (VSCO2, Karoryfer, Iowa, Freesound), CC BY 3.0.</p></div>
   <div class="r"><p><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></p></div>
 </div></footer>
 
 <div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-label="Ami a felszín alatt van – animáció">
   <div class="vbox">
     <div class="vf"><iframe id="vmFrame" title="Ami a felszín alatt van – geotechnika bemutató animáció" allow="autoplay; fullscreen" allowfullscreen></iframe><video id="vmVideo" playsinline controls preload="none" poster="img/poster.jpg?v=3" hidden></video></div>
-    <div class="vbar"><span>Ami a felszín alatt van · 3:20 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
+    <div class="vbar"><span id="vmTitle">Ami a felszín alatt van · 3:20 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
   </div>
 </div>
 <script>
@@ -246,9 +276,14 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
   // iPhone-on a böngésző csak videóelemet enged teljes képernyőre: ott a videó MP4-es változata megy a telefon saját lejátszójával
   const v = $('#vmVideo'), noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled), MP4_READY = true, useMP4 = MP4_READY && noElFS && (/iPhone|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && !/Android/.test(navigator.userAgent) && /Mac|iP/.test(navigator.platform || '')));
-  const open = () => { last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden';
-    if (useMP4) { f.hidden = true; v.hidden = false; if (!v.getAttribute('src')) v.src = 'video/geotechnika.mp4?v=1'; try { v.currentTime = 0; } catch (er) {} const p = v.play(); if (p && p.catch) p.catch(() => {}); return; }
-    f.src = 'video/geotechnika.html?v=11#autoplay'; setTimeout(() => f.focus(), 300); };
+  // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar"); MP4 (iPhone) csak ahol már elkészült
+  const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
+    kar: { html: 'video/epitokar.html?v=1', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:31 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=1' } };
+  let cur = VIDS.geo;
+  const open = (e) => { const key = (e && e.currentTarget && e.currentTarget.dataset.video) || 'geo'; cur = VIDS[key] || VIDS.geo;
+    last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; $('#vmTitle').textContent = cur.title;
+    if (useMP4 && cur.mp4) { f.hidden = true; v.hidden = false; v.poster = cur.poster; if (v.getAttribute('src') !== cur.mp4) v.src = cur.mp4; try { v.currentTime = 0; } catch (er) {} const p = v.play(); if (p && p.catch) p.catch(() => {}); return; }
+    v.hidden = true; f.hidden = false; f.src = cur.html + '#autoplay'; setTimeout(() => f.focus(), 300); };
   let pseudo = false; const fit = () => m.classList.toggle('rot', pseudo && innerHeight > innerWidth);
   const setPseudo = (on) => { pseudo = on; m.classList.toggle('pfs', on); fit(); };
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
@@ -260,7 +295,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const host = () => { try { f.contentWindow.postMessage('vfs-host', '*'); } catch (er) {} }; f.addEventListener('load', () => { host(); setTimeout(host, 1500); setTimeout(host, 4000); });
   const enterFS = () => { setPseudo(true); const req = m.requestFullscreen || m.webkitRequestFullscreen; if (!req) return; try { const pr = req.call(m); if (pr && pr.then) pr.then(lockLand).catch(() => {}); } catch (er) {} };
   const exitFS = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } real = false; setPseudo(false); };
-  const close = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } setPseudo(false); m.hidden = true; if (useMP4) { try { v.pause(); } catch (er) {} } else f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
+  const close = () => { if (fsEl()) { const ex = document.exitFullscreen || document.webkitExitFullscreen; if (ex) try { ex.call(document); } catch (er) {} } setPseudo(false); m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) close(); });
