@@ -278,7 +278,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const v = $('#vmVideo'), noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled), MP4_READY = true, useMP4 = MP4_READY && noElFS && (/iPhone|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && !/Android/.test(navigator.userAgent) && /Mac|iP/.test(navigator.platform || '')));
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar"); MP4 (iPhone) csak ahol már elkészült
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
-    kar: { html: 'video/epitokar.html?v=1', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:31 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=1' } };
+    kar: { html: 'video/epitokar.html?v=2', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:31 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=1' } };
   let cur = VIDS.geo;
   const open = (e) => { const key = (e && e.currentTarget && e.currentTarget.dataset.video) || 'geo'; cur = VIDS[key] || VIDS.geo;
     last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; $('#vmTitle').textContent = cur.title;
