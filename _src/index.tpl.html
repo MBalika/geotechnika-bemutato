@@ -226,7 +226,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </div></div>
 
 <section id="kar" class="kar"><div class="wrap">
-  <div class="sh"><div><div class="kick">Másik videó <span class="bdg">Új · 3:55</span></div><h2>Mit építenél? – Az Építőmérnöki Kar</h2></div><p>Két alapszak, hét specializáció, egyetlen városban.</p></div>
+  <div class="sh"><div><div class="kick">Másik videó <span class="bdg">Új · 3:50</span></div><h2>Mit építenél? – Az Építőmérnöki Kar</h2></div><p>Két alapszak, hét specializáció, egyetlen városban.</p></div>
   <div class="k-top">
     <button class="vcard" data-video="kar" type="button" aria-label="A kari bemutató animáció lejátszása">
       <img src="img/kar_poster.jpg?v=2" alt="Makettszerű városmetszet: ferdekábeles híd, toronyház cölöpalapon, metró, autópálya, vasút, víztorony, daru" loading="lazy" width="1600" height="900">
@@ -236,7 +236,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
     <div class="k-txt">
       <p class="lead">Minden híd, alagút és út mögött ott van a mérnöki elme. A videó egy makettszerű város metszetén mutatja meg, mit csinál az építőmérnök: a felszínen és alatta.</p>
       <p class="lead">Két alapszak közül választhatsz: az Építőmérnök BSc (8 félév) öt, az új Földmérő és földrendező mérnök BSc (7 félév, 2027 szeptemberétől) két specializációt kínál.</p>
-      <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>3:55</small></button></div>
+      <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>3:50</small></button></div>
     </div>
   </div>
   <h3 class="kh">Építőmérnök BSc <span>8 félév · 5 specializáció</span></h3>
@@ -300,8 +300,9 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const isPhone = isIOS || /Android.+Mobile|Mobile.+Firefox|Windows Phone/i.test(ua) || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 820);
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar")
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
-    kar: { html: 'video/epitokar.html?v=5', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:55 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=2' } };
-  let cur = VIDS.geo, phoneMode = false;
+    kar: { html: 'video/epitokar.html?v=7', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:50 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=2' } };
+  let cur = VIDS.geo, phoneMode = false, htmlMode = false, htmlPlaying = true;
+  const cmd = (c) => { try { f.contentWindow.postMessage('vcmd:' + c, '*'); } catch (er) {} };
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
   const lockLand = () => { try { const o = screen.orientation; if (o && o.lock) o.lock('landscape').catch(() => {}); } catch (er) {} };
   const reqFS = (el) => { const r = el.requestFullscreen || el.webkitRequestFullscreen; if (!r) return false; try { const pr = r.call(el, { navigationUI: 'hide' }); if (pr && pr.catch) pr.catch(() => {}); return true; } catch (er) { return false; } };
@@ -309,26 +310,29 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   // ---------- telefonos vezérlők: −10 s, szünet, +10 s, sebesség, teljes képernyő, bezárás (3 s után elhalványulnak, érintésre visszajönnek) ----------
   const RATES = [1, 1.25, 1.5, 2, 0.75]; let ri = 0, idleT = 0;
   const fmtR = (r) => String(r).replace('.', ',') + '×';
-  const showCtl = () => { ctl.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(() => { if (!v.paused) ctl.classList.add('idle'); }, 3000); };
-  const syncPlay = () => { $('#vcPlay').textContent = v.paused ? '▶' : '❚❚'; if (v.paused) ctl.classList.remove('idle'); };
-  const seek = (d) => { try { v.currentTime = Math.max(0, Math.min((v.duration || 1e9) - 0.2, v.currentTime + d)); } catch (er) {} showCtl(); };
+  const showCtl = () => { ctl.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(() => { if (htmlMode ? htmlPlaying : !v.paused) ctl.classList.add('idle'); }, 3000); };
+  const syncPlay = () => { const pz = htmlMode ? !htmlPlaying : v.paused; $('#vcPlay').textContent = pz ? '▶' : '❚❚'; if (pz) ctl.classList.remove('idle'); };
+  const seek = (d) => { if (htmlMode) cmd('seek:' + d); else try { v.currentTime = Math.max(0, Math.min((v.duration || 1e9) - 0.2, v.currentTime + d)); } catch (er) {} showCtl(); };
   $('#vcBack').addEventListener('click', () => seek(-10)); $('#vcFwd').addEventListener('click', () => seek(10));
-  $('#vcPlay').addEventListener('click', () => { if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause(); showCtl(); });
-  $('#vcRate').addEventListener('click', () => { ri = (ri + 1) % RATES.length; v.playbackRate = RATES[ri]; $('#vcRate').textContent = fmtR(RATES[ri]); showCtl(); });
-  const phoneFS = () => { if (isIOS && v.webkitEnterFullscreen) { try { v.webkitEnterFullscreen(); return; } catch (er) {} } if (fsEl()) exitAnyFS(); else if (reqFS(m)) lockLandSoon(); };
+  $('#vcPlay').addEventListener('click', () => { if (htmlMode) cmd('toggle'); else if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause(); showCtl(); });
+  $('#vcRate').addEventListener('click', () => { ri = (ri + 1) % RATES.length; if (htmlMode) cmd('rate:' + RATES[ri]); else v.playbackRate = RATES[ri]; $('#vcRate').textContent = fmtR(RATES[ri]); showCtl(); });
+  const phoneFS = () => { if (!htmlMode && isIOS && v.webkitEnterFullscreen) { try { v.webkitEnterFullscreen(); return; } catch (er) {} } if (fsEl()) exitAnyFS(); else if (reqFS(m)) lockLandSoon(); };
   const lockLandSoon = () => setTimeout(() => { if (fsEl() && innerHeight > innerWidth) lockLand(); }, 300);
   $('#vcFs').addEventListener('click', () => { phoneFS(); showCtl(); });
   v.addEventListener('play', syncPlay); v.addEventListener('pause', syncPlay); v.addEventListener('ratechange', () => { const k = RATES.indexOf(v.playbackRate); if (k >= 0) { ri = k; $('#vcRate').textContent = fmtR(v.playbackRate); } });
   m.addEventListener('touchstart', () => { if (phoneMode) showCtl(); }, { passive: true }); m.addEventListener('mousemove', () => { if (phoneMode) showCtl(); });
   // fordítás fekvőbe: a kép a teljes kijelzőt kitölti (ahol a böngésző engedi, valódi teljes képernyővel)
   const onRot = () => { if (m.hidden || !phoneMode) return; const land = innerWidth > innerHeight;
-    if (land && isIOS && v.webkitEnterFullscreen && !v.webkitDisplayingFullscreen && !v.paused) { try { v.webkitEnterFullscreen(); } catch (er) {} }
+    if (land && !htmlMode && isIOS && v.webkitEnterFullscreen && !v.webkitDisplayingFullscreen && !v.paused) { try { v.webkitEnterFullscreen(); } catch (er) {} }
     if (land && !isIOS && !fsEl()) reqFS(m); };
   addEventListener('orientationchange', () => setTimeout(onRot, 250)); try { matchMedia('(orientation: landscape)').addEventListener('change', () => setTimeout(onRot, 250)); } catch (er) {}
   const open = (e) => { const key = (e && e.currentTarget && e.currentTarget.dataset.video) || 'geo'; cur = VIDS[key] || VIDS.geo;
     last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; $('#vmTitle').textContent = cur.title;
-    phoneMode = !!(cur.mp4 && (isPhone || noElFS));
-    if (phoneMode) { m.classList.add('phone'); f.hidden = true; v.hidden = false; ctl.hidden = false; v.poster = cur.poster; if (v.getAttribute('src') !== cur.mp4) v.src = cur.mp4; try { v.currentTime = 0; } catch (er) {}
+    const useVid = !!(cur.mp4 && (isPhone || noElFS)); phoneMode = useVid || isPhone; htmlMode = phoneMode && !useVid; htmlPlaying = true;
+    // telefon, de ehhez a videóhoz még nincs MP4: a HTML-lejátszó tölti ki a kijelzőt, a felső gombok azt vezérlik
+    if (htmlMode) { m.classList.add('phone'); v.hidden = true; f.hidden = false; ctl.hidden = false; $('#vcFs').hidden = !!(isIOS || noElFS); ri = 0; $('#vcRate').textContent = fmtR(1); syncPlay(); showCtl();
+      f.src = cur.html + '#autoplay'; if (!isIOS && !noElFS) reqFS(m); return; }
+    if (phoneMode) { $('#vcFs').hidden = false; m.classList.add('phone'); f.hidden = true; v.hidden = false; ctl.hidden = false; v.poster = cur.poster; if (v.getAttribute('src') !== cur.mp4) v.src = cur.mp4; try { v.currentTime = 0; } catch (er) {}
       ri = 0; v.playbackRate = 1; v.defaultPlaybackRate = 1; $('#vcRate').textContent = fmtR(1); const p = v.play(); if (p && p.catch) p.catch(() => {}); syncPlay(); showCtl();
       // Androidon (és ahol az elem mehet teljes képernyőre) a koppintással rögtön teljes képernyő: fordításra a kép kitölti a kijelzőt
       if (!isIOS && !noElFS) reqFS(m);
@@ -343,12 +347,13 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const host = () => { try { f.contentWindow.postMessage('vfs-host', '*'); } catch (er) {} }; f.addEventListener('load', () => { host(); setTimeout(host, 1500); setTimeout(host, 4000); });
   const enterFS = () => { setPseudo(true); const req = m.requestFullscreen || m.webkitRequestFullscreen; if (!req) return; try { const pr = req.call(m); if (pr && pr.then) pr.then(lockLand).catch(() => {}); } catch (er) {} };
   const exitFS = () => { exitAnyFS(); real = false; setPseudo(false); };
-  const close = () => { exitAnyFS(); try { if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen(); } catch (er) {} setPseudo(false); m.classList.remove('phone'); phoneMode = false; ctl.hidden = true; m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
+  const close = () => { htmlMode = false; exitAnyFS(); try { if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen(); } catch (er) {} setPseudo(false); m.classList.remove('phone'); phoneMode = false; ctl.hidden = true; m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $('#vcClose').addEventListener('click', close);
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) close(); });
-  addEventListener('message', (e) => { if ((e.data === 'vclose' || e.data === 'ka-close-video') && !m.hidden) close(); if (e.data === 'vfs-hello') host(); if (e.data === 'vfs') { (pseudo || fsEl()) ? exitFS() : enterFS(); } }); }
+  addEventListener('message', (e) => { if ((e.data === 'vclose' || e.data === 'ka-close-video') && !m.hidden) close(); if (e.data === 'vfs-hello') host(); if (e.data === 'vfs') { if (phoneMode) { if (!isIOS && !noElFS) { fsEl() ? exitAnyFS() : reqFS(m); } } else (pseudo || fsEl()) ? exitFS() : enterFS(); }
+    if (typeof e.data === 'string' && e.data.indexOf('vstate:') === 0) { htmlPlaying = e.data === 'vstate:1'; if (htmlMode) syncPlay(); } }); }
 /*GUARD*/
 })();
 </script>
