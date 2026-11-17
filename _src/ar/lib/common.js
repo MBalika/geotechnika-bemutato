@@ -105,9 +105,23 @@ const inc = (times) => { const o = []; for (const t of times) o.push(o.length &&
 export function trackPos(node, times, values) { return new THREE.VectorKeyframeTrack(node.name + '.position', inc(times), values.flat()); }
 export function trackQuat(node, times, eulers) { const v = []; for (const e of eulers) { const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(...e)); v.push(q.x, q.y, q.z, q.w); } return new THREE.QuaternionKeyframeTrack(node.name + '.quaternion', inc(times), v); }
 export function trackScale(node, times, values) { return new THREE.VectorKeyframeTrack(node.name + '.scale', inc(times), values.flat()); }
-export function spinTrack(node, axis, period, n = 4) { // egyenletes forgás: n+1 kulcs körönként
-  const times = [], v = []; for (let i = 0; i <= n; i++) { times.push(period * i / n); const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...axis), Math.PI * 2 * i / n); v.push(q.x, q.y, q.z, q.w); }
+export function spinTrack(node, axis, period, n = 4, total = period) { // egyenletes forgás: n kulcs körönként, a teljes klipen át
+  const times = [], v = []; const N = Math.round(n * total / period); for (let i = 0; i <= N; i++) { times.push(period * i / n); const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...axis), Math.PI * 2 * i / n); v.push(q.x, q.y, q.z, q.w); }
   return new THREE.QuaternionKeyframeTrack(node.name + '.quaternion', times, v); }
 
 let UID = 0; export const uid = (p) => p + '_' + (++UID);
 export function node(parent, name, pos = [0, 0, 0]) { const g = new THREE.Group(); g.name = uid(name); g.position.set(...pos); parent.add(g); return g; }
+
+// Ember (≈1,8 m): munkavédelmi sisak, láthatósági mellény; rot: elforgatás a függőleges tengely körül; tablet: kezében tablet
+export function person(B, x, z, rot = 0, o = {}) {
+  const c = Math.cos(rot), s = Math.sin(rot), y0 = o.y || 0; const P = (dx, dy, dz) => [x + dx * c + dz * s, y0 + dy, z - dx * s + dz * c];
+  const vest = mat(o.vest || '#ff7a1a'), pants = mat(o.pants || '#2f3a4a'), skin = mat('#e0b48f'), helm = mat(o.helmet || '#f4c430'), shirt = mat(o.shirt || '#3a5f8a');
+  for (const sx of [-1, 1]) { B.mesh(new THREE.BoxGeometry(0.17, 0.86, 0.2), pants, P(sx * 0.1, 0.43, 0), [0, rot, 0]); B.mesh(new THREE.BoxGeometry(0.19, 0.1, 0.28), mat('#2a2a2a'), P(sx * 0.1, 0.05, 0.04), [0, rot, 0]); }
+  B.mesh(new THREE.BoxGeometry(0.46, 0.62, 0.26), vest, P(0, 1.17, 0), [0, rot, 0]);
+  B.mesh(new THREE.BoxGeometry(0.47, 0.06, 0.27), mat('#e8e8e0'), P(0, 1.05, 0), [0, rot, 0]);
+  const fwd = o.tablet ? 0.5 : 0; for (const sx of [-1, 1]) B.mesh(new THREE.BoxGeometry(0.12, 0.58, 0.13), shirt, P(sx * 0.3, 1.18, fwd ? 0.1 : 0), [0, rot, 0]);
+  B.mesh(new THREE.BoxGeometry(0.1, 0.1, 0.1), skin, P(0, 1.53, 0), [0, rot, 0]);
+  B.mesh(new THREE.SphereGeometry(0.12, 10, 8), skin, P(0, 1.67, 0));
+  B.mesh(new THREE.SphereGeometry(0.135, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), helm, P(0, 1.7, 0)); B.mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.02, 12), helm, P(0, 1.7, 0.02));
+  if (o.tablet) B.mesh(new THREE.BoxGeometry(0.3, 0.22, 0.03), mat('#20262e'), P(0, 1.02, 0.3), [0, rot, 0]);
+}

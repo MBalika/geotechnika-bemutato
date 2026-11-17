@@ -91,6 +91,7 @@ main p{text-align:justify; text-justify:inter-word; hyphens:manual; -webkit-hyph
 .nav-arrow:hover{transform:scale(1.08); border-color:var(--sc); background:rgba(11,14,18,.8)}
 .nav-arrow svg{width:24px; height:24px}
 .nav-arrow.prev{left:16px} .nav-arrow.next{right:16px}
+@media (min-width:761px){ .nav-arrow{top:104px; margin-top:0; width:52px; height:52px} .nav-arrow.prev{left:auto; right:calc(var(--pad) + 62px)} .nav-arrow.next{right:var(--pad)} .count{top:22px} }
 /* vezérlők */
 .ctrl{position:absolute; right:var(--pad); bottom:32px; z-index:6; display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; max-width:60%}
 .btn{display:inline-flex; align-items:center; gap:9px; height:48px; padding:0 18px; border-radius:999px; border:1px solid var(--line2); background:rgba(11,14,18,.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); font:800 16px/1 var(--fh); letter-spacing:.08em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:border-color .2s, background .2s, transform .15s}
@@ -264,7 +265,7 @@ body.aula .count{top:40px; right:64px}
   <div class="hud" id="hud" aria-live="polite">
     <div class="kicker" id="kicker"></div>
     <h1 id="mname"></h1>
-    <p class="hook" id="mhook"></p>
+    <div class="hook" id="mhook"></div>
     <div class="facts" id="facts"></div>
   </div>
   <div class="ctrl" id="ctrl">

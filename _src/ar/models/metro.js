@@ -68,7 +68,7 @@ export function build({ lang }) {
   for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; hb.box(0.5, R * 2, 0.5, mat(C.steelDark), 0.35, 0, 0, [a, 0, 0]); }
   for (let i = 0; i < 18; i++) { const a = i * Math.PI / 9, rr = 0.8 + (i % 3) * 0.8; hb.mesh(new THREE.ConeGeometry(0.18, 0.4, 6), mat('#e8e2d6', { m: 0.5 }), [0.7, Math.sin(a) * rr, Math.cos(a) * rr], [0, 0, -Math.PI / 2]); }
   hb.build(head);
-  tracks.push(trackPos(tbm, [0, TA, T - 0.01, T], [[TXa, 0, 0], [TXb, 0, 0], [TXb, 0, 0], [TXa, 0, 0]]), spinTrack(head, [1, 0, 0], 4, 5));
+  tracks.push(trackPos(tbm, [0, TA, T - 0.01, T], [[TXa, 0, 0], [TXb, 0, 0], [TXb, 0, 0], [TXa, 0, 0]]), spinTrack(head, [1, 0, 0], 4, 6, T));
   // ellátó vonat: az aknából viszi a szegmenseket az utánfutóig, majd vissza
   const train = node(root, 'vonat'); const vb = new Batch('vonat'); const ty = YA - R + 1.25;
   vb.boxB(4.6, 2.2, 2.2, mat('#e0523f'), 2.3, 0, 0); vb.boxB(2.2, 0.9, 2.3, mat(C.glassDark), 1.6, 2.2, 0);
