@@ -115,6 +115,11 @@ HU = {
      'hook': 'Előbb digitálisan épül fel – a valóság szintről szintre utoléri.',
      'facts': [['6', 'szintes épület'], ['1', 'közös digitális modell'], ['3', 'réteg: szerkezet, gépészet, homlokzat']],
      'info': 'A BIM (épületinformációs modellezés) azt jelenti, hogy az épület előbb a számítógépben készül el, minden elemével együtt: pillérek, födémek, csövek, légcsatornák, ablakok. A modellből számolják a mennyiségeket és a költséget, ütemezik az építést, és még a kivitelezés előtt kiszűrik, ha egy cső belefutna egy gerendába. A helyszínen tableten nézik, mi következik. Az építéstechnológus mérnök ebből a közös modellből irányítja a kivitelezést, a daru mozgásától a homlokzat szereléséig.'},
+    {'id': 'cfa', 'sec': True, 'f': 'cfa-makett', 'img': 'cfa-makett', 'sp': 'geo', 'anim': True, 'orbit': '28deg 74deg 100%', 'kind': 'labels',
+     'name': 'CFA-cölöp fúrás közben', 'act': 'Mutasd, mi micsoda!',
+     'hook': 'Becsavarja magát a talajba – béléscső és zagy nélkül.',
+     'facts': [['80 cm', 'cölöpátmérő'], ['10 m', 'fúrásmélység'], ['20 m', 'spirálhossz']],
+     'info': 'A CFA-cölöp folyamatos spirálfúróval készül. A spirál 10 m mélyen jár, a menetei tele vannak talajjal: ez a talaj támasztja meg a furat falát, ezért nem kell béléscső vagy zagy. A betont tömlő hozza a forgatófejig, onnan a spirál üreges szárán jut le a talpig, és a spirál visszahúzásával kitölti a furatot; a vasalást utána engedik bele a friss betonba. A gépet a fülkében ülő gépkezelő irányítja. A geotechnikus mérnök tervezi meg, milyen hosszú és vastag cölöpök kellenek, hogy biztonságosan elbírják az épület terhét.'},
     {'id': 'pisa', 'sec': True, 'f': 'pisa-makett', 'img': 'pisa-makett', 'sp': 'geo', 'anim': False, 'orbit': '40deg 78deg 108%', 'kind': 'labels',
      'name': 'A pisai ferde torony', 'act': 'Mutasd, mi micsoda!',
      'hook': '800 éve dől – geotechnikusok állították meg.',
@@ -196,6 +201,9 @@ EN_M = {
   'nagysebessegu-vasut': ('High-speed railway', 'Here comes the train!', '300 km/h: the train flashes across the viaduct in barely two seconds.',
     [['300 km/h', 'speed'], ['25 kV', 'in the overhead line'], ['≈ 2 s', 'to cross the bridge']],
     'At high speed every centimetre counts: the track must be laid very precisely, the curves must have large radii and the gradients must be gentle. That is why the line crosses the valley on a viaduct and goes through the hill in a tunnel. The rails sit on a concrete slab, and a 25 kV overhead line above supplies the power. The transport engineer designs the alignment and the track structure, while the structural and geotechnical engineers design the bridge and the tunnel.'),
+  'cfa': ('CFA pile during drilling', 'Show me what’s what!', 'It screws itself into the ground – no casing, no slurry.',
+    [['80 cm', 'pile diameter'], ['10 m', 'drilling depth'], ['20 m', 'auger length']],
+    'A CFA pile is made with a continuous flight auger. The auger is 10 m deep, and its flights are full of soil: this soil supports the borehole wall, which is why no casing or slurry is needed. The concrete is brought by a hose to the rotary head, and from there it runs down the hollow stem of the auger to the base, filling the borehole as the auger is withdrawn; the reinforcement cage is then pushed into the fresh concrete. The rig is controlled by the operator sitting in the cab. The geotechnical engineer works out how long and how thick the piles need to be to carry the load of the building safely.'),
   'pisa': ('The Leaning Tower of Pisa', 'Show me what’s what!', 'Leaning for 800 years – geotechnical engineers stopped it.',
     [['≈ 3 m', 'average settlement'], ['14,500 t', 'mass of the tower'], ['0.5°', 'tilted back by']],
     'Beneath the tower lies soft, compressible clay, and the ground on the south side is slightly weaker than on the north: that is why it started to lean during construction. Between 1999 and 2001, soil was carefully extracted from beneath the north side through inclined boreholes. The tower, settling towards the north, tilted back by about 0.5°, and it has been stable ever since. The cross-sections show the soil layers and the clay layer bent down into a bowl shape.'),
@@ -208,7 +216,7 @@ for m in HU['M']:
 HYPH = '<script src="../vendor/hyphenopoly/Hyphenopoly_Loader.js"></script>\n<script>Hyphenopoly.config({ require: { "hu": "FORCEHYPHENOPOLY" }, setup: { hide: "none", selectors: { ".hyphenate": { minWordLength: 6, compound: "auto" } } } });</script>'
 
 # a bemutató (és az aula-túra) sorrendje: a specializációk váltakoznak
-ORDER = ['mol-campus', 'ferdekabeles-hid', 'metro-pajzs', 'nyomtatott-haz', 'hajozsilip', 'dron-pontfelho', 'foldrenges-razoasztal', 'birtokrendezes', 'autopalya-csomopont', 'gat-vizeromu', 'felhokarcolo-tmd', 'bim-epitkezes', 'mobilgat', 'nagysebessegu-vasut', 'pisa']
+ORDER = ['mol-campus', 'ferdekabeles-hid', 'metro-pajzs', 'nyomtatott-haz', 'hajozsilip', 'dron-pontfelho', 'cfa', 'foldrenges-razoasztal', 'birtokrendezes', 'autopalya-csomopont', 'gat-vizeromu', 'felhokarcolo-tmd', 'bim-epitkezes', 'mobilgat', 'nagysebessegu-vasut', 'pisa']
 
 def page(L, out):
     L['M'].sort(key=lambda m: ORDER.index(m['id']) if m['id'] in ORDER else 99)

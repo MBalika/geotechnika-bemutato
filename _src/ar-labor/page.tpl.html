@@ -54,6 +54,7 @@ main p{text-align:justify; text-justify:inter-word; hyphens:manual; -webkit-hyph
 .lang{display:inline-flex; border:1px solid var(--line2); border-radius:999px; overflow:hidden}
 .lang a, .lang span{padding:6px 10px; font:800 13px/1 var(--fh); letter-spacing:.1em}
 .lang span{background:var(--ink); color:var(--bg)}
+.top nav .lang a{padding:6px 10px; font:800 13px/1 var(--fh); letter-spacing:.1em; color:var(--muted)} .top nav .lang a:hover{color:var(--ink)}
 /* színpad */
 .stage{position:relative; height:calc(100svh - 62px); min-height:600px; max-height:1100px; overflow:hidden; background:var(--bg); isolation:isolate}
 .stage::before{content:""; position:absolute; inset:0; z-index:-2; background:radial-gradient(48% 62% at 64% 48%, color-mix(in srgb, var(--sc) 34%, transparent), transparent 72%), radial-gradient(40% 50% at 10% 95%, color-mix(in srgb, var(--sc) 14%, transparent), transparent 70%); transition:background .8s}
