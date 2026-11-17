@@ -45,7 +45,7 @@ HU = {
     'foldr': {'n': 'Földrendező', 'short': 'Földrendező', 'b': 'fm', 'd': 'Földrészletek, birtokrendezés, területhasználat: kié mi és hol, és hogyan lehet a földet okosabban felosztani és használni.'},
   },
   'M': [
-    {'id': 'mol-campus', 'sp': 'geo', 'anim': True, 'labelT': 25, 'orbit': '28deg 76deg 92%', 'kind': 'restart',
+    {'id': 'mol-campus', 'sec': True, 'sp': 'geo', 'anim': True, 'labelT': 25, 'orbit': '28deg 76deg 92%', 'kind': 'restart',
      'name': 'MOL Campus', 'act': 'Építsd fel!',
      'hook': '143 méter a Duna-parton – és a titka a föld alatt van.',
      'facts': [['143 m', 'magas a csúccsal'], ['135', 'cölöp a torony alatt'], ['16 m', 'mély munkagödör']],
@@ -55,12 +55,12 @@ HU = {
      'hook': 'Kábelek tartják a pályát – a színük elárulja, melyikben mekkora az erő.',
      'facts': [['230 m', 'a főnyílás'], ['104 m', 'magas pilonok'], ['88', 'ferde kábel']],
      'info': 'A pálya súlyát és a forgalom terhét a ferde kábelek viszik át a pilonokra, onnan pedig a mederpillérek alapjain jut a teherbíró talajba. A hosszabb, laposabb kábelekben nagyobb az erő: ezt mutatja a sárgától a vörösig tartó szín. A tartószerkezet-tervező mérnök úgy hangolja a kábelerőket, hogy a pálya egyenes maradjon, és a szél, a forgalom és a hőmérséklet-változás se tegyen benne kárt.'},
-    {'id': 'metro-pajzs', 'sp': 'kozl', 'anim': True, 'labelT': 19, 'orbit': '24deg 76deg 72%', 'kind': 'restart',
+    {'id': 'metro-pajzs', 'sec': True, 'sp': 'kozl', 'anim': True, 'labelT': 19, 'orbit': '24deg 76deg 72%', 'kind': 'restart',
      'name': 'Metróépítés pajzzsal', 'act': 'Indítsd a fúrást!',
      'hook': '21 méterrel az utca alatt fúr – fent senki sem veszi észre.',
      'facts': [['6 m', 'alagútátmérő'], ['21 m', 'mélyen az utca alatt'], ['1,5 m', 'egy gyűrű szélessége']],
      'info': 'A pajzsos alagútfúró elöl forgó vágókerékkel bontja a talajt, a pajzs védelmében pedig rögtön vasbeton elemekből, tübbingekből rakja össze az alagút gyűrűit. A kitermelt talajt szalag viszi hátra, az új elemeket az ellátó vonat hozza az indítóaknából, ahová a daru engedi le őket. A közlekedésmérnök tervezi a vonalat, az állomásokat és a vágányt, a geotechnikussal közösen pedig azt, hogy fent ne mozduljon meg az utca.'},
-    {'id': 'hajozsilip', 'sp': 'viz', 'anim': True, 'labelT': 12, 'orbit': '22deg 66deg 72%', 'kind': 'restart',
+    {'id': 'hajozsilip', 'sec': True, 'sp': 'viz', 'anim': True, 'labelT': 12, 'orbit': '22deg 66deg 72%', 'kind': 'restart',
      'name': 'Hajózsilip', 'act': 'Emeld meg a hajót!',
      'hook': 'Lift a hajónak: 8 méter emelés, szivattyú nélkül.',
      'facts': [['8 m', 'emelés'], ['≈ 100 m', 'hosszú kamra'], ['0', 'szivattyú kell hozzá']],
@@ -85,7 +85,27 @@ HU = {
      'hook': 'Sok keskeny csíkból néhány nagy tábla – és mindegyikhez út vezet.',
      'facts': [['46', 'keskeny parcella előtte'], ['6', 'nagy tábla utána'], ['3', 'új dűlőút']],
      'info': 'Az örökléssel és adásvételekkel szétaprózott, sokszor csak néhány méter széles parcellákat nehéz megművelni és megközelíteni. A birtokrendezés során a földmérők bemérik a régi határokat, felmérik a tulajdonokat és a földek értékét, majd a tulajdonosokkal egyeztetve új, összevont táblákat alakítanak ki. Mindegyikhez dűlőút vezet, a fasorok védenek a széltől, az árok elvezeti a vizet. A földrendező mérnök a mérést, a jogot, a gazdaságot és a tájat együtt látja.'},
-    {'id': 'pisa', 'f': 'pisa-makett', 'img': 'pisa-makett', 'sp': 'geo', 'anim': False, 'orbit': '40deg 78deg 108%', 'kind': 'labels',
+    {'id': 'felhokarcolo-tmd', 'sp': 'tart', 'anim': True, 'labelT': 16, 'orbit': '24deg 74deg 92%', 'kind': 'restart',
+     'name': 'Felhőkarcoló szélben', 'act': 'Indítsd a szelet!',
+     'hook': '300 méter magasan egy óriás inga fogja meg a lengést.',
+     'facts': [['300 m', 'magas torony'], ['≈ 4 s', 'egy lengés ideje'], ['5×', 'kisebb kilengés az ingával']],
+     'info': 'A magas, karcsú tornyot a szél lengésbe hozza: a felső szinteken ez kellemetlen, erős szélben akár ijesztő is lehet. A csúcsban ezért egy több száz tonnás ingát függesztenek fel, amelynek a lengésideje a toronyéval egyezik. Amikor a torony kilendül, az inga az ellenkező irányba leng, és visszahúzza: a kilengés a töredékére csökken. A tartószerkezet-tervező mérnök szélcsatorna-kísérletekkel és számítással hangolja be a rendszert.'},
+    {'id': 'autopalya-csomopont', 'sp': 'kozl', 'anim': True, 'labelT': 5, 'orbit': '30deg 56deg 70%', 'kind': 'labels',
+     'name': 'Autópálya-csomópont', 'act': 'Mutasd, mi micsoda!',
+     'hook': 'Lóhere alakú csomópont: mindenki kanyarodhat, senki sem áll meg.',
+     'facts': [['2 × 3', 'sáv az autópályán'], ['4', 'hurokág'], ['0', 'jelzőlámpa']],
+     'info': 'A lóhere-csomópontban a főút hídon halad át az autópálya fölött, a négy hurokág pedig keresztezés nélkül vezeti át a balra kanyarodókat: egy háromnegyed körrel jobbra fordulva kerülnek a másik útra. Így nem kell jelzőlámpa, a forgalom folyamatos. A közlekedésmérnök tervezi meg a nyomvonalat, az ívek sugarát, az emelkedőket és a csatlakozó sávokat úgy, hogy nagy sebességnél is biztonságos maradjon.'},
+    {'id': 'gat-vizeromu', 'sec': True, 'sp': 'viz', 'anim': True, 'labelT': 6, 'orbit': '26deg 70deg 78%', 'kind': 'restart',
+     'name': 'Völgyzáró gát', 'act': 'Nyisd ki a zsilipet!',
+     'hook': 'Egy betonfal 42 méter mély vizet tart vissza – és közben áramot termel.',
+     'facts': [['42 m', 'mély tározó'], ['48 m', 'magas gát'], ['1', 'turbina és generátor']],
+     'info': 'A gravitációs gát a saját súlyával áll ellen a víz nyomásának, ezért a szelvénye alul széles, háromszög alakú. A tározóból a víz a nyomócsövön zúdul le a gát lábánál álló erőműházba, ott megforgatja a turbinát, a turbina pedig a generátort, az áram pedig a távvezetéken jut el a városba. Ha túl sok a víz, kinyitják az árapasztó zsilipjét. A vízmérnök tervezi a tározót, a gátat és az árvízi biztonságot, a geotechnikussal közösen pedig a gát alapozását és azt, hogy a víz ne szivárogjon el alatta.'},
+    {'id': 'mobilgat', 'sec': True, 'sp': 'viz', 'anim': True, 'labelT': 15, 'orbit': '24deg 66deg 74%', 'kind': 'restart',
+     'name': 'Mobilgát', 'act': 'Jön az árvíz!',
+     'hook': 'Pár óra alatt felépül, és megvédi a várost a megáradt folyótól.',
+     'facts': [['7,6 m', 'vízszint-emelkedés'], ['13', 'gerenda egymáson'], ['4 m', 'oszloptávolság']],
+     'info': 'Ahol a folyópartot nem akarják állandó fallal elzárni, mobilgátat terveznek: a rakpartba betonalapot és csatlakozókat építenek, árvíz előtt pedig a dolgozók gyorsan felállítják az acéloszlopokat, és beengedik közéjük az alumínium gerendákat. A gerendák között tömítés van, a víznyomás pedig csak még jobban összeszorítja őket. A víz levonulása után az egészet elbontják, és a part újra szabad. A vízmérnök tervezi a védvonal magasságát, a geotechnikus pedig azt, hogy a víz ne szivárogjon át alatta.'},
+    {'id': 'pisa', 'sec': True, 'f': 'pisa-makett', 'img': 'pisa-makett', 'sp': 'geo', 'anim': False, 'orbit': '40deg 78deg 108%', 'kind': 'labels',
      'name': 'A pisai ferde torony', 'act': 'Mutasd, mi micsoda!',
      'hook': '800 éve dől – geotechnikusok állították meg.',
      'facts': [['≈ 3 m', 'átlagos süllyedés'], ['14 500 t', 'a torony tömege'], ['0,5°', 'ennyit billentették vissza']],
@@ -96,7 +116,7 @@ HU = {
 HYPH = '<script src="../vendor/hyphenopoly/Hyphenopoly_Loader.js"></script>\n<script>Hyphenopoly.config({ require: { "hu": "FORCEHYPHENOPOLY" }, setup: { hide: "none", selectors: { ".hyphenate": { minWordLength: 6, compound: "auto" } } } });</script>'
 
 # a bemutató (és az aula-túra) sorrendje: a specializációk váltakoznak
-ORDER = ['mol-campus', 'ferdekabeles-hid', 'metro-pajzs', 'nyomtatott-haz', 'hajozsilip', 'dron-pontfelho', 'foldrenges-razoasztal', 'birtokrendezes', 'pisa']
+ORDER = ['mol-campus', 'ferdekabeles-hid', 'metro-pajzs', 'nyomtatott-haz', 'hajozsilip', 'dron-pontfelho', 'foldrenges-razoasztal', 'birtokrendezes', 'autopalya-csomopont', 'gat-vizeromu', 'felhokarcolo-tmd', 'mobilgat', 'pisa']
 
 def page(L, out):
     L['M'].sort(key=lambda m: ORDER.index(m['id']) if m['id'] in ORDER else 99)

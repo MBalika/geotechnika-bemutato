@@ -386,7 +386,7 @@ mv.addEventListener('load', () => {
   const m = cur; $('#loader').classList.add('done');
   mv.setAttribute('camera-orbit', m.orbit); // berepülés a kamerával
   if (m.anim) { if (labels && m.labelT != null) { mv.pause(); mv.currentTime = m.labelT; } else if (!userPaused) { mv.currentTime = 0; mv.play(); } }
-  syncPlay(); if (aula) tourArm(); preloadNext();
+  syncPlay(); applyMotion(1600); if (aula) tourArm(); preloadNext();
 });
 function preloadNext() { const n = M[(M.indexOf(cur) + 1) % M.length]; try { fetch(abs('models/' + fileOf(n) + '.glb')).catch(() => {}); } catch (e) {} }
 const go = (d) => { const i = M.indexOf(cur); select(M[(i + d + M.length) % M.length].id); };
@@ -404,12 +404,20 @@ $('#actBtn').addEventListener('click', () => { const k = $('#actBtn').dataset.ki
   if (k === 'labels') { setLabels(!labels); return; }
   if (labels) { setLabels(false); userPaused = false; return; }
   userPaused = false; mv.currentTime = 0; mv.play(); syncPlay(); });
-$('#rotBtn').addEventListener('click', () => { const on = !mv.hasAttribute('auto-rotate'); mv.toggleAttribute('auto-rotate', on); $('#rotBtn').setAttribute('aria-pressed', String(on)); });
+/* mozgás: teljes 3D-s makettek körbeforognak, a metszetes makettek (sec) csak ide-oda lengenek a nézet körül */
+let rotating = true, lastUser = 0; const swing = { on: false, t0: 0, th0: 0, phi: 75, r: '100%', hold: false };
+function anchorSwing(delay = 0) { try { const o = mv.getCameraOrbit(); swing.th0 = o.theta * 180 / Math.PI; swing.phi = o.phi * 180 / Math.PI; swing.r = o.radius + 'm'; } catch (e) {} swing.t0 = performance.now() + delay; }
+function applyMotion(delay = 0) { const sec = cur && cur.sec; mv.toggleAttribute('auto-rotate', rotating && !sec); swing.on = rotating && !!sec; if (swing.on) { swing.hold = true; setTimeout(() => { anchorSwing(); swing.hold = false; }, delay); } $('#rotBtn').setAttribute('aria-pressed', String(rotating)); }
+mv.addEventListener('camera-change', (e) => { if (e.detail.source === 'user-interaction') { lastUser = performance.now(); swing.hold = true; } });
+$('#rotBtn').addEventListener('click', () => { rotating = !rotating; applyMotion(); });
 const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
 function toggleFS(el = stage) { if (fsEl()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; } const r = el.requestFullscreen || el.webkitRequestFullscreen; if (r) try { const p = r.call(el); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
 $('#fsBtn').addEventListener('click', () => toggleFS());
 $('#prog').addEventListener('click', (e) => { if (!cur.anim || !mv.duration) return; const r = e.currentTarget.getBoundingClientRect(); if (labels) setLabels(false); mv.currentTime = (e.clientX - r.left) / r.width * mv.duration; if (mv.paused && !userPaused) mv.play(); });
-(function loop() { if (cur && cur.anim && mv.duration) $('#prog i').style.width = (100 * (mv.currentTime % mv.duration) / mv.duration).toFixed(2) + '%'; requestAnimationFrame(loop); })();
+(function loop(now) { if (cur && cur.anim && mv.duration) $('#prog i').style.width = (100 * (mv.currentTime % mv.duration) / mv.duration).toFixed(2) + '%';
+  if (swing.on && mv.loaded) { if (swing.hold && lastUser && now - lastUser > 2500) { lastUser = 0; anchorSwing(); swing.hold = false; }
+    if (!swing.hold && now > swing.t0) { const th = swing.th0 + 34 * Math.sin(2 * Math.PI * (now - swing.t0) / 18000); mv.cameraOrbit = `${th.toFixed(2)}deg ${swing.phi.toFixed(2)}deg ${swing.r}`; } }
+  requestAnimationFrame(loop); })(performance.now());
 mv.addEventListener('play', syncPlay); mv.addEventListener('pause', syncPlay);
 setTimeout(() => $('#hint').classList.add('off'), 7000);
 
@@ -425,10 +433,10 @@ function tourArm() { clearTimeout(tourT); if (!aula || manualLeft > 0) return; c
   tourT = setTimeout(() => go(1), ms); }
 function manual() { if (!aula) return; clearTimeout(tourT); manualLeft = 40; const b = $$('#ticker i')[M.indexOf(cur)]; if (b) { const x = b.querySelector('b'); x.style.transition = 'none'; x.style.width = '0'; }
   const show = () => { $('#manual').textContent = T.manual.replace('{s}', manualLeft); $('#manual').classList.add('on'); };
-  show(); clearInterval(manualT); manualT = setInterval(() => { manualLeft--; if (manualLeft <= 0) { clearInterval(manualT); $('#manual').classList.remove('on'); if (labels) setLabels(false); mv.setAttribute('auto-rotate', ''); go(1); } else show(); }, 1000); }
+  show(); clearInterval(manualT); manualT = setInterval(() => { manualLeft--; if (manualLeft <= 0) { clearInterval(manualT); $('#manual').classList.remove('on'); if (labels) setLabels(false); rotating = true; applyMotion(); go(1); } else show(); }, 1000); }
 function setAula(on) { aula = on; document.body.classList.toggle('aula', on); clearTimeout(tourT); clearInterval(manualT); manualLeft = 0; $('#manual').classList.remove('on');
   try { const u = new URL(location.href); on ? u.searchParams.set('aula', '1') : u.searchParams.delete('aula'); history.replaceState(null, '', u); } catch (e) {}
-  if (on) { mv.setAttribute('auto-rotate', ''); mv.setAttribute('rotation-per-second', '10deg'); userPaused = false; if (labels) setLabels(false); tourArm();
+  if (on) { rotating = true; applyMotion(); mv.setAttribute('rotation-per-second', '10deg'); userPaused = false; if (labels) setLabels(false); tourArm();
     setTimeout(() => { if (!fsEl() && manualLeft <= 0) { $('#manual').textContent = T.fsHint; $('#manual').classList.add('on'); setTimeout(() => { if (manualLeft <= 0) $('#manual').classList.remove('on'); }, 6000); } }, 900); }
   else { mv.setAttribute('rotation-per-second', '14deg'); if (fsEl()) toggleFS(); } }
 $('#aulaBtn').addEventListener('click', () => { setAula(true); toggleFS(document.documentElement); });
