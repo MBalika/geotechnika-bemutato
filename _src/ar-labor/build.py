@@ -105,6 +105,16 @@ HU = {
      'hook': 'Pár óra alatt felépül, és megvédi a várost a megáradt folyótól.',
      'facts': [['7,6 m', 'vízszint-emelkedés'], ['13', 'gerenda egymáson'], ['4 m', 'oszloptávolság']],
      'info': 'Ahol a folyópartot nem akarják állandó fallal elzárni, mobilgátat terveznek: a rakpartba betonalapot és csatlakozókat építenek, árvíz előtt pedig a dolgozók gyorsan felállítják az acéloszlopokat, és beengedik közéjük az alumínium gerendákat. A gerendák között tömítés van, a víznyomás pedig csak még jobban összeszorítja őket. A víz levonulása után az egészet elbontják, és a part újra szabad. A vízmérnök tervezi a védvonal magasságát, a geotechnikus pedig azt, hogy a víz ne szivárogjon át alatta.'},
+    {'id': 'nagysebessegu-vasut', 'sp': 'kozl', 'anim': True, 'labelT': 2.35, 'orbit': '26deg 72deg 72%', 'kind': 'restart',
+     'name': 'Nagysebességű vasút', 'act': 'Jön a vonat!',
+     'hook': '300 km/h: a szerelvény alig két másodperc alatt suhan át a völgyhídon.',
+     'facts': [['300 km/h', 'sebesség'], ['25 kV', 'a felsővezetékben'], ['≈ 2 s', 'alatt ér át a hídon']],
+     'info': 'Nagy sebességnél minden centiméter számít: a vágánynak nagyon pontosan kell feküdnie, az íveknek nagy sugarúnak, az emelkedőknek enyhének kell lenniük. Ezért a pálya völgyhídon szeli át a völgyet, és alagúton át a dombot. A sínek betonlemezen fekszenek, fölöttük 25 kV-os felsővezeték adja az áramot. A közlekedésmérnök tervezi meg a nyomvonalat és a pályaszerkezetet, a hidat és az alagutat pedig a tartószerkezet-tervező és a geotechnikus mérnök.'},
+    {'id': 'bim-epitkezes', 'sp': 'eti', 'anim': True, 'labelT': 22, 'orbit': '30deg 66deg 80%', 'kind': 'restart',
+     'name': 'Épülő ház BIM-mel', 'act': 'Építsd fel!',
+     'hook': 'Előbb digitálisan épül fel – a valóság szintről szintre utoléri.',
+     'facts': [['6', 'szintes épület'], ['1', 'közös digitális modell'], ['3', 'réteg: szerkezet, gépészet, homlokzat']],
+     'info': 'A BIM (épületinformációs modellezés) azt jelenti, hogy az épület előbb a számítógépben készül el, minden elemével együtt: pillérek, födémek, csövek, légcsatornák, ablakok. A modellből számolják a mennyiségeket és a költséget, ütemezik az építést, és még a kivitelezés előtt kiszűrik, ha egy cső belefutna egy gerendába. A helyszínen tableten nézik, mi következik. Az építéstechnológus mérnök ebből a közös modellből irányítja a kivitelezést, a daru mozgásától a homlokzat szereléséig.'},
     {'id': 'pisa', 'sec': True, 'f': 'pisa-makett', 'img': 'pisa-makett', 'sp': 'geo', 'anim': False, 'orbit': '40deg 78deg 108%', 'kind': 'labels',
      'name': 'A pisai ferde torony', 'act': 'Mutasd, mi micsoda!',
      'hook': '800 éve dől – geotechnikusok állították meg.',
@@ -116,7 +126,7 @@ HU = {
 HYPH = '<script src="../vendor/hyphenopoly/Hyphenopoly_Loader.js"></script>\n<script>Hyphenopoly.config({ require: { "hu": "FORCEHYPHENOPOLY" }, setup: { hide: "none", selectors: { ".hyphenate": { minWordLength: 6, compound: "auto" } } } });</script>'
 
 # a bemutató (és az aula-túra) sorrendje: a specializációk váltakoznak
-ORDER = ['mol-campus', 'ferdekabeles-hid', 'metro-pajzs', 'nyomtatott-haz', 'hajozsilip', 'dron-pontfelho', 'foldrenges-razoasztal', 'birtokrendezes', 'autopalya-csomopont', 'gat-vizeromu', 'felhokarcolo-tmd', 'mobilgat', 'pisa']
+ORDER = ['mol-campus', 'ferdekabeles-hid', 'metro-pajzs', 'nyomtatott-haz', 'hajozsilip', 'dron-pontfelho', 'foldrenges-razoasztal', 'birtokrendezes', 'autopalya-csomopont', 'gat-vizeromu', 'felhokarcolo-tmd', 'bim-epitkezes', 'mobilgat', 'nagysebessegu-vasut', 'pisa']
 
 def page(L, out):
     L['M'].sort(key=lambda m: ORDER.index(m['id']) if m['id'] in ORDER else 99)
