@@ -74,9 +74,9 @@ export function build({ lang }) {
   const clips = [new THREE.AnimationClip('nyomtatas', T, tracks)];
   const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
     label(G, hu ? 'Portálos 3D-nyomtató' : 'Gantry 3D printer', [GX, GH + 0.5, Z0 + 1.4], [GX + 2, GH + 3.2, Z0 + 3], SPEC.eti, K);
-    label(G, hu ? 'Rétegenként nyomtatott betonfal' : 'Concrete wall, printed layer by layer', [-HW, 1.6, HD], [-HW - 3.5, 1.2, HD + 4], '#bdb6a9', K);
+    label(G, hu ? 'Rétegenként nyomtatott betonfal' : 'Concrete wall, printed layer by layer', [-HW, 1.6, HD], [-HW - 1.5, 0.4, HD + 6.5], '#bdb6a9', K);
     label(G, hu ? 'Betonkeverő és szivattyú' : 'Mixer and pump', [-8.5, 5.2, -5], [-10.5, 7.6, -3], C.white, K);
-    label(G, hu ? 'Kezelő' : 'Operator', [-7.8, 1.9, 3.8], [-9.6, 3.6, 6.6], '#ff7a1a', K);
+    label(G, hu ? 'Kezelő' : 'Operator', [-7.8, 1.9, 3.8], [-11, 5.8, 6], '#ff7a1a', K);
     label(G, hu ? 'Napelemek a födémen' : 'Solar panels on the roof', [1.0, WT + 0.9, 0], [2.5, WT + 3.2, 3.5], '#1d3557', K);
     return G; };
   return { root, labels, clips, k: K, posterView: [30, 30], posterT: 9, labelT: T - 1 };

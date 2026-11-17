@@ -48,10 +48,10 @@ export function build({ lang }) {
   sand.build(root);
   const clips = [new THREE.AnimationClip('arviz', T, tracks)];
   const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
-    label(G, hu ? 'Mobilgát: alumínium gerendák\nacéloszlopok között' : 'Mobile flood wall: aluminium\nbeams between steel posts', [WX, PY + 4, -2], [WX + 8, PY + 14, 6], '#c0c7cf', K);
+    label(G, hu ? 'Mobilgát: alumínium gerendák\nacéloszlopok között' : 'Mobile flood wall: aluminium\nbeams between steel posts', [WX, PY + 4, -2], [WX + 6, PY + 22, 4], '#c0c7cf', K);
     label(G, hu ? 'Árvízszint' : 'Flood level', [-20, H1, 0], [-28, H1 + 9, 6], C.waterDeep, K);
-    label(G, hu ? 'Szárazon marad a város' : 'The town stays dry', [36, PY + 10, -2], [34, PY + 18, 6], C.grass, K);
-    label(G, hu ? 'Vízmérce' : 'Gauge', [-6.05, 7.6, -5.85], [-12, 13, 4], '#e0523f', K);
+    label(G, hu ? 'Szárazon marad a város' : 'The town stays dry', [36, PY + 10, -2], [36, PY + 32, 6], C.grass, K);
+    label(G, hu ? 'Vízmérce' : 'Gauge', [-6.05, 0.5, -5.85], [-16, -2.5, 8], '#e0523f', K);
     return G; };
   return { root, labels, clips, k: K, posterView: [24, 20], posterT: 15, labelT: 15 };
 }

@@ -64,7 +64,7 @@ export function build({ lang }) {
   const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
     label(G, hu ? 'Autópálya: 2 × 3 sáv' : 'Motorway: 2 × 3 lanes', [-110, 1, 7.5], [-130, 16, 40], C.asphalt, K);
     label(G, hu ? 'Híd: a főút az autópálya fölött' : 'Bridge: the main road crosses over', [0, RY + 1, 20], [30, RY + 22, 60], C.concrete, K);
-    label(G, hu ? 'Hurokág: balra kanyarodás\nkeresztezés nélkül' : 'Loop ramp: left turns\nwithout crossing traffic', [12 + R, 4, 12 + 2 * R], [70, 26, 95], SPEC.kozl, K);
+    label(G, hu ? 'Hurokág: balra kanyarodás\nkeresztezés nélkül' : 'Loop ramp: left turns\nwithout crossing traffic', [12 + R, 4, 12 + 2 * R], [52, 4, 120], SPEC.kozl, K);
     label(G, hu ? 'Zajvédő fal' : 'Noise barrier', [95, 3.5, 18.5], [120, 14, 50], '#7aa66b', K);
     return G; };
   return { root, labels, clips, k: K, posterView: [30, 34], posterT: 5, labelT: 5 };

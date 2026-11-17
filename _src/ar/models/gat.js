@@ -77,10 +77,10 @@ export function build({ lang }) {
   const clips = [new THREE.AnimationClip('vizeromu', T, tracks)];
   const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
     label(G, hu ? 'Tározó: 42 m mély víz' : 'Reservoir: 42 m deep', [-60, 24, 0.2], [-80, 62, 10], C.water, K);
-    label(G, hu ? 'Gravitációs gát' : 'Gravity dam', [6, 20, 0.2], [4, 66, 10], '#d9d6cf', K);
-    label(G, hu ? 'Nyomócső' : 'Penstock', [27, yF(27) + 2, -10], [36, 40, 10], '#5d6670', K);
-    label(G, hu ? 'Turbina és generátor' : 'Turbine and generator', [50, 12, -6], [76, 34, 10], '#c8553d', K);
-    label(G, hu ? 'Árapasztó' : 'Spillway', [20, yF(20) + 1, SZ1], [30, 52, -20], '#4f8dff', K);
+    label(G, hu ? 'Gravitációs gát' : 'Gravity dam', [6, 20, 0.2], [-8, 80, 10], '#d9d6cf', K);
+    label(G, hu ? 'Nyomócső' : 'Penstock', [27, yF(27) + 2, -10], [46, 52, 10], '#5d6670', K);
+    label(G, hu ? 'Turbina és generátor' : 'Turbine and generator', [50, 12, -6], [76, 26, 14], '#c8553d', K);
+    label(G, hu ? 'Árapasztó' : 'Spillway', [20, yF(20) + 1, SZ1], [36, 76, -26], '#4f8dff', K);
     label(G, hu ? 'Áram a városnak' : 'Power for the town', [112, hillY(-60) + 20, -60], [118, hillY(-60) + 40, -50], '#ffd23f', K);
     return G; };
   return { root, labels, clips, k: K, posterView: [26, 22], posterT: 6, labelT: 6 };

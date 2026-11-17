@@ -65,7 +65,7 @@ export function build({ lang }) {
   const clips = [new THREE.AnimationClip('vonat', T, tracks)];
   const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
     label(G, '300 km/h', [20, RL + 4.5, TZ[1]], [30, RL + 20, 10], '#e0523f', K);
-    label(G, hu ? 'Völgyhíd' : 'Viaduct', [-26, RL - 2, DC + DW / 2], [-36, RL + 14, 14], C.concrete, K);
+    label(G, hu ? 'Völgyhíd' : 'Viaduct', [-26, RL - 2, DC + DW / 2], [-34, RL - 12, 18], C.concrete, K);
     label(G, hu ? 'Felsővezeték: 25 kV' : 'Overhead line: 25 kV', [-44, RL + 6.4, TZ[0]], [-60, RL + 22, 4], C.dark, K);
     label(G, hu ? 'Alagút a dombban' : 'Tunnel through the hill', [72, RL + 6, DC + 9], [86, RL + 24, 18], '#86a85f', K);
     return G; };
