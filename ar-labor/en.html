@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<base href="/ar-labor/">
+<title>AR Lab – What would you build? | BME Faculty of Civil Engineering</title>
+<meta name="description" content="Rotate, zoom and view them in AR on your phone: bridges, towers, tunnels, locks – moving 3D models from every specialisation of the BME Faculty of Civil Engineering.">
+<meta name="theme-color" content="#0b0e12">
+<meta property="og:title" content="AR Lab – What would you build? | BME Faculty of Civil Engineering">
+<meta property="og:description" content="Rotate, zoom and view them in AR on your phone: bridges, towers, tunnels, locks – moving 3D models from every specialisation of the BME Faculty of Civil Engineering.">
+<meta property="og:image" content="img/mol-campus.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0e12'/%3E%3Cpath d='M32 10 52 22v20L32 54 12 42V22z' fill='none' stroke='%23c6f432' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M12 22l20 12 20-12M32 34v20' fill='none' stroke='%23c6f432' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preload" href="../fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+@font-face{font-family:'BarlowC';font-display:swap;font-weight:700;src:url(../fonts/barlow-condensed-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'BarlowC';font-display:swap;font-weight:700;src:url(../fonts/barlow-condensed-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'BarlowC';font-display:swap;font-weight:800;src:url(../fonts/barlow-condensed-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'BarlowC';font-display:swap;font-weight:800;src:url(../fonts/barlow-condensed-latin-ext-800-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-display:swap;font-weight:400;src:url(../fonts/inter-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-display:swap;font-weight:400;src:url(../fonts/inter-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-display:swap;font-weight:600;src:url(../fonts/inter-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-display:swap;font-weight:600;src:url(../fonts/inter-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#0b0e12; --bg2:#11161c; --card:#151b22; --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.18);
+  --ink:#eef1ea; --muted:#a2aab3; --lime:#c6f432;
+  --fh:'BarlowC','Barlow Condensed','Arial Narrow',sans-serif; --fb:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --pad:40px; --max:1320px; --sc:#c6f432; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--ink); font:400 17px/1.62 var(--fb); -webkit-font-smoothing:antialiased; overflow-x:hidden}
+a{color:inherit}
+button{font:inherit; color:inherit}
+img{display:block; max-width:100%; height:auto}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 var(--pad)}
+main p{text-align:justify; text-justify:inter-word; hyphens:manual; -webkit-hyphens:manual; text-wrap:pretty}
+.nw{white-space:nowrap; hyphens:none}
+.rag{text-align:left!important}
+.twr{text-wrap:wrap!important}
+/* fejléc */
+.top{position:sticky; top:0; z-index:30; background:rgba(11,14,18,.82); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; height:62px; gap:16px; max-width:none}
+.brand{display:flex; align-items:center; gap:12px; font:800 20px/1 var(--fh); letter-spacing:.04em; text-transform:uppercase; text-decoration:none; white-space:nowrap}
+.brand i{width:14px; height:22px; background:var(--lime); border-radius:3px; box-shadow:0 0 18px rgba(198,244,50,.55)}
+.brand span{color:var(--muted); font-weight:700}
+.top nav{display:flex; align-items:center; gap:22px; font:700 15px/1 var(--fh); letter-spacing:.06em; text-transform:uppercase}
+.top nav a, .top nav button{text-decoration:none; color:var(--muted); background:none; border:0; padding:0; cursor:pointer; font:inherit; letter-spacing:inherit; text-transform:inherit}
+.top nav a:hover, .top nav button:hover{color:var(--ink)}
+.top nav .aula-btn{color:var(--bg); background:var(--lime); border-radius:999px; padding:9px 14px; box-shadow:0 0 24px rgba(198,244,50,.35)}
+.top nav .aula-btn:hover{color:var(--bg); filter:brightness(1.08)}
+.lang{display:inline-flex; border:1px solid var(--line2); border-radius:999px; overflow:hidden}
+.lang a, .lang span{padding:6px 10px; font:800 13px/1 var(--fh); letter-spacing:.1em}
+.lang span{background:var(--ink); color:var(--bg)}
+/* színpad */
+.stage{position:relative; height:calc(100svh - 62px); min-height:600px; max-height:1100px; overflow:hidden; background:var(--bg); isolation:isolate}
+.stage::before{content:""; position:absolute; inset:0; z-index:-2; background:radial-gradient(48% 62% at 64% 48%, color-mix(in srgb, var(--sc) 34%, transparent), transparent 72%), radial-gradient(40% 50% at 10% 95%, color-mix(in srgb, var(--sc) 14%, transparent), transparent 70%); transition:background .8s}
+.floor{position:absolute; left:-40%; right:-40%; bottom:-6%; height:58%; z-index:-1; pointer-events:none;
+  background-image:linear-gradient(color-mix(in srgb, var(--sc) 55%, transparent) 1.5px, transparent 1.5px), linear-gradient(90deg, color-mix(in srgb, var(--sc) 55%, transparent) 1.5px, transparent 1.5px);
+  background-size:72px 72px; transform:perspective(520px) rotateX(66deg); transform-origin:50% 100%;
+  -webkit-mask-image:linear-gradient(to top, rgba(0,0,0,.9), transparent 85%); mask-image:linear-gradient(to top, rgba(0,0,0,.9), transparent 85%); animation:floor 3.2s linear infinite; opacity:.8}
+@keyframes floor{to{background-position:0 72px, 0 0}}
+#mv{position:absolute; inset:0; width:100%; height:100%; background:transparent; --poster-color:transparent; --progress-bar-color:transparent; outline:none}
+#mv::part(default-ar-button){display:none}
+.loader{position:absolute; left:0; top:0; height:3px; width:0; background:var(--sc); box-shadow:0 0 14px var(--sc); z-index:8; transition:width .2s, opacity .4s}
+.loader.done{opacity:0}
+/* HUD */
+.hud{position:absolute; left:var(--pad); bottom:96px; width:min(560px, 44%); z-index:5; pointer-events:none}
+.hud > *{pointer-events:auto}
+.kicker{display:block; font:800 15px/1.25 var(--fh); letter-spacing:.14em; text-transform:uppercase; color:var(--sc); transition:color .6s}
+.kicker i{display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--sc); box-shadow:0 0 14px var(--sc); margin-right:10px; vertical-align:.08em}
+.kicker span{color:var(--muted); letter-spacing:.1em; margin-left:8px; white-space:nowrap}
+#mname{text-shadow:0 2px 28px rgba(0,0,0,.55); font:800 clamp(52px, 6.4vw, 112px)/.9 var(--fh); text-transform:uppercase; letter-spacing:-.005em; margin:14px 0 0; text-wrap:balance}
+#mname .w{display:inline-block; overflow:hidden; vertical-align:top; padding-bottom:.04em; margin-bottom:-.04em}
+#mname .w > span{display:inline-block}
+.hook{text-shadow:0 1px 14px rgba(0,0,0,.7); font:600 clamp(17px, 1.45vw, 23px)/1.38 var(--fb); color:#d7dcd2; margin:16px 0 0; max-width:30em; text-align:left!important; text-wrap:pretty}
+.facts{display:flex; gap:clamp(18px, 2.4vw, 40px); margin-top:24px; flex-wrap:wrap}
+.fact b{text-shadow:0 2px 18px rgba(0,0,0,.5); display:block; font:800 clamp(34px, 3.4vw, 58px)/1 var(--fh); color:var(--sc); white-space:nowrap; transition:color .6s; font-variant-numeric:tabular-nums}
+.fact span{display:block; font:600 13px/1.3 var(--fb); color:var(--muted); margin-top:6px; max-width:11em; text-transform:none}
+.hud.in .kicker, .hud.in .hook, .hud.in .fact{animation:fadeUp .7s cubic-bezier(.2,.8,.2,1) both}
+.hud.in .hook{animation-delay:.32s} .hud.in .fact{animation-delay:calc(.42s + var(--i) * .09s)}
+.hud.in #mname .w > span{animation:wordUp .75s cubic-bezier(.2,.85,.2,1) both; animation-delay:calc(.08s + var(--i) * .07s)}
+@keyframes fadeUp{from{opacity:0; transform:translateY(18px)}to{opacity:1; transform:none}}
+@keyframes wordUp{from{transform:translateY(105%) skewY(6deg)}to{transform:none}}
+/* számláló és nyilak */
+.count{position:absolute; right:var(--pad); top:26px; z-index:5; font:800 clamp(38px, 4vw, 64px)/1 var(--fh); color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.28); letter-spacing:.02em; pointer-events:none}
+.count b{color:var(--sc); -webkit-text-stroke:0; transition:color .6s}
+.nav-arrow{position:absolute; top:50%; z-index:6; width:58px; height:58px; margin-top:-29px; border-radius:50%; border:1px solid var(--line2); background:rgba(11,14,18,.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:grid; place-items:center; cursor:pointer; transition:transform .2s, border-color .2s, background .2s}
+.nav-arrow:hover{transform:scale(1.08); border-color:var(--sc); background:rgba(11,14,18,.8)}
+.nav-arrow svg{width:24px; height:24px}
+.nav-arrow.prev{left:16px} .nav-arrow.next{right:16px}
+@media (min-width:761px){ .nav-arrow{top:104px; margin-top:0; width:52px; height:52px} .nav-arrow.prev{left:auto; right:calc(var(--pad) + 62px)} .nav-arrow.next{right:var(--pad)} .count{top:22px} }
+/* vezérlők */
+.ctrl{position:absolute; right:var(--pad); bottom:32px; z-index:6; display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; max-width:60%}
+.btn{display:inline-flex; align-items:center; gap:9px; height:48px; padding:0 18px; border-radius:999px; border:1px solid var(--line2); background:rgba(11,14,18,.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); font:800 16px/1 var(--fh); letter-spacing:.08em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:border-color .2s, background .2s, transform .15s}
+.btn:hover{border-color:rgba(255,255,255,.4)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:18px; height:18px; flex:none}
+.btn.ic{width:48px; padding:0; justify-content:center}
+.btn[hidden]{display:none}
+.btn[aria-pressed="true"]{border-color:var(--sc); color:var(--sc)}
+.btn.act{background:var(--sc); color:#0b0e12; border-color:transparent; box-shadow:0 0 30px color-mix(in srgb, var(--sc) 55%, transparent); animation:pulse 2.4s ease-in-out infinite}
+.btn.act:hover{filter:brightness(1.08)}
+@keyframes pulse{0%,100%{box-shadow:0 0 18px color-mix(in srgb, var(--sc) 40%, transparent)}50%{box-shadow:0 0 38px color-mix(in srgb, var(--sc) 75%, transparent)}}
+.btn.ar{background:var(--lime); color:#0b0e12; border-color:transparent}
+.prog{position:absolute; left:0; right:0; bottom:0; height:4px; z-index:6; background:rgba(255,255,255,.06); cursor:pointer}
+.prog i{position:absolute; left:0; top:0; bottom:0; width:0; background:var(--sc); box-shadow:0 0 12px var(--sc)}
+.prog[hidden]{display:none}
+.hint{position:absolute; left:50%; top:22px; transform:translateX(-50%); z-index:6; font:700 14px/1 var(--fh); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); background:rgba(11,14,18,.6); border:1px solid var(--line); padding:9px 14px; border-radius:999px; white-space:nowrap; pointer-events:none; transition:opacity .5s}
+.hint.off{opacity:0}
+/* átmenet: szakirányszínű csík söpör át */
+.wipe{position:absolute; inset:0; z-index:7; pointer-events:none; overflow:hidden}
+.wipe::before, .wipe::after{content:""; position:absolute; top:-20%; bottom:-20%; left:0; width:130%; transform:translateX(-140%) skewX(-12deg)}
+.wipe::before{background:var(--sc)}
+.wipe::after{background:#0b0e12; width:118%}
+.stage.wiping .wipe::before{animation:wipe .95s cubic-bezier(.75,0,.25,1) both}
+.stage.wiping .wipe::after{animation:wipe .95s cubic-bezier(.75,0,.25,1) .07s both}
+@keyframes wipe{from{transform:translateX(-140%) skewX(-12deg)}to{transform:translateX(140%) skewX(-12deg)}}
+/* polc */
+section{padding:72px 0}
+.sec-h{display:flex; align-items:end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:26px}
+h2{font:800 clamp(40px, 4.4vw, 68px)/.95 var(--fh); text-transform:uppercase; margin:0}
+h2 em{font-style:normal; color:var(--lime)}
+.chips{display:flex; gap:8px; flex-wrap:wrap}
+.chip{display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 14px; border-radius:999px; border:1px solid var(--line2); background:transparent; cursor:pointer; font:800 14px/1 var(--fh); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.chip i{width:9px; height:9px; border-radius:50%; background:var(--c, var(--ink))}
+.chip[aria-pressed="true"]{color:var(--ink); border-color:var(--c, var(--ink)); background:color-mix(in srgb, var(--c, #fff) 14%, transparent)}
+.cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:18px}
+.card{position:relative; text-align:left; border:1px solid var(--line); background:var(--card); border-radius:16px; overflow:hidden; cursor:pointer; padding:0; transition:transform .2s, border-color .2s, box-shadow .2s}
+.card::before{content:""; position:absolute; left:0; right:0; top:0; height:4px; background:var(--c); z-index:1}
+.card:hover{transform:translateY(-4px); border-color:color-mix(in srgb, var(--c) 60%, transparent); box-shadow:0 14px 40px -12px color-mix(in srgb, var(--c) 45%, transparent)}
+.card[aria-pressed="true"]{border-color:var(--c); box-shadow:0 0 0 1px var(--c), 0 14px 40px -12px color-mix(in srgb, var(--c) 55%, transparent)}
+.card img{width:100%; aspect-ratio:16/10; object-fit:cover; background:#e8eef2}
+.card .t{display:block; padding:14px 16px 16px}
+.card .t small{display:block; font:800 13px/1.15 var(--fh); letter-spacing:.1em; text-transform:uppercase; color:var(--c)}
+.card .t b{display:block; font:800 26px/1.02 var(--fh); text-transform:uppercase; margin-top:6px}
+.card .t span{display:block; font:400 14px/1.4 var(--fb); color:var(--muted); margin-top:6px}
+.card[hidden]{display:none}
+/* részletek */
+.detail{display:grid; grid-template-columns:1.25fr .75fr; gap:48px; align-items:start}
+.detail h3{font:800 clamp(30px, 2.6vw, 40px)/1 var(--fh); text-transform:uppercase; margin:0 0 14px}
+.detail p{margin:0 0 14px; color:#d4d9d0}
+.where{display:flex; gap:14px; align-items:center; margin-top:18px; padding:16px 18px; border-radius:14px; border:1px solid var(--line); background:var(--bg2)}
+.where i{width:12px; height:44px; border-radius:6px; background:var(--sc); flex:none; box-shadow:0 0 18px var(--sc)}
+.where b{display:block; font:800 22px/1.05 var(--fh); text-transform:uppercase}
+.where span{display:block; color:var(--muted); font-size:14px; margin-top:4px}
+.qrbox{border:1px solid var(--line); background:var(--bg2); border-radius:18px; padding:22px; text-align:center}
+.qrbox .q{background:#fff; border-radius:12px; padding:14px; width:220px; margin:0 auto}
+.qrbox .q svg{display:block; width:100%; height:auto}
+.qrbox b{display:block; font:800 24px/1.05 var(--fh); text-transform:uppercase; margin-top:16px}
+.qrbox span{display:block; color:var(--muted); font-size:14px; margin-top:6px}
+/* szakirányok */
+.bsc{margin-top:8px}
+.bsc + .bsc{margin-top:34px}
+.bsc-h{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:14px}
+.bsc-h b{font:800 30px/1 var(--fh); text-transform:uppercase}
+.bsc-h span{color:var(--muted); font:700 15px/1 var(--fh); letter-spacing:.1em; text-transform:uppercase}
+.specs{display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px}
+.spec{border:1px solid var(--line); border-radius:16px; padding:18px; background:linear-gradient(160deg, color-mix(in srgb, var(--c) 16%, transparent), transparent 55%), var(--card); position:relative; overflow:hidden}
+.spec b{display:block; font:800 24px/1.02 var(--fh); text-transform:uppercase; color:var(--c)}
+.spec p{font-size:15px; line-height:1.5; margin:10px 0 12px; color:#d4d9d0}
+.spec .ms{display:flex; gap:6px; flex-wrap:wrap}
+.spec .ms button{border:1px solid color-mix(in srgb, var(--c) 55%, transparent); background:transparent; color:var(--ink); border-radius:999px; padding:6px 10px; font:700 13px/1 var(--fh); letter-spacing:.06em; text-transform:uppercase; cursor:pointer}
+.spec .ms button:hover{background:color-mix(in srgb, var(--c) 20%, transparent)}
+.spec .ms em{font:700 13px/1 var(--fh); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-style:normal; padding:6px 0}
+footer{border-top:1px solid var(--line); padding:28px 0 40px; color:var(--muted); font-size:14px}
+footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+footer a{color:var(--ink)}
+/* AULA mód: teljes képernyő, nagy betűk, magától léptet */
+.aula-only{display:none}
+body.aula{overflow:hidden; cursor:default}
+body.aula.idle, body.aula.idle *{cursor:none!important}
+body.aula .top, body.aula main > section, body.aula footer{display:none}
+body.aula .stage{height:100vh; max-height:none; min-height:0}
+body.aula .aula-only{display:block}
+body.aula .hud{left:64px; bottom:120px; width:min(900px, 52%)}
+body.aula #mname{font-size:clamp(72px, 7.2vw, 170px)}
+body.aula .hint{display:none}
+body.aula .kicker{font-size:clamp(18px, 1.4vw, 28px)}
+body.aula .hook{font-size:clamp(22px, 1.8vw, 36px)}
+body.aula .fact b{font-size:clamp(48px, 4.6vw, 96px)}
+body.aula .fact span{font-size:clamp(14px, 1vw, 20px)}
+body.aula .nav-arrow, body.aula .ctrl .opt{display:none}
+body.aula .ctrl{right:auto; left:64px; bottom:40px}
+body.aula .count{top:40px; right:64px}
+.abrand{position:absolute; left:64px; top:40px; z-index:6; font:800 clamp(20px, 1.6vw, 30px)/1 var(--fh); letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+.abrand b{color:var(--lime)}
+.aqr{position:absolute; right:64px; bottom:56px; z-index:6; width:clamp(230px, 15vw, 320px); text-align:center; border-radius:22px; padding:18px; background:rgba(11,14,18,.72); border:1px solid var(--line2); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px)}
+.aqr .q{background:#fff; border-radius:14px; padding:12px}
+.aqr .q svg{display:block; width:100%; height:auto}
+.aqr b{display:block; font:800 clamp(22px, 1.6vw, 32px)/1 var(--fh); text-transform:uppercase; margin-top:14px; color:var(--lime)}
+.aqr span{display:block; font:600 clamp(13px, .85vw, 17px)/1.3 var(--fb); color:var(--muted); margin-top:6px}
+.ticker{position:absolute; left:64px; right:calc(64px + clamp(230px, 15vw, 320px) + 24px); bottom:0; height:4px; z-index:6; display:flex; gap:6px}
+.ticker i{flex:1; background:rgba(255,255,255,.12); position:relative; overflow:hidden; border-radius:2px}
+.ticker i b{position:absolute; inset:0; width:0; background:var(--lime)}
+.ticker i.done b{width:100%; background:rgba(198,244,50,.45)}
+.manual{position:absolute; left:50%; top:40px; transform:translateX(-50%); z-index:7; font:800 clamp(16px, 1.1vw, 22px)/1 var(--fh); letter-spacing:.12em; text-transform:uppercase; background:var(--lime); color:#0b0e12; padding:12px 20px; border-radius:999px; opacity:0; transition:opacity .3s; pointer-events:none}
+.manual.on{opacity:1}
+.aexit{position:absolute; right:16px; top:16px; z-index:8; width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:rgba(11,14,18,.5); color:var(--muted); cursor:pointer; opacity:.25; transition:opacity .2s}
+.aexit:hover{opacity:1}
+/* reszponzív */
+@media (max-width:1100px){
+  :root{--pad:28px}
+  .detail{grid-template-columns:1fr}
+  .qrbox{display:none}
+  .hud{width:min(560px, 58%)}
+}
+@media (max-width:760px){
+  :root{--pad:18px}
+  body{font-size:16px}
+  .top .wrap{height:56px}
+  .top nav .hide-s, .top nav .aula-btn{display:none}
+  .brand span{display:none}
+  .stage{height:auto; min-height:0; max-height:none; display:flex; flex-direction:column}
+  .viewer{position:relative; height:62svh; min-height:380px}
+  .hud{position:relative; left:auto; bottom:auto; width:auto; padding:6px var(--pad) 0}
+  #mname{font-size:clamp(44px, 13vw, 64px)}
+  .facts{gap:16px 22px}
+  .fact b{font-size:clamp(30px, 9vw, 40px)}
+  .ctrl{position:relative; right:auto; bottom:auto; max-width:none; justify-content:flex-start; padding:18px var(--pad) 26px}
+  .btn{height:44px; padding:0 14px; font-size:15px}
+  .btn.ic{width:44px}
+  .btn.ar{order:-1; width:100%; justify-content:center; height:52px; font-size:18px}
+  .count{top:14px; right:var(--pad); font-size:36px}
+  .nav-arrow{width:44px; height:44px; margin-top:-22px; top:31svh}
+  .nav-arrow.prev{left:8px} .nav-arrow.next{right:8px}
+  .hint{display:none}
+  section{padding:52px 0}
+}
+@media (min-width:761px){ .viewer{position:absolute; inset:0} .shade{position:absolute; left:0; top:0; bottom:0; width:58%; z-index:4; pointer-events:none; background:linear-gradient(90deg, rgba(11,14,18,.86), rgba(11,14,18,.5) 55%, transparent)} }
+@media (min-width:1101px){ .viewer{left:30%} body.aula .viewer{left:40%; right:-2%} }
+@media (prefers-reduced-motion:reduce){
+  .floor{animation:none} .btn.act{animation:none}
+  .hud.in .kicker, .hud.in .hook, .hud.in .fact, .hud.in #mname .w > span{animation:none}
+  .stage.wiping .wipe::before, .stage.wiping .wipe::after{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><i></i>AR Lab <span>What would you build?</span></a>
+  <nav>
+    <button type="button" class="hide-s" data-go="modellek">Models</button>
+    <button type="button" class="hide-s" data-go="szakiranyok">Specialisations</button>
+    <a class="hide-s" href="/">Geotechnics showcase</a>
+    <span class="lang"><a href="/ar-labor" id="langLink" hreflang="hu">HU</a><span>EN</span></span>
+    <button type="button" class="aula-btn" id="aulaBtn">Hall mode</button>
+  </nav>
+</div></header>
+<main>
+<div class="stage" id="stage">
+  <div class="floor" aria-hidden="true"></div>
+  <div class="viewer">
+    <model-viewer id="mv" alt="" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" ar-placement="floor" camera-controls touch-action="pan-y" shadow-intensity="1.1" shadow-softness="0.9" exposure="1.08" environment-image="neutral" tone-mapping="neutral" interaction-prompt="auto" interaction-prompt-threshold="4000" auto-rotate auto-rotate-delay="2500" rotation-per-second="14deg" interpolation-decay="140" loading="eager" min-camera-orbit="auto 8deg auto" max-camera-orbit="auto 96deg auto"></model-viewer>
+    <div class="loader" id="loader"></div>
+    <div class="count" id="count" aria-hidden="true"></div>
+    <div class="hint" id="hint">Rotate · zoom · try the button</div>
+    <div class="prog" id="prog" hidden><i></i></div>
+  </div>
+  <div class="shade" aria-hidden="true"></div>
+  <button type="button" class="nav-arrow prev" id="prev" aria-label="Previous model"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" class="nav-arrow next" id="next" aria-label="Next model"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="hud" id="hud" aria-live="polite">
+    <div class="kicker" id="kicker"></div>
+    <h1 id="mname"></h1>
+    <div class="hook" id="mhook"></div>
+    <div class="facts" id="facts"></div>
+  </div>
+  <div class="ctrl" id="ctrl">
+    <button type="button" class="btn ar" id="arBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>View it in your room</button>
+    <button type="button" class="btn act" id="actBtn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span></span></button>
+    <button type="button" class="btn ic" id="playBtn" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+    <button type="button" class="btn opt" id="lblBtn" aria-pressed="false">Labels</button>
+    <button type="button" class="btn ic opt" id="rotBtn" aria-pressed="true" aria-label="Rotate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg></button>
+    <button type="button" class="btn ic opt" id="fsBtn" aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+  <div class="abrand aula-only"><b>BME Faculty of Civil Engineering</b> · AR Lab</div>
+  <div class="aqr aula-only"><div class="q" id="aqr"></div><b>Try it in AR!</b><span>Scan the code and put the model on the table.</span></div>
+  <div class="ticker aula-only" id="ticker"></div>
+  <div class="manual aula-only" id="manual"></div>
+  <button type="button" class="aexit aula-only" id="aexit" aria-label="Exit hall mode">✕</button>
+  <div class="wipe" aria-hidden="true"></div>
+</div>
+
+<section id="modellek"><div class="wrap">
+  <div class="sec-h"><h2>Pick a <em>model!</em></h2><div class="chips" id="chips"></div></div>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<section id="reszletek" style="padding-top:0"><div class="wrap detail">
+  <div>
+    <h3 id="dname"></h3>
+    <p id="minfo" class="hyphenate"></p>
+    <div class="where"><i></i><div><b id="dspec"></b><span id="dbsc"></span></div></div>
+  </div>
+  <div class="qrbox"><div class="q" id="qr"></div><b>Take it with you</b><span>Scan it with your phone and view the model in AR on your own desk.</span></div>
+</div></section>
+
+<section id="szakiranyok" style="background:var(--bg2)"><div class="wrap">
+  <div class="sec-h"><h2>Which one <em>is yours?</em></h2></div>
+  <div id="bscs"></div>
+</div></section>
+</main>
+<footer><div class="wrap"><p class="rag">BME Faculty of Civil Engineering · AR Lab. The models are simplified, for teaching purposes.</p><p class="rag"><a href="/">Back to the geotechnics showcase</a></p></div></footer>
+
+<script>self.ModelViewerElement = { meshoptDecoderLocation: new URL('vendor/meshopt_decoder.js', document.baseURI).href };</script>
+<script type="module" src="vendor/model-viewer.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>
+(() => {
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const D = {"lang": "en", "SPECS": {"tart": {"n": "Structural Engineering", "short": "Structures", "b": "ep", "d": "Bridges, towers and halls: they must carry the loads, the wind and earthquakes – and look good while doing it.", "c": "#ff8a3d"}, "geo": {"n": "Geotechnical Engineering", "short": "Geotechnics", "b": "ep", "d": "What lies beneath the surface: foundations, excavations, tunnels and earthworks. Every building stands on the ground – someone has to work out how.", "c": "#b8e04a"}, "eti": {"n": "Construction Technology and Building Information Management", "short": "Construction", "b": "ep", "d": "How it actually gets built: cranes, robots, 3D-printed concrete, and the digital BIM model that runs the whole construction site.", "c": "#b48cff"}, "kozl": {"n": "Transport Infrastructure", "short": "Transport", "b": "ep", "d": "Roads, railways, metro lines and interchanges: getting from A to B quickly, safely and sustainably.", "c": "#ffd23f"}, "viz": {"n": "Water Engineering", "short": "Water", "b": "ep", "d": "Dams, locks, flood defence, drinking water and wastewater. In an age of climate change, one of the most important fields of engineering.", "c": "#4f8dff"}, "geoinf": {"n": "Geoinformatics", "short": "Geoinformatics", "b": "fm", "d": "Drones, laser scanners and satellite positioning: a centimetre-accurate digital copy of the world, maps and geographic information systems.", "c": "#3fd0e8"}, "foldr": {"n": "Land Management", "short": "Land Management", "b": "fm", "d": "Land parcels, land consolidation and land use: who owns what and where, and how land can be divided and used more wisely.", "c": "#5ccf7a"}}, "BSC": {"ep": {"n": "Civil Engineering BSc", "d": "8 semesters · 5 specialisations"}, "fm": {"n": "Surveying and Land Management Engineering BSc", "d": "7 semesters · from September 2027"}}, "M": [{"id": "mol-campus", "sec": true, "sp": "geo", "anim": true, "labelT": 25, "orbit": "28deg 76deg 92%", "kind": "restart", "name": "MOL Campus", "act": "Build it!", "hook": "143 metres on the Danube bank – and its secret lies underground.", "facts": [["143 m", "tall including the spire"], ["135", "piles under the tower"], ["16 m", "deep excavation"]], "info": "Budapest’s tallest building stands on made ground and Danube sandy gravel, with groundwater 8 m below the surface. First the 21 m deep diaphragm wall goes in all around: it retains the soil and keeps the water out. Then comes the excavation for the four-level basement, followed by the 2.2 m thick raft, supported by 135 piles reaching down to the stiff Kiscell clay. Only then can the tower rise. Making sure it stands safely is the geotechnical engineer’s job."}, {"id": "ferdekabeles-hid", "sp": "tart", "anim": true, "orbit": "26deg 70deg 70%", "kind": "labels", "name": "Cable-stayed bridge", "act": "Show me what’s what!", "hook": "Cables hold up the deck – their colour shows how much force each one carries.", "facts": [["230 m", "main span"], ["104 m", "tall pylons"], ["88", "stay cables"]], "info": "The weight of the deck and the traffic is carried by the stay cables to the pylons, and from there through the foundations of the river piers into the bearing ground. The longer, flatter cables carry more force: that is what the colour from yellow to red shows. The structural engineer tunes the cable forces so that the deck stays straight and is not harmed by wind, traffic or changes in temperature."}, {"id": "metro-pajzs", "sec": true, "sp": "kozl", "anim": true, "labelT": 19, "orbit": "24deg 76deg 72%", "kind": "restart", "name": "Building a metro with a TBM", "act": "Start boring!", "hook": "It bores 21 metres below the street – and nobody up there notices.", "facts": [["6 m", "tunnel diameter"], ["21 m", "below the street"], ["1.5 m", "width of one ring"]], "info": "The tunnel boring machine excavates the ground with a rotating cutterhead at the front, and under the protection of its shield it immediately assembles the tunnel rings from precast concrete segments. A conveyor carries the spoil back, and the supply train brings new segments from the launch shaft, where the crane lowers them. The transport engineer designs the route, the stations and the track, and together with the geotechnical engineer makes sure that the street above does not move."}, {"id": "nyomtatott-haz", "sp": "eti", "anim": true, "labelT": 23, "orbit": "32deg 62deg 80%", "kind": "restart", "name": "3D-printed house", "act": "Print it!", "hook": "No formwork, layer by layer: a giant 3D printer builds up the walls.", "facts": [["0 m²", "of formwork needed"], ["≈ 3 cm", "thick printed layer"], ["70 m²", "floor area of the house"]], "info": "The gantry printer works from the digital design: the print head follows the line of the wall precisely and lays down fast-setting concrete layer by layer. No formwork is needed, less material is wasted, and the machine can build shapes that would be expensive to make the traditional way. The construction engineer plans the production process, the concrete mix and the schedule. Building information management means that the whole process runs from one shared digital model, the BIM model."}, {"id": "hajozsilip", "sec": true, "sp": "viz", "anim": true, "labelT": 12, "orbit": "22deg 66deg 72%", "kind": "restart", "name": "Navigation lock", "act": "Lift the ship!", "hook": "A lift for ships: an 8-metre rise with no pumps.", "facts": [["8 m", "lift"], ["≈ 100 m", "long chamber"], ["0", "pumps needed"]], "info": "A lock carries ships between two different water levels. The lower gate closes behind the ship, water flows into the chamber from the upper pool, and the ship rises with it. When the two levels are equal, the upper gate opens. The two leaves of a mitre gate close in a point facing the upper pool, so the water pressure presses them together and seals them. The water engineer designs the chamber, the filling and emptying system, the gates and the lock walls."}, {"id": "dron-pontfelho", "sp": "geoinf", "anim": true, "labelT": 21.5, "orbit": "26deg 58deg 80%", "kind": "restart", "name": "Drone and point cloud", "act": "Scan it!", "hook": "One flight, and the town’s centimetre-accurate digital twin is ready.", "facts": [["2", "flight strips"], ["30 m", "flying height"], ["1–2 cm", "accuracy with GNSS"]], "info": "The drone’s laser scanner measures hundreds of thousands of points every second, and the position of each one in space is known. From the point cloud – here the colour shows height – the area’s digital twin is created: buildings, terrain, trees and roads, with centimetre accuracy. The surveyor measures control points with a GNSS receiver, so the model sits in real-world coordinates. From this, the geoinformatics engineer produces base maps for design, 3D city models or even flood inundation maps."}, {"id": "foldrenges-razoasztal", "sp": "tart", "anim": true, "labelT": 8.3, "orbit": "20deg 70deg 74%", "kind": "restart", "name": "Earthquake shake table", "act": "Shake it!", "hook": "Two identical buildings, the same earthquake: one dances, the other barely moves.", "facts": [["6", "storey model buildings"], ["4", "rubber–steel bearings"], ["± 25 cm", "table movement"]], "info": "In the laboratory a shake table recreates an earthquake, and engineers watch what happens to scale models of buildings. The building on the left stands rigidly on the table: the earthquake shakes it at full strength, and the upper storeys sway a lot. The building on the right stands on rubber–steel bearings: the bearings deform in shear and absorb most of the motion, so the building barely moves. The structural engineer uses calculation and testing to decide how a building, a bridge or a tower can withstand an earthquake."}, {"id": "birtokrendezes", "sp": "foldr", "anim": true, "labelT": 19, "orbit": "22deg 56deg 82%", "kind": "restart", "name": "Land consolidation", "act": "Sort it out!", "hook": "A few large fields from many narrow strips – and a road to every one.", "facts": [["46", "narrow parcels before"], ["6", "large fields after"], ["3", "new farm roads"]], "info": "Parcels split up by inheritance and sales, often only a few metres wide, are hard to farm and hard to reach. In land consolidation, surveyors measure the old boundaries and assess ownership and land values, then, in agreement with the owners, create new, consolidated fields. Every field gets a farm road, rows of trees shelter it from the wind and a ditch drains the water. The land management engineer sees surveying, law, economics and the landscape together."}, {"id": "autopalya-csomopont", "sp": "kozl", "anim": true, "labelT": 5, "orbit": "30deg 56deg 70%", "kind": "labels", "name": "Motorway interchange", "act": "Show me what’s what!", "hook": "A cloverleaf interchange: everyone can turn, nobody has to stop.", "facts": [["2 × 3", "motorway lanes"], ["4", "loop ramps"], ["0", "traffic lights"]], "info": "In a cloverleaf interchange the main road crosses over the motorway on a bridge, and the four loop ramps take left-turning traffic across without any crossing movements: vehicles turn right through three-quarters of a circle to join the other road. No traffic lights are needed and traffic keeps flowing. The transport engineer designs the alignment, the curve radii, the gradients and the slip lanes so that it stays safe even at high speed."}, {"id": "gat-vizeromu", "sec": true, "sp": "viz", "anim": true, "labelT": 6, "orbit": "26deg 70deg 78%", "kind": "restart", "name": "Valley dam", "act": "Open the gate!", "hook": "A concrete wall holds back 42 metres of water – and generates electricity too.", "facts": [["42 m", "deep reservoir"], ["48 m", "tall dam"], ["1", "turbine and generator"]], "info": "A gravity dam resists the water pressure with its own weight, so its cross-section is wide at the bottom and triangular. Water from the reservoir rushes down the penstock to the powerhouse at the foot of the dam, where it turns the turbine; the turbine drives the generator, and the electricity reaches the town along the power line. If there is too much water, the spillway gate is opened. The water engineer designs the reservoir, the dam and its flood safety, and together with the geotechnical engineer the dam’s foundation and how to stop water seeping underneath it."}, {"id": "felhokarcolo-tmd", "sp": "tart", "anim": true, "labelT": 16, "orbit": "24deg 74deg 92%", "kind": "restart", "name": "Skyscraper in the wind", "act": "Start the wind!", "hook": "300 metres up, a giant pendulum tames the sway.", "facts": [["300 m", "tall tower"], ["≈ 4 s", "one sway"], ["5×", "less sway with the pendulum"]], "info": "Wind sets a tall, slender tower swaying: on the upper floors this is unpleasant, and in a strong wind it can even be frightening. So a pendulum weighing several hundred tonnes is hung at the top, tuned to swing with the same period as the tower. When the tower sways one way, the pendulum swings the other way and pulls it back: the sway drops to a fraction. The structural engineer tunes the system with wind tunnel tests and calculations."}, {"id": "bim-epitkezes", "sp": "eti", "anim": true, "labelT": 22, "orbit": "30deg 66deg 80%", "kind": "restart", "name": "Building with BIM", "act": "Build it!", "hook": "It is built digitally first – then reality catches up, storey by storey.", "facts": [["6", "storey building"], ["1", "shared digital model"], ["3", "layers: structure, services, façade"]], "info": "BIM (building information modelling) means that the building is completed in the computer first, with every element: columns, slabs, pipes, ducts and windows. The model is used to calculate quantities and costs, to schedule the works, and to spot before construction whether a pipe would run into a beam. On site, the team checks on a tablet what comes next. The construction engineer runs the works from this shared model, from the crane movements to the installation of the façade."}, {"id": "mobilgat", "sec": true, "sp": "viz", "anim": true, "labelT": 15, "orbit": "24deg 66deg 74%", "kind": "restart", "name": "Demountable flood wall", "act": "Here comes the flood!", "hook": "Put up in a few hours, it protects the town from the swollen river.", "facts": [["7.6 m", "rise in water level"], ["13", "beams stacked"], ["4 m", "post spacing"]], "info": "Where the riverbank should not be closed off by a permanent wall, engineers design a demountable flood wall: a concrete foundation with fixings is built into the embankment, and before a flood the crews quickly put up the steel posts and slide the aluminium beams between them. There are seals between the beams, and the water pressure only presses them tighter. Once the water has gone down, the whole wall is taken away and the riverbank is open again. The water engineer designs the height of the defence line, and the geotechnical engineer makes sure that water does not seep through underneath."}, {"id": "nagysebessegu-vasut", "sp": "kozl", "anim": true, "labelT": 2.35, "orbit": "26deg 72deg 72%", "kind": "restart", "name": "High-speed railway", "act": "Here comes the train!", "hook": "300 km/h: the train flashes across the viaduct in barely two seconds.", "facts": [["300 km/h", "speed"], ["25 kV", "in the overhead line"], ["≈ 2 s", "to cross the bridge"]], "info": "At high speed every centimetre counts: the track must be laid very precisely, the curves must have large radii and the gradients must be gentle. That is why the line crosses the valley on a viaduct and goes through the hill in a tunnel. The rails sit on a concrete slab, and a 25 kV overhead line above supplies the power. The transport engineer designs the alignment and the track structure, while the structural and geotechnical engineers design the bridge and the tunnel."}, {"id": "pisa", "sec": true, "f": "pisa-makett", "img": "pisa-makett", "sp": "geo", "anim": false, "orbit": "40deg 78deg 108%", "kind": "labels", "name": "The Leaning Tower of Pisa", "act": "Show me what’s what!", "hook": "Leaning for 800 years – geotechnical engineers stopped it.", "facts": [["≈ 3 m", "average settlement"], ["14,500 t", "mass of the tower"], ["0.5°", "tilted back by"]], "info": "Beneath the tower lies soft, compressible clay, and the ground on the south side is slightly weaker than on the north: that is why it started to lean during construction. Between 1999 and 2001, soil was carefully extracted from beneath the north side through inclined boreholes. The tower, settling towards the north, tilted back by about 0.5°, and it has been stable ever since. The cross-sections show the soil layers and the clay layer bent down into a bowl shape."}], "T": {"all": "All", "soon": "Coming soon", "learn": "You study this", "play": "Play", "pause": "Pause", "manual": "You’re in control · moving on in {s} s", "fsHint": "F: full screen · ←/→: browse"}};
+const { SPECS, BSC, M, T } = D;
+const mv = $('#mv'), stage = $('#stage'), hud = $('#hud');
+const abs = (u) => new URL(u, document.baseURI).href; // az AR-nézők teljes címet kérnek
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const params = new URLSearchParams(location.search);
+let cur = null, labels = false, userPaused = false, aula = false;
+
+/* ---------- polc, szűrők, szakirányok ---------- */
+const order = Object.keys(SPECS);
+const shelf = [...M].sort((a, b) => order.indexOf(a.sp) - order.indexOf(b.sp));
+$('#cards').innerHTML = shelf.map(m => { const s = SPECS[m.sp]; return `<button type="button" class="card" data-id="${m.id}" data-sp="${m.sp}" style="--c:${s.c}" aria-pressed="false"><img src="img/${m.img || m.id}.jpg" alt="" width="800" height="500" loading="lazy"><span class="t"><small>${s.short}</small><b>${m.name}</b><span>${m.hook}</span></span></button>`; }).join('');
+const present = order.filter(k => M.some(m => m.sp === k));
+$('#chips').innerHTML = `<button type="button" class="chip" data-sp="" aria-pressed="true">${T.all}</button>` + present.map(k => `<button type="button" class="chip" data-sp="${k}" style="--c:${SPECS[k].c}" aria-pressed="false"><i></i>${SPECS[k].short}</button>`).join('');
+$('#chips').addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (!b) return; const sp = b.dataset.sp;
+  $$('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === b))); $$('.card').forEach(c => c.hidden = !!sp && c.dataset.sp !== sp); });
+$('#cards').addEventListener('click', (e) => { const b = e.target.closest('.card'); if (b) { select(b.dataset.id); stage.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }); } });
+$('#bscs').innerHTML = Object.entries(BSC).map(([bk, b]) => `<div class="bsc"><div class="bsc-h"><b>${b.n}</b><span>${b.d}</span></div><div class="specs">` +
+  order.filter(k => SPECS[k].b === bk).map(k => { const s = SPECS[k], ms = M.filter(m => m.sp === k);
+    return `<div class="spec" style="--c:${s.c}"><b>${s.n}</b><p class="hyphenate">${s.d}</p><div class="ms">${ms.length ? ms.map(m => `<button type="button" data-id="${m.id}">${m.name}</button>`).join('') : `<em>${T.soon}</em>`}</div></div>`; }).join('') + '</div></div>').join('');
+$('#bscs').addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { select(b.dataset.id); stage.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }); } });
+$$('[data-go]').forEach(b => b.addEventListener('click', () => document.getElementById(b.dataset.go).scrollIntoView({ behavior: RM ? 'auto' : 'smooth' })));
+
+/* ---------- QR ---------- */
+const linkOf = (m) => location.origin + location.pathname + '?m=' + m.id;
+function qrSvg(text) { try { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); } catch (e) { return ''; } }
+
+/* ---------- számláló (count-up) ---------- */
+function countUp(el, txt, delay) {
+  const EN = D.lang === 'en'; const m = EN ? txt.match(/^(\D*?)(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)(.*)$/) : txt.match(/^(\D*?)(\d{1,3}(?:[ \u00a0\u202f]\d{3})+|\d+(?:,\d+)?)(.*)$/);
+  if (!m || RM) { el.textContent = txt; return; }
+  const [, pre, num, post] = m; const sep = EN ? (num.includes(',') ? ',' : '') : (num.match(/[ \u00a0\u202f]/) || [''])[0], dec = EN ? (num.includes('.') ? '.' : '') : (num.includes(',') ? ',' : '');
+  const v = parseFloat(EN ? num.replace(/,/g, '') : num.replace(/[ \u00a0\u202f]/g, '').replace(',', '.')), nd = dec ? num.split(dec)[1].length : 0;
+  const fmt = (x) => { let s = x.toFixed(nd); if (dec) s = s.replace('.', dec); if (sep) s = s.replace(/\B(?=(\d{3})+(?!\d))/g, sep); return pre + s + post; };
+  el.textContent = fmt(0); const t0 = performance.now() + delay, dur = 1100;
+  const tick = (t) => { const k = Math.min(1, Math.max(0, (t - t0) / dur)); el.textContent = fmt(v * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); else el.textContent = txt; };
+  requestAnimationFrame(tick);
+}
+
+/* ---------- modell kiválasztása ---------- */
+const fileOf = (m) => (m.f || m.id) + (labels ? (D.lang === 'en' ? '-feliratok-en' : '-feliratok') : '');
+function setSrc(m) { const f = fileOf(m); mv.setAttribute('ios-src', abs('models/' + f + '.usdz')); mv.setAttribute('src', abs('models/' + f + '.glb')); }
+function paintHud(m) {
+  const s = SPECS[m.sp]; document.documentElement.style.setProperty('--sc', s.c);
+  $('#kicker').innerHTML = `<i></i>${s.n}<span>· ${BSC[s.b].n}</span>`;
+  $('#mname').innerHTML = m.name.split(' ').map((w, i) => `<span class="w"><span style="--i:${i}">${w}</span></span>`).join(' ');
+  $('#mhook').textContent = m.hook;
+  $('#facts').innerHTML = m.facts.map(([v, l], i) => `<div class="fact" style="--i:${i}"><b></b><span>${l}</span></div>`).join('');
+  $$('#facts .fact b').forEach((b, i) => countUp(b, m.facts[i][0], RM ? 0 : 450 + i * 90));
+  $('#actBtn span').textContent = m.act; $('#actBtn').dataset.kind = m.kind;
+  const i = M.indexOf(m); $('#count').innerHTML = `<b>${String(i + 1).padStart(2, '0')}</b> / ${String(M.length).padStart(2, '0')}`;
+  hud.classList.remove('in'); void hud.offsetWidth; hud.classList.add('in');
+  $('#dname').textContent = m.name; $('#minfo').textContent = m.info; $('#dspec').textContent = s.n; $('#dbsc').textContent = T.learn + ' · ' + BSC[s.b].n;
+  $$('.card').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.id === m.id)));
+  const svg = qrSvg(linkOf(m)); $('#qr').innerHTML = svg; $('#aqr').innerHTML = svg;
+  $$('#ticker i').forEach((t, j) => { t.classList.toggle('done', j < i); const b = t.querySelector('b'); b.style.transition = 'none'; b.style.width = '0'; });
+}
+function select(id, opt = {}) {
+  const m = M.find(x => x.id === id) || M[0]; if (cur === m && !opt.force) return; const first = !cur; cur = m;
+  try { const u = new URL(location.href); u.searchParams.set('m', m.id); history.replaceState(null, '', u); } catch (e) {}
+  { const ll = $('#langLink'); if (ll) ll.href = (D.lang === 'en' ? '/ar-labor' : '/ar-labor/en') + '?m=' + m.id; }
+  const swap = () => { paintHud(m); loading(m); setSrc(m); };
+  if (first || RM) { swap(); return; }
+  stage.classList.remove('wiping'); void stage.offsetWidth; stage.classList.add('wiping');
+  setTimeout(swap, 430); setTimeout(() => stage.classList.remove('wiping'), 1100);
+}
+function loading(m) {
+  const [th, ph] = m.orbit.split(' '); mv.setAttribute('camera-target', 'auto auto auto'); mv.setAttribute('camera-orbit', `${parseFloat(th) - 38}deg ${parseFloat(ph) - 12}deg 220%`); mv.jumpCameraToGoal && mv.jumpCameraToGoal();
+  mv.setAttribute('alt', m.name); const L = $('#loader'); L.classList.remove('done'); L.style.width = '8%';
+  $('#prog').hidden = !m.anim; $('#lblBtn').setAttribute('aria-pressed', String(labels));
+}
+mv.addEventListener('progress', (e) => { $('#loader').style.width = (8 + 92 * e.detail.totalProgress) + '%'; if (e.detail.totalProgress >= 1) $('#loader').classList.add('done'); });
+mv.addEventListener('load', () => {
+  const m = cur; $('#loader').classList.add('done');
+  mv.setAttribute('camera-orbit', m.orbit); // berepülés a kamerával
+  if (m.anim) { if (labels && m.labelT != null) { mv.pause(); mv.currentTime = m.labelT; } else if (!userPaused) { mv.currentTime = 0; mv.play(); } }
+  syncPlay(); applyMotion(1600); if (aula) tourArm(); preloadNext();
+});
+function preloadNext() { const n = M[(M.indexOf(cur) + 1) % M.length]; try { fetch(abs('models/' + fileOf(n) + '.glb')).catch(() => {}); } catch (e) {} }
+const go = (d) => { const i = M.indexOf(cur); select(M[(i + d + M.length) % M.length].id); };
+$('#prev').addEventListener('click', () => go(-1)); $('#next').addEventListener('click', () => go(1));
+
+/* ---------- animáció, feliratok, forgatás ---------- */
+const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>', PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+function syncPlay() { const b = $('#playBtn'); const on = cur && cur.anim && !mv.paused; b.hidden = !(cur && cur.anim); b.innerHTML = on ? PAUSE : PLAY; b.setAttribute('aria-label', on ? T.pause : T.play); }
+$('#playBtn').addEventListener('click', () => { if (!cur.anim) return; if (mv.paused) { if (labels) setLabels(false); userPaused = false; mv.play(); } else { userPaused = true; mv.pause(); } syncPlay(); });
+function setLabels(on) { labels = on; $('#lblBtn').setAttribute('aria-pressed', String(on));
+  try { const o = mv.getCameraOrbit(), t = mv.getCameraTarget(); mv.setAttribute('camera-orbit', `${o.theta}rad ${o.phi}rad ${o.radius}m`); mv.setAttribute('camera-target', `${t.x}m ${t.y}m ${t.z}m`); } catch (e) {}
+  const keep = cur.orbit; cur.orbit = mv.getAttribute('camera-orbit'); setSrc(cur); mv.addEventListener('load', () => { cur.orbit = keep; }, { once: true }); }
+$('#lblBtn').addEventListener('click', () => setLabels(!labels));
+$('#actBtn').addEventListener('click', () => { const k = $('#actBtn').dataset.kind;
+  if (k === 'labels') { setLabels(!labels); return; }
+  if (labels) { setLabels(false); userPaused = false; return; }
+  userPaused = false; mv.currentTime = 0; mv.play(); syncPlay(); });
+/* mozgás: teljes 3D-s makettek körbeforognak, a metszetes makettek (sec) csak ide-oda lengenek a nézet körül */
+let rotating = true, lastUser = 0; const swing = { on: false, t0: 0, th0: 0, phi: 75, r: '100%', hold: false };
+function anchorSwing(delay = 0) { try { const o = mv.getCameraOrbit(); swing.th0 = o.theta * 180 / Math.PI; swing.phi = o.phi * 180 / Math.PI; swing.r = o.radius + 'm'; } catch (e) {} swing.t0 = performance.now() + delay; }
+function applyMotion(delay = 0) { const sec = cur && cur.sec; mv.toggleAttribute('auto-rotate', rotating && !sec); swing.on = rotating && !!sec; if (swing.on) { swing.hold = true; setTimeout(() => { anchorSwing(); swing.hold = false; }, delay); } $('#rotBtn').setAttribute('aria-pressed', String(rotating)); }
+mv.addEventListener('camera-change', (e) => { if (e.detail.source === 'user-interaction') { lastUser = performance.now(); swing.hold = true; } });
+$('#rotBtn').addEventListener('click', () => { rotating = !rotating; applyMotion(); });
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+function toggleFS(el = stage) { if (fsEl()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; } const r = el.requestFullscreen || el.webkitRequestFullscreen; if (r) try { const p = r.call(el); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
+$('#fsBtn').addEventListener('click', () => toggleFS());
+$('#prog').addEventListener('click', (e) => { if (!cur.anim || !mv.duration) return; const r = e.currentTarget.getBoundingClientRect(); if (labels) setLabels(false); mv.currentTime = (e.clientX - r.left) / r.width * mv.duration; if (mv.paused && !userPaused) mv.play(); });
+(function loop(now) { if (cur && cur.anim && mv.duration) $('#prog i').style.width = (100 * (mv.currentTime % mv.duration) / mv.duration).toFixed(2) + '%';
+  if (swing.on && mv.loaded) { if (swing.hold && lastUser && now - lastUser > 2500) { lastUser = 0; anchorSwing(); swing.hold = false; }
+    if (!swing.hold && now > swing.t0) { const th = swing.th0 + 34 * Math.sin(2 * Math.PI * (now - swing.t0) / 18000); mv.cameraOrbit = `${th.toFixed(2)}deg ${swing.phi.toFixed(2)}deg ${swing.r}`; } }
+  requestAnimationFrame(loop); })(performance.now());
+mv.addEventListener('play', syncPlay); mv.addEventListener('pause', syncPlay);
+setTimeout(() => $('#hint').classList.add('off'), 7000);
+
+/* ---------- AR ---------- */
+customElements.whenDefined('model-viewer').then(() => { const chk = () => { $('#arBtn').hidden = !mv.canActivateAR; }; mv.addEventListener('load', chk); setTimeout(chk, 1200); });
+$('#arBtn').addEventListener('click', () => { try { mv.activateAR(); } catch (e) {} });
+
+/* ---------- AULA mód: magától léptet, ha hozzányúlnak, átadja az irányítást ---------- */
+$('#ticker').innerHTML = M.map(() => '<i><b></b></i>').join('');
+let tourT = 0, manualT = 0, manualLeft = 0, idleT = 0;
+function dwell() { const d = cur.anim && mv.duration ? mv.duration + 3 : 18; return Math.max(18, Math.min(34, d)) * 1000; }
+function tourArm() { clearTimeout(tourT); if (!aula || manualLeft > 0) return; const ms = dwell(); const t = $$('#ticker i')[M.indexOf(cur)]; if (t) { const b = t.querySelector('b'); b.style.transition = 'none'; b.style.width = '0'; void b.offsetWidth; b.style.transition = `width ${ms}ms linear`; b.style.width = '100%'; }
+  tourT = setTimeout(() => go(1), ms); }
+function manual() { if (!aula) return; clearTimeout(tourT); manualLeft = 40; const b = $$('#ticker i')[M.indexOf(cur)]; if (b) { const x = b.querySelector('b'); x.style.transition = 'none'; x.style.width = '0'; }
+  const show = () => { $('#manual').textContent = T.manual.replace('{s}', manualLeft); $('#manual').classList.add('on'); };
+  show(); clearInterval(manualT); manualT = setInterval(() => { manualLeft--; if (manualLeft <= 0) { clearInterval(manualT); $('#manual').classList.remove('on'); if (labels) setLabels(false); rotating = true; applyMotion(); go(1); } else show(); }, 1000); }
+function setAula(on) { aula = on; document.body.classList.toggle('aula', on); clearTimeout(tourT); clearInterval(manualT); manualLeft = 0; $('#manual').classList.remove('on');
+  try { const u = new URL(location.href); on ? u.searchParams.set('aula', '1') : u.searchParams.delete('aula'); history.replaceState(null, '', u); } catch (e) {}
+  if (on) { rotating = true; applyMotion(); mv.setAttribute('rotation-per-second', '10deg'); userPaused = false; if (labels) setLabels(false); tourArm();
+    setTimeout(() => { if (!fsEl() && manualLeft <= 0) { $('#manual').textContent = T.fsHint; $('#manual').classList.add('on'); setTimeout(() => { if (manualLeft <= 0) $('#manual').classList.remove('on'); }, 6000); } }, 900); }
+  else { mv.setAttribute('rotation-per-second', '14deg'); if (fsEl()) toggleFS(); } }
+$('#aulaBtn').addEventListener('click', () => { setAula(true); toggleFS(document.documentElement); });
+$('#aexit').addEventListener('click', () => setAula(false));
+['pointerdown', 'wheel'].forEach(ev => stage.addEventListener(ev, (e) => { if (aula && !e.target.closest('.aexit')) manual(); }, { passive: true }));
+addEventListener('pointermove', () => { if (!aula) return; document.body.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(() => document.body.classList.add('idle'), 2500); });
+addEventListener('keydown', (e) => { if (e.target.closest && e.target.closest('input, textarea')) return; const k = e.key.toLowerCase();
+  if (k === 'arrowright') { go(1); manual(); } else if (k === 'arrowleft') { go(-1); manual(); }
+  else if (k === ' ' && aula) { e.preventDefault(); $('#playBtn').click(); manual(); }
+  else if (k === 'l') { setLabels(!labels); manual(); } else if (k === 'r') $('#rotBtn').click();
+  else if (k === 'f') toggleFS(aula ? document.documentElement : stage);
+  else if (k === 'a') setAula(!aula); else if (k === 'escape' && aula && !fsEl()) setAula(false); });
+
+/* ---------- indulás ---------- */
+select((params.get('m') && M.some(m => m.id === params.get('m'))) ? params.get('m') : M[0].id);
+if (params.has('aula')) setAula(true);
+window.__arl = { M, select, setAula };
+/* ================= FORMÁZÁS: nem törő egységek + magyar elválasztás ================= */
+const GUARD = (() => {
+  const NB = '\u00A0', WJ = '\u2060', NNB = '\u202F', NBH = '\u2011';
+  const SKIP = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'CODE', 'PRE', 'svg', 'SVG', 'CANVAS', 'SELECT', 'OPTION']);
+  const BLOCK = 'main p, main li, main h2, main h3, main h4, main h5, main b, main .verdict, main .vs > div, main .rv, main .tlx, main .note, main .tagline, main .stat span, main .lead, footer p, footer li, .hero-lead';
+  const HYPH = 'main p, main li, main .vs > div, main .rv, main .note, main .verdict, main .tlx, main .lead, footer p, .hero-lead';
+  const NOHY = 'sub, sup, code, button, label, output, td, th, .nw, h1, h2, h3, h4, h5, .chip, .pill, .kick, .mono, .tag, .bdg, .d';
+  const TERMS = ['kiscelli agyag', 'kövér agyag', 'laza üledék', 'Pannon-tó', 'Tisza-gát', 'Fővám tér', 'Paks II', 'Jáky József', 'Építőmérnöki Kar', 'Kárpát-medence', 'talajmechanikai labor', 'első vázlat'];
+  const termRx = new RegExp('(' + TERMS.sort((a, b) => b.length - a.length).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '[ \\u00A0]')).join('|') + ')', 'giu');
+  const MULT_SYM = /^(tg|ctg|sin|cos|tan|exp|ln|log)\b/;
+  const NUMW = /(^|[\s(\u00A0\u2060„])((?:[Kk]ét|[Hh]árom|[Nn]égy|[Öö]t|[Hh]at|[Hh]ét|[Nn]yolc|[Kk]ilenc|[Tt]íz|[Tt]izennégy|[Ee]lső|[Mm]ásodik|[Hh]armadik|[Nn]egyedik|[Mm]indkét|[Mm]indhárom|[Nn]éhány|[Ee]gyik))(?=\s\S)\s/g;
+  function textPass(s) {
+    if (!/[ \-–·]/.test(s)) return s;
+    s = s.replace(/(^|[^\d,.])(\d{1,3}) (\d{3})(?!\d)/g, '$1$2' + NNB + '$3');
+    s = s.replace(/ ([=≤≥≈→←×±<>⇒↔]) /g, NB + '$1' + NB);
+    s = s.replace(/([\p{N}\p{L})\]′″°²³]) ([+−]) (?=[\p{N}\p{L}(])/gu, '$1' + NB + '$2' + NB);
+    s = s.replace(/(^|[(\[„])([=≤≥≈<>±~]) (?=\S)/g, '$1$2' + NB);
+    s = s.replace(/ · (?=(\S+))/g, (m, nxt) => { const w = nxt.replace(/^[(„"]/, ''); if (/^\p{L}{3,}/u.test(w) && !MULT_SYM.test(w)) return m; return NB + '·' + NB; });
+    s = s.replace(/(\d)-(\d)/g, '$1' + NBH + '$2');
+    s = s.replace(/\b([A-Z]{2,5})-(\d)/g, '$1' + NBH + '$2');
+    s = s.replace(/([^\s\u2060])–([^\s\u2060])/g, '$1' + WJ + '–' + WJ + '$2');
+    s = s.replace(/(^|[\s(\u00A0])(pl\.|kb\.|ill\.|ún\.|max\.|min\.|Dr\.) (?=\S)/g, '$1$2' + NB);
+    s = s.replace(/(^|[\s(\u00A0\u2060~≈≤≥=<>−+])(\d+(?:[,.]\d+)?\.?%?) (?=\S)/g, '$1$2' + NB);
+    s = s.replace(/(^|[\s(\u00A0\u2060~≈≤≥=<>−+])(\d+(?:[,.]\d+)?\.?%?) (?=\S)/g, '$1$2' + NB);
+    for (let i = 0; i < 2; i++) s = s.replace(/(^|[\s(\u00A0\u2060„])(a|az|A|Az|s|e|egy|Egy|és|És) (?=\S)/g, '$1$2' + NB);
+    s = s.replace(NUMW, '$1$2' + NB);
+    s = s.replace(/([\d°′″%)\]\p{Lu}])-(\p{Ll}{1,6})(?=$|[\s.,;:!?)”\u00A0\u2060])/gu, '$1' + NBH + '$2');
+    s = s.replace(/(\d[\u00A0 ](?:mm|cm|m|kPa|MPa|kN|m²|m³))-(\p{Ll}{1,7})(?=$|[\s.,;:!?)”\u00A0\u2060])/gu, '$1' + NBH + '$2');
+    return s;
+  }
+  const SHORTEND = new RegExp('(^|[\\s(\u00A0\u2060„])(a|az|A|Az|s|e|egy|Egy|és|És|pl\\.|kb\\.|ill\\.|ún\\.|\\d+(?:[,.]\\d+)?\\.?%?) $');
+  function crossPass(nodes) { for (let i = 0; i < nodes.length - 1; i++) { const a = nodes[i], b = nodes[i + 1]; const av = a.nodeValue, bv = b.nodeValue; if (!av || !bv) continue;
+    if (av.endsWith(' ') && /^\S/.test(bv) && SHORTEND.test(av)) a.nodeValue = av.slice(0, -1) + NB;
+    const ms = /^ ([=≤≥≈→←×±<>⇒+−/]) /.exec(b.nodeValue); if (ms && /\S$/.test(a.nodeValue)) b.nodeValue = NB + ms[1] + NB + b.nodeValue.slice(3);
+    const me = / ([=≤≥≈→←×±<>⇒+−/]) $/.exec(a.nodeValue); if (me && /^\S/.test(b.nodeValue)) a.nodeValue = a.nodeValue.slice(0, -3) + NB + me[1] + NB; } }
+  function bindPositions(full, cpl = 70) {
+    const bind = new Set(); const segMax = Math.max(14, Math.min(38, 0.42 * cpl)), parMax = Math.max(10, Math.min(24, 0.30 * cpl));
+    const mark = (a, b) => { for (let i = a; i < b; i++) if (full[i] === ' ') bind.add(i); };
+    const sepRx = / · |; | – /g; let last = 0, m, lastSep = ''; const segs = [];
+    while ((m = sepRx.exec(full))) { segs.push([last, m.index, lastSep, m[0]]); last = m.index + m[0].length; lastSep = m[0]; } segs.push([last, full.length, lastSep, '']);
+    if (segs.length > 1) for (const [a, b, before, after] of segs) { const t = full.slice(a, b).replace(/[\u2060\u00AD]/g, '').trim(); const dashOnly = (before === ' – ' || before === '') && (after === ' – ' || after === '') && (before || after); const lim = dashOnly ? Math.min(22, segMax) : segMax; if (t.length > 0 && t.length < lim) mark(a, b); }
+    const pr = /\(([^()]{1,30})\)/g; while ((m = pr.exec(full))) { if (m[0].replace(/[\u2060\u00AD]/g, '').length <= parMax) mark(m.index, m.index + m[0].length); }
+    termRx.lastIndex = 0; while ((m = termRx.exec(full))) mark(m.index, m.index + m[0].length);
+    return bind;
+  }
+  function textNodes(root) { const out = []; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode(n) { let p = n.parentNode; while (p && p !== root) { if (SKIP.has(p.nodeName)) return NodeFilter.FILTER_REJECT; p = p.parentNode; } return NodeFilter.FILTER_ACCEPT; } }); let n; while ((n = w.nextNode())) out.push(n); return out; }
+  let hyph = null; const done = new WeakMap();
+  function processBlock(el) {
+    if (!el.isConnected) return; if (el.closest('svg')) return; const cur = el.textContent; if (done.get(el) === cur) return;
+    const nodes = textNodes(el); for (const n of nodes) { const v = textPass(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; } crossPass(nodes);
+    const full = nodes.map(n => n.nodeValue).join(''); const fs = parseFloat(getComputedStyle(el).fontSize) || 16; const cpl = el.clientWidth > 40 ? el.clientWidth / (fs * 0.52) : 70;
+    const bind = bindPositions(full, cpl);
+    if (bind.size) { let off = 0; for (const n of nodes) { const v = n.nodeValue; let o = '', ch = false; for (let i = 0; i < v.length; i++) { if (v[i] === ' ' && bind.has(off + i)) { o += NB + WJ; ch = true; } else o += v[i]; } off += v.length; if (ch) n.nodeValue = o; } }
+    if (hyph && el.matches(HYPH)) { for (const n of textNodes(el)) { if (n.parentElement && n.parentElement.closest(NOHY) && n.parentElement.closest(NOHY) !== el) continue; const parts = n.nodeValue.split(/( )/); let ch = false;
+      for (let i = 0; i < parts.length; i += 2) { const t = parts[i]; if (!t || !/\p{L}{6,}/u.test(t)) continue; const clean = t.replace(/[\u00AD\u200B]/g, ''); let hh;
+        if (t.includes(WJ)) { const vis = clean.replace(/[\u2060]/g, ''); if (vis.length <= 16 || /^\(.*\)[.,;:!?]*$/.test(vis)) continue; const k = Math.max(clean.lastIndexOf('\u00A0'), clean.lastIndexOf(WJ)); const tail = clean.slice(k + 1); if (!/\p{L}{6,}/u.test(tail)) continue; hh = clean.slice(0, k + 1) + hyph(tail); } else hh = hyph(clean);
+        hh = hh.replace(/\u200B/g, ''); if (hh !== t) { parts[i] = hh; ch = true; } } if (ch) n.nodeValue = parts.join(''); } }
+    done.set(el, el.textContent);
+  }
+  let obs = null, pend = new Set(), sched = false;
+  function observe() { obs.observe(document.body, { childList: true, subtree: true, characterData: true }); }
+  function run(root = document.body) { const set = new Set(); if (root.matches && root.matches(BLOCK)) set.add(root); $$(BLOCK, root).forEach(e => set.add(e)); if (obs) obs.disconnect(); set.forEach(processBlock); if (obs) { obs.takeRecords(); observe(); } }
+  function flush() { sched = false; const roots = Array.from(pend); pend.clear(); if (obs) obs.disconnect(); for (const r of roots) { if (!r.isConnected) continue; const blk = r.closest ? r.closest(BLOCK) : null; if (blk) processBlock(blk); if (r.querySelectorAll) $$(BLOCK, r).forEach(processBlock); } if (obs) { obs.takeRecords(); observe(); } }
+  function start() { run(); obs = new MutationObserver(recs => { for (const r of recs) { const t = r.type === 'characterData' ? r.target.parentElement : r.target; if (t && !(t.closest && t.closest('svg'))) pend.add(t); } if (pend.size && !sched) { sched = true; requestAnimationFrame(flush); } }); observe();
+    const H = window.Hyphenopoly; if (H && H.hyphenators && H.hyphenators.hu) H.hyphenators.hu.then(fn => { hyph = s => fn(s); $$(HYPH).forEach(e => done.delete(e)); run(); window.__fmtHyphReady = true; }).catch(() => {}); }
+  return { start, run };
+})();
+
+/* RAG3 – lyukas sorkizárt blokk tartaléka (formázás skill): (1) ha a szép tördelés (text-wrap: pretty) lyukas,
+   előbb sima tördeléssel (text-wrap: wrap, .twr) próbálja – a blokk sorkizárt marad; (2) csak ha így is lyukas,
+   balra zárt lesz (.rag). Az összetartozó egységek (NBSP/U+2060 kötések) érintetlenek maradnak.
+   Idempotens: a döntést szélesség + szöveg szerint megjegyzi, ismételt futáskor nem mér újra. */
+const RAG3 = (() => {
+  try { const st = document.createElement('style'); st.textContent = '.twr{text-wrap:wrap!important}'; document.head.appendChild(st); } catch (e) {}
+  const memo = new WeakMap();
+  const sig = (el) => el.textContent;   // a teljes szöveg (az elválasztás után is újramér)
+  function bad(el, strict) {
+    const fs = parseFloat(getComputedStyle(el).fontSize) || 16; const all = document.createRange(); all.selectNodeContents(el); const rs = all.getClientRects(); if (rs.length < 2) return false;
+    let lastTop = -1e9; for (const r of rs) if (r.width && r.top > lastTop) lastTop = r.top; let big = 0, mid = 0;
+    // sima tördelésnél (strict): egy nem utolsó, nagyon rövid sor (pl. hosszú, nem törhető képlet előtt) is rossz – a sorokat
+    // függőleges átfedés szerint vonjuk össze, így az alsó/felső index nem számít külön sornak; <br>-es blokknál nem vizsgáljuk
+    if (strict && !el.querySelector('br')) { const L = []; for (const r of rs) { if (!r.width || !r.height) continue; let l = L.find((q) => Math.min(q.b, r.bottom) - Math.max(q.t, r.top) > 0.5 * Math.min(q.b - q.t, r.height));
+      if (!l) L.push({ t: r.top, b: r.bottom, l: r.left, r: r.right }); else { l.t = Math.min(l.t, r.top); l.b = Math.max(l.b, r.bottom); l.l = Math.min(l.l, r.left); l.r = Math.max(l.r, r.right); } }
+      L.sort((a, b) => a.t - b.t); for (let i = 0; i < L.length - 1; i++) if (L[i].r - L[i].l < el.clientWidth * 0.35) return true; }
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) { const t = n.nodeValue; for (let i = 0; i < t.length; i++) { const c = t[i]; if (c !== ' ' && c !== '\u00A0') continue; const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + 1); const b = r.getBoundingClientRect(); if (!b.width || b.top >= lastTop - 2) continue; if (b.width > fs * 1.15) big++; else if (b.width > fs * 0.9) mid++; } }
+    return big > 0 || mid >= 2;
+  }
+  function check(el) {
+    if (!el || !el.isConnected || !el.offsetParent) return;
+    const w = el.clientWidth, s = sig(el), m = memo.get(el);
+    if (m && m.w === w && m.s === s) { el.classList.toggle('twr', m.res === 'twr'); el.classList.toggle('rag', m.res === 'rag'); return; }
+    el.classList.remove('rag', 'twr'); let res = 'ok';
+    if (getComputedStyle(el).textAlign === 'justify' && bad(el)) { el.classList.add('twr'); res = 'twr'; if (bad(el, true)) { el.classList.remove('twr'); el.classList.add('rag'); res = 'rag'; } }
+    memo.set(el, { w, s, res });
+  }
+  return { check };
+})();
+
+const RAG = (() => {
+  const SEL = 'main p, main li, main .vs > div, main .rv, main .note, main .verdict, main .tlx, footer p, .hero-lead';
+  const check = (el) => RAG3.check(el);
+  const run = () => $$(SEL).forEach(e => { if (e.offsetParent || e.closest('.vmodal')) check(e); });
+  let tm = 0; addEventListener('resize', () => { clearTimeout(tm); tm = setTimeout(run, 250); });
+  document.addEventListener('click', () => { clearTimeout(tm); tm = setTimeout(run, 120); });
+  return { run };
+})();
+GUARD.start();
+setTimeout(() => RAG.run(), 400);
+{ const iv = setInterval(() => { if (window.__fmtHyphReady) { clearInterval(iv); requestAnimationFrame(() => { RAG.run(); window.__ragDone = true; }); } }, 100); setTimeout(() => clearInterval(iv), 8000); }
+})();
+</script>
+</body>
+</html>

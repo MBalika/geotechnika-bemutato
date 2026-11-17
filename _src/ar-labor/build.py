@@ -25,7 +25,7 @@ HU = {
     'specs_h': 'Melyik <em>a tiéd?</em>',
     'foot': 'BME Építőmérnöki Kar · AR Labor. A modellek oktatási célú, egyszerűsített makettek.',
     'foot_link': 'Vissza a geotechnika-bemutatóhoz',
-    'langsw': '',
+    'langsw': '<span class="lang"><span>HU</span><a href="/ar-labor/en" id="langLink" hreflang="en">EN</a></span>',
   },
   'T': {
     'all': 'Mind', 'soon': 'Hamarosan', 'learn': 'Ezt tanulod', 'play': 'Lejátszás', 'pause': 'Szünet',
@@ -123,6 +123,88 @@ HU = {
   ],
 }
 
+
+EN_S = {
+    'title': 'AR Lab – What would you build? | BME Faculty of Civil Engineering',
+    'desc': 'Rotate, zoom and view them in AR on your phone: bridges, towers, tunnels, locks – moving 3D models from every specialisation of the BME Faculty of Civil Engineering.',
+    'brand': 'AR Lab', 'brand2': 'What would you build?',
+    'nav_models': 'Models', 'nav_specs': 'Specialisations', 'nav_back': 'Geotechnics showcase', 'nav_aula': 'Hall mode',
+    'prev': 'Previous model', 'next': 'Next model', 'hint': 'Rotate · zoom · try the button',
+    'ar': 'View it in your room', 'pause': 'Pause', 'labels': 'Labels', 'rotate': 'Rotate', 'fullscreen': 'Full screen',
+    'abrand': '<b>BME Faculty of Civil Engineering</b> · AR Lab', 'aqr_t': 'Try it in AR!', 'aqr_s': 'Scan the code and put the model on the table.',
+    'aula_exit': 'Exit hall mode',
+    'models_h': 'Pick a <em>model!</em>',
+    'qr_t': 'Take it with you', 'qr_s': 'Scan it with your phone and view the model in AR on your own desk.',
+    'specs_h': 'Which one <em>is yours?</em>',
+    'foot': 'BME Faculty of Civil Engineering · AR Lab. The models are simplified, for teaching purposes.',
+    'foot_link': 'Back to the geotechnics showcase',
+    'langsw': '<span class="lang"><a href="/ar-labor" id="langLink" hreflang="hu">HU</a><span>EN</span></span>',
+}
+EN_T = {'all': 'All', 'soon': 'Coming soon', 'learn': 'You study this', 'play': 'Play', 'pause': 'Pause',
+        'manual': 'You’re in control · moving on in {s} s', 'fsHint': 'F: full screen · ←/→: browse'}
+EN_BSC = {'ep': {'n': 'Civil Engineering BSc', 'd': '8 semesters · 5 specialisations'},
+          'fm': {'n': 'Surveying and Land Management Engineering BSc', 'd': '7 semesters · from September 2027'}}
+EN_SPECS = {
+    'tart': {'n': 'Structural Engineering', 'short': 'Structures', 'b': 'ep', 'd': 'Bridges, towers and halls: they must carry the loads, the wind and earthquakes – and look good while doing it.'},
+    'geo': {'n': 'Geotechnical Engineering', 'short': 'Geotechnics', 'b': 'ep', 'd': 'What lies beneath the surface: foundations, excavations, tunnels and earthworks. Every building stands on the ground – someone has to work out how.'},
+    'eti': {'n': 'Construction Technology and Building Information Management', 'short': 'Construction', 'b': 'ep', 'd': 'How it actually gets built: cranes, robots, 3D-printed concrete, and the digital BIM model that runs the whole construction site.'},
+    'kozl': {'n': 'Transport Infrastructure', 'short': 'Transport', 'b': 'ep', 'd': 'Roads, railways, metro lines and interchanges: getting from A to B quickly, safely and sustainably.'},
+    'viz': {'n': 'Water Engineering', 'short': 'Water', 'b': 'ep', 'd': 'Dams, locks, flood defence, drinking water and wastewater. In an age of climate change, one of the most important fields of engineering.'},
+    'geoinf': {'n': 'Geoinformatics', 'short': 'Geoinformatics', 'b': 'fm', 'd': 'Drones, laser scanners and satellite positioning: a centimetre-accurate digital copy of the world, maps and geographic information systems.'},
+    'foldr': {'n': 'Land Management', 'short': 'Land Management', 'b': 'fm', 'd': 'Land parcels, land consolidation and land use: who owns what and where, and how land can be divided and used more wisely.'},
+}
+EN_M = {
+  'mol-campus': ('MOL Campus', 'Build it!', '143 metres on the Danube bank – and its secret lies underground.',
+    [['143 m', 'tall including the spire'], ['135', 'piles under the tower'], ['16 m', 'deep excavation']],
+    'Budapest’s tallest building stands on made ground and Danube sandy gravel, with groundwater 8 m below the surface. First the 21 m deep diaphragm wall goes in all around: it retains the soil and keeps the water out. Then comes the excavation for the four-level basement, followed by the 2.2 m thick raft, supported by 135 piles reaching down to the stiff Kiscell clay. Only then can the tower rise. Making sure it stands safely is the geotechnical engineer’s job.'),
+  'ferdekabeles-hid': ('Cable-stayed bridge', 'Show me what’s what!', 'Cables hold up the deck – their colour shows how much force each one carries.',
+    [['230 m', 'main span'], ['104 m', 'tall pylons'], ['88', 'stay cables']],
+    'The weight of the deck and the traffic is carried by the stay cables to the pylons, and from there through the foundations of the river piers into the bearing ground. The longer, flatter cables carry more force: that is what the colour from yellow to red shows. The structural engineer tunes the cable forces so that the deck stays straight and is not harmed by wind, traffic or changes in temperature.'),
+  'metro-pajzs': ('Building a metro with a TBM', 'Start boring!', 'It bores 21 metres below the street – and nobody up there notices.',
+    [['6 m', 'tunnel diameter'], ['21 m', 'below the street'], ['1.5 m', 'width of one ring']],
+    'The tunnel boring machine excavates the ground with a rotating cutterhead at the front, and under the protection of its shield it immediately assembles the tunnel rings from precast concrete segments. A conveyor carries the spoil back, and the supply train brings new segments from the launch shaft, where the crane lowers them. The transport engineer designs the route, the stations and the track, and together with the geotechnical engineer makes sure that the street above does not move.'),
+  'nyomtatott-haz': ('3D-printed house', 'Print it!', 'No formwork, layer by layer: a giant 3D printer builds up the walls.',
+    [['0 m²', 'of formwork needed'], ['≈ 3 cm', 'thick printed layer'], ['70 m²', 'floor area of the house']],
+    'The gantry printer works from the digital design: the print head follows the line of the wall precisely and lays down fast-setting concrete layer by layer. No formwork is needed, less material is wasted, and the machine can build shapes that would be expensive to make the traditional way. The construction engineer plans the production process, the concrete mix and the schedule. Building information management means that the whole process runs from one shared digital model, the BIM model.'),
+  'hajozsilip': ('Navigation lock', 'Lift the ship!', 'A lift for ships: an 8-metre rise with no pumps.',
+    [['8 m', 'lift'], ['≈ 100 m', 'long chamber'], ['0', 'pumps needed']],
+    'A lock carries ships between two different water levels. The lower gate closes behind the ship, water flows into the chamber from the upper pool, and the ship rises with it. When the two levels are equal, the upper gate opens. The two leaves of a mitre gate close in a point facing the upper pool, so the water pressure presses them together and seals them. The water engineer designs the chamber, the filling and emptying system, the gates and the lock walls.'),
+  'dron-pontfelho': ('Drone and point cloud', 'Scan it!', 'One flight, and the town’s centimetre-accurate digital twin is ready.',
+    [['2', 'flight strips'], ['30 m', 'flying height'], ['1–2 cm', 'accuracy with GNSS']],
+    'The drone’s laser scanner measures hundreds of thousands of points every second, and the position of each one in space is known. From the point cloud – here the colour shows height – the area’s digital twin is created: buildings, terrain, trees and roads, with centimetre accuracy. The surveyor measures control points with a GNSS receiver, so the model sits in real-world coordinates. From this, the geoinformatics engineer produces base maps for design, 3D city models or even flood inundation maps.'),
+  'foldrenges-razoasztal': ('Earthquake shake table', 'Shake it!', 'Two identical buildings, the same earthquake: one dances, the other barely moves.',
+    [['6', 'storey model buildings'], ['4', 'rubber–steel bearings'], ['± 25 cm', 'table movement']],
+    'In the laboratory a shake table recreates an earthquake, and engineers watch what happens to scale models of buildings. The building on the left stands rigidly on the table: the earthquake shakes it at full strength, and the upper storeys sway a lot. The building on the right stands on rubber–steel bearings: the bearings deform in shear and absorb most of the motion, so the building barely moves. The structural engineer uses calculation and testing to decide how a building, a bridge or a tower can withstand an earthquake.'),
+  'birtokrendezes': ('Land consolidation', 'Sort it out!', 'A few large fields from many narrow strips – and a road to every one.',
+    [['46', 'narrow parcels before'], ['6', 'large fields after'], ['3', 'new farm roads']],
+    'Parcels split up by inheritance and sales, often only a few metres wide, are hard to farm and hard to reach. In land consolidation, surveyors measure the old boundaries and assess ownership and land values, then, in agreement with the owners, create new, consolidated fields. Every field gets a farm road, rows of trees shelter it from the wind and a ditch drains the water. The land management engineer sees surveying, law, economics and the landscape together.'),
+  'autopalya-csomopont': ('Motorway interchange', 'Show me what’s what!', 'A cloverleaf interchange: everyone can turn, nobody has to stop.',
+    [['2 × 3', 'motorway lanes'], ['4', 'loop ramps'], ['0', 'traffic lights']],
+    'In a cloverleaf interchange the main road crosses over the motorway on a bridge, and the four loop ramps take left-turning traffic across without any crossing movements: vehicles turn right through three-quarters of a circle to join the other road. No traffic lights are needed and traffic keeps flowing. The transport engineer designs the alignment, the curve radii, the gradients and the slip lanes so that it stays safe even at high speed.'),
+  'gat-vizeromu': ('Valley dam', 'Open the gate!', 'A concrete wall holds back 42 metres of water – and generates electricity too.',
+    [['42 m', 'deep reservoir'], ['48 m', 'tall dam'], ['1', 'turbine and generator']],
+    'A gravity dam resists the water pressure with its own weight, so its cross-section is wide at the bottom and triangular. Water from the reservoir rushes down the penstock to the powerhouse at the foot of the dam, where it turns the turbine; the turbine drives the generator, and the electricity reaches the town along the power line. If there is too much water, the spillway gate is opened. The water engineer designs the reservoir, the dam and its flood safety, and together with the geotechnical engineer the dam’s foundation and how to stop water seeping underneath it.'),
+  'felhokarcolo-tmd': ('Skyscraper in the wind', 'Start the wind!', '300 metres up, a giant pendulum tames the sway.',
+    [['300 m', 'tall tower'], ['≈ 4 s', 'one sway'], ['5×', 'less sway with the pendulum']],
+    'Wind sets a tall, slender tower swaying: on the upper floors this is unpleasant, and in a strong wind it can even be frightening. So a pendulum weighing several hundred tonnes is hung at the top, tuned to swing with the same period as the tower. When the tower sways one way, the pendulum swings the other way and pulls it back: the sway drops to a fraction. The structural engineer tunes the system with wind tunnel tests and calculations.'),
+  'bim-epitkezes': ('Building with BIM', 'Build it!', 'It is built digitally first – then reality catches up, storey by storey.',
+    [['6', 'storey building'], ['1', 'shared digital model'], ['3', 'layers: structure, services, façade']],
+    'BIM (building information modelling) means that the building is completed in the computer first, with every element: columns, slabs, pipes, ducts and windows. The model is used to calculate quantities and costs, to schedule the works, and to spot before construction whether a pipe would run into a beam. On site, the team checks on a tablet what comes next. The construction engineer runs the works from this shared model, from the crane movements to the installation of the façade.'),
+  'mobilgat': ('Demountable flood wall', 'Here comes the flood!', 'Put up in a few hours, it protects the town from the swollen river.',
+    [['7.6 m', 'rise in water level'], ['13', 'beams stacked'], ['4 m', 'post spacing']],
+    'Where the riverbank should not be closed off by a permanent wall, engineers design a demountable flood wall: a concrete foundation with fixings is built into the embankment, and before a flood the crews quickly put up the steel posts and slide the aluminium beams between them. There are seals between the beams, and the water pressure only presses them tighter. Once the water has gone down, the whole wall is taken away and the riverbank is open again. The water engineer designs the height of the defence line, and the geotechnical engineer makes sure that water does not seep through underneath.'),
+  'nagysebessegu-vasut': ('High-speed railway', 'Here comes the train!', '300 km/h: the train flashes across the viaduct in barely two seconds.',
+    [['300 km/h', 'speed'], ['25 kV', 'in the overhead line'], ['≈ 2 s', 'to cross the bridge']],
+    'At high speed every centimetre counts: the track must be laid very precisely, the curves must have large radii and the gradients must be gentle. That is why the line crosses the valley on a viaduct and goes through the hill in a tunnel. The rails sit on a concrete slab, and a 25 kV overhead line above supplies the power. The transport engineer designs the alignment and the track structure, while the structural and geotechnical engineers design the bridge and the tunnel.'),
+  'pisa': ('The Leaning Tower of Pisa', 'Show me what’s what!', 'Leaning for 800 years – geotechnical engineers stopped it.',
+    [['≈ 3 m', 'average settlement'], ['14,500 t', 'mass of the tower'], ['0.5°', 'tilted back by']],
+    'Beneath the tower lies soft, compressible clay, and the ground on the south side is slightly weaker than on the north: that is why it started to lean during construction. Between 1999 and 2001, soil was carefully extracted from beneath the north side through inclined boreholes. The tower, settling towards the north, tilted back by about 0.5°, and it has been stable ever since. The cross-sections show the soil layers and the clay layer bent down into a bowl shape.'),
+}
+import copy
+EN = {'lang': 'en', 'S': EN_S, 'T': EN_T, 'BSC': EN_BSC, 'SPECS': EN_SPECS, 'M': []}
+for m in HU['M']:
+    e = copy.deepcopy(m); n, a, h, f, i = EN_M[m['id']]; e.update({'name': n, 'act': a, 'hook': h, 'facts': f, 'info': i}); EN['M'].append(e)
+
 HYPH = '<script src="../vendor/hyphenopoly/Hyphenopoly_Loader.js"></script>\n<script>Hyphenopoly.config({ require: { "hu": "FORCEHYPHENOPOLY" }, setup: { hide: "none", selectors: { ".hyphenate": { minWordLength: 6, compound: "auto" } } } });</script>'
 
 # a bemutató (és az aula-túra) sorrendje: a specializációk váltakoznak
@@ -132,7 +214,7 @@ def page(L, out):
     L['M'].sort(key=lambda m: ORDER.index(m['id']) if m['id'] in ORDER else 99)
     for k, v in L['SPECS'].items(): v['c'] = SPEC_C[k]
     data = {'lang': L['lang'], 'SPECS': L['SPECS'], 'BSC': L['BSC'], 'M': L['M'], 'T': L['T']}
-    s = tpl.replace('{{lang}}', L['lang']).replace('{{hyph}}', HYPH)
+    s = tpl.replace('{{lang}}', L['lang']).replace('{{hyph}}', HYPH if L['lang'] == 'hu' else '')
     for k, v in L['S'].items(): s = s.replace('{{' + k + '}}', v)
     assert '{{' not in s, s[s.index('{{'):s.index('{{') + 40]
     assert '/*DATA*/null' in s and '/*GUARD*/' in s
@@ -140,3 +222,4 @@ def page(L, out):
     (root / 'ar-labor' / out).write_text(s, encoding='utf-8'); print(out, len(s))
 
 page(HU, 'index.html')
+page(EN, 'en.html')
