@@ -96,6 +96,8 @@ h2{font:800 clamp(38px, 4.2vw, 60px)/.95 var(--fh); text-transform:uppercase; ma
 .kar{background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
 .k-top{display:grid; grid-template-columns:1.15fr 1fr; gap:48px; align-items:center}
 .k-txt .lead{margin:0 0 14px; color:#d6dbd3}
+.kh{font:800 30px/1.1 var(--fh); text-transform:uppercase; margin:40px 0 0; color:#fff; display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px}
+.kh span{font:700 16px/1.2 var(--fh); letter-spacing:.1em; color:var(--lime)}
 .todo-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:18px}
 .ch{position:relative; display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden}
 .ch .im{position:relative; display:block; width:100%; padding:0; border:0; aspect-ratio:16/9; background:#0d1116; overflow:hidden; cursor:pointer}
@@ -212,7 +214,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </div></div>
 
 <section id="kar" class="kar"><div class="wrap">
-  <div class="sh"><div><div class="kick">Másik videó <span class="bdg">Új · 3:31</span></div><h2>Mit építenél? – Az Építőmérnöki Kar</h2></div><p>Hat szakirány egyetlen városban, a hídtól a BIM-ig.</p></div>
+  <div class="sh"><div><div class="kick">Másik videó <span class="bdg">Új · 3:55</span></div><h2>Mit építenél? – Az Építőmérnöki Kar</h2></div><p>Két alapszak, hét specializáció, egyetlen városban.</p></div>
   <div class="k-top">
     <button class="vcard" data-video="kar" type="button" aria-label="A kari bemutató animáció lejátszása">
       <img src="img/kar_poster.jpg?v=1" alt="Makettszerű városmetszet: ferdekábeles híd, toronyház cölöpalapon, metró, autópálya, vasút, víztorony, daru" loading="lazy" width="1600" height="900">
@@ -220,18 +222,23 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
       <span class="cap"><span>Mit építenél, ha nem lennének határok?</span><span>▶ lejátszás</span></span>
     </button>
     <div class="k-txt">
-      <p class="lead">Minden híd, alagút és út mögött egy mérnöki elme áll. A videó egy makettszerű város metszetén mutatja meg, mit csinál az építőmérnök: a felszínen és alatta.</p>
-      <p class="lead">Az első négy félév közös, utána hat irány közül választasz. Nem kell most tudnod, melyik a tiéd.</p>
-      <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>3:31</small></button></div>
+      <p class="lead">Minden híd, alagút és út mögött ott van a mérnöki elme. A videó egy makettszerű város metszetén mutatja meg, mit csinál az építőmérnök: a felszínen és alatta.</p>
+      <p class="lead">Két alapszak közül választhatsz: az Építőmérnök BSc (8 félév) öt, az új Földmérő és földrendező mérnök BSc (7 félév, 2027 szeptemberétől) két specializációt kínál.</p>
+      <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>3:55</small></button></div>
     </div>
   </div>
+  <h3 class="kh">Építőmérnök BSc <span>8 félév · 5 specializáció</span></h3>
   <div class="chapters c3">
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Tartószerkezetek"><img src="img/kar_1.jpg?v=1" alt="Tartószerkezetek – ferdekábeles híd a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Tartószerkezetek</h3><p class="rag">Hidak és tornyok, amelyek évszázadokig állnak: kábelerők, szélteher, merevítő mag.</p><div class="tm">0:37–0:57</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geotechnika"><img src="img/kar_2.jpg?v=1" alt="Geotechnika – mélygarázs cölöpökkel a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Geotechnika</h3><p class="rag">Ami a felszín alatt van: cölöpök, résfal, talajrétegek.</p><div class="tm">0:57–1:16</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Közlekedési létesítmények"><img src="img/kar_3.jpg?v=1" alt="Közlekedési létesítmények – fúrópajzs a metróalagútban a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>Közlekedési létesítmények</h3><p class="rag">Utak, vasutak, alagutak: fúrópajzs, útrétegek, ágyazat.</p><div class="tm">1:16–1:36</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geodézia és térinformatika"><img src="img/kar_4.jpg?v=1" alt="Geodézia és térinformatika – pontfelhő a városról a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Geodézia és térinformatika</h3><p class="rag">Drón, lézerszkenner, műholdak: pontfelhő és digitális iker.</p><div class="tm">1:36–1:56</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Vízmérnöki"><img src="img/kar_5.jpg?v=1" alt="Vízmérnöki – víz- és szennyvízhálózat a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Vízmérnöki</h3><p class="rag">Árvízvédelem, ivóvíz, szennyvíz: a gáttól a csapig.</p><div class="tm">1:56–2:15</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Építéstechnológia és BIM"><img src="img/kar_6.jpg?v=1" alt="Építéstechnológia és BIM – épülő ház daruval a videóból" loading="lazy" width="960" height="540"><span class="n">6</span><span class="pl"></span></button><div class="tx"><h3>Építéstechnológia és BIM</h3><p class="rag">Előbb virtuálisan épül fel, aztán a valóságban: 4D ütemterv, ütközés, energia.</p><div class="tm">2:15–2:35</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Tartószerkezetek"><img src="img/kar_1.jpg?v=1" alt="Tartószerkezetek – ferdekábeles híd a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Tartószerkezetek</h3><p class="rag">Hidak és tornyok, amelyek évszázadokig állnak: kábelerők, szélteher, merevítő mag.</p><div class="tm">0:50–1:08</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geotechnika"><img src="img/kar_2.jpg?v=1" alt="Geotechnika – mélygarázs cölöpökkel a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Geotechnika</h3><p class="rag">Ami a felszín alatt van: cölöpök, résfal, talajrétegek.</p><div class="tm">1:08–1:25</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Építéstechnológia és építményinformációs menedzsment"><img src="img/kar_6.jpg?v=1" alt="Építéstechnológia és építményinformációs menedzsment – épülő ház daruval a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>Építéstechnológia és építményinformációs menedzsment</h3><p class="rag">Előbb virtuálisan épül fel, aztán a valóságban: BIM, 4D ütemterv, ütközés, energia.</p><div class="tm">1:25–1:42</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Közlekedési létesítmények"><img src="img/kar_3.jpg?v=1" alt="Közlekedési létesítmények – fúrópajzs a metróalagútban a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Közlekedési létesítmények</h3><p class="rag">Utak, vasutak, alagutak: fúrópajzs, útrétegek, ágyazat.</p><div class="tm">1:42–2:00</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Vízmérnöki"><img src="img/kar_5.jpg?v=1" alt="Vízmérnöki – víz- és szennyvízhálózat a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Vízmérnöki</h3><p class="rag">Árvízvédelem, ivóvíz, szennyvíz: a gáttól a csapig.</p><div class="tm">2:00–2:17</div></div></article>
+  </div>
+  <h3 class="kh">Földmérő és földrendező mérnök BSc <span>7 félév · 2 specializáció · új szak, 2027 szeptemberétől</span></h3>
+  <div class="chapters c3">
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geoinformatika"><img src="img/kar_4.jpg?v=1" alt="Geoinformatika – pontfelhő a városról a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Geoinformatika</h3><p class="rag">Drón, lézerszkenner, műholdak: pontfelhő, térinformatikai rétegek, digitális iker.</p><div class="tm">2:24–2:41</div></div></article>
+    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Földrendező"><img src="img/kar_7.jpg?v=1" alt="Földrendező – parcellák birtokrendezése a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Földrendező</h3><p class="rag">Szétaprózott parcellákból ésszerű birtokok, távérzékelés, fenntartható földhasználat.</p><div class="tm">2:41–2:59</div></div></article>
   </div>
 </div></section>
 
@@ -278,7 +285,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const v = $('#vmVideo'), noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled), MP4_READY = true, useMP4 = MP4_READY && noElFS && (/iPhone|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && !/Android/.test(navigator.userAgent) && /Mac|iP/.test(navigator.platform || '')));
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar"); MP4 (iPhone) csak ahol már elkészült
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
-    kar: { html: 'video/epitokar.html?v=2', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:31 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=1' } };
+    kar: { html: 'video/epitokar.html?v=3', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 3:55 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=1' } };
   let cur = VIDS.geo;
   const open = (e) => { const key = (e && e.currentTarget && e.currentTarget.dataset.video) || 'geo'; cur = VIDS[key] || VIDS.geo;
     last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; $('#vmTitle').textContent = cur.title;
