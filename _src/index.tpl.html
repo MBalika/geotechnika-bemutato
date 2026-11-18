@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ami a felszín alatt van – Geotechnika</title>
-<meta name="description" content="Bemutató animáció a geotechnikáról 17–20 éveseknek: mi van a város alatt, miért talajon építünk itthon, és mit csinál a geotechnikus. BME Építőmérnöki Kar.">
+<title>Mit építenél? – BME Építőmérnöki Kar</title>
+<meta name="description" content="Animációs bemutató a BME Építőmérnöki Karáról végzős középiskolásoknak: két alapszak, hét specializáció, rövid videók telefonra és szakirány-videók.">
 <meta name="theme-color" content="#0b0e12">
-<meta property="og:title" content="Ami a felszín alatt van – Geotechnika">
-<meta property="og:description" content="Hogyan áll meg egy 143 méteres torony? 3 perces animáció arról, mi van a felszín alatt – és ki tervezi.">
-<meta property="og:image" content="img/og.jpg">
+<meta property="og:title" content="Mit építenél? – BME Építőmérnöki Kar">
+<meta property="og:description" content="Amit nap mint nap használsz, azt építőmérnök tervezte. Két alapszak, hét specializáció – nézd meg, te mit építenél.">
+<meta property="og:image" content="img/kar_poster.jpg?v=2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0e12'/%3E%3Crect x='24' y='8' width='16' height='26' rx='2' fill='%23eef1ea'/%3E%3Crect x='8' y='34' width='48' height='8' fill='%238f7a55'/%3E%3Crect x='8' y='44' width='48' height='12' fill='%233c4450'/%3E%3Crect x='27' y='34' width='3' height='18' fill='%23c6f432'/%3E%3Crect x='34' y='34' width='3' height='18' fill='%23c6f432'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -140,6 +140,18 @@ footer p{margin:0 0 10px; max-width:none}
 footer .cred{font-size:13.5px; line-height:1.5; color:#7f8892}
 footer b{color:var(--ink); font:800 22px/1.1 var(--fh); text-transform:uppercase; letter-spacing:.03em}
 footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(--fh); letter-spacing:.06em; text-transform:uppercase; text-decoration:none}
+/* rövid (álló) videók */
+.reels{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:26px; max-width:1040px}
+.vcard.rcard{aspect-ratio:9/16; box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.reel h3{font:800 28px/1.05 var(--fh); text-transform:uppercase; margin:16px 0 6px; color:#fff}
+.reel p{color:var(--muted); margin:0 0 10px; font-size:15.5px; line-height:1.45}
+.reel .dl{color:var(--lime); font:700 14px/1 var(--fb); text-decoration:none}
+.reel .dl:hover{text-decoration:underline}
+.k-txt .st{font:800 44px/1 var(--fh); text-transform:uppercase; margin:14px 0 18px; color:#fff} .k-txt .st em{font-style:normal; color:var(--lime)}
+.soon{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:34px; color:var(--muted); font:700 14px/1 var(--fb)}
+.soon b{font:800 15px/1 var(--fh); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-right:6px}
+.soon span{border:1px dashed var(--line2); border-radius:999px; padding:9px 14px; color:#8d959e}
+@media (max-width: 760px){ .reels{grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:68%; overflow-x:auto; scroll-snap-type:x mandatory; gap:14px; padding-bottom:8px; margin-right:calc(-1 * var(--pad))} .reel{scroll-snap-align:start} .k-txt .st{font-size:36px} }
 /* videó-modális */
 .vmodal{position:fixed; inset:0; z-index:100; background:rgba(4,6,8,.92); display:grid; place-items:center; padding:24px}
 .vmodal[hidden]{display:none}
@@ -155,6 +167,9 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 .vmodal.pfs .vf{aspect-ratio:auto; width:100%; height:100%; border-radius:0; box-shadow:none}
 .vmodal.pfs .vbar{display:none}
 .vmodal.pfs.rot .vbox iframe{inset:auto; left:50%; top:50%; width:100vh; width:100dvh; height:100vw; transform:translate(-50%, -50%) rotate(90deg); transform-origin:50% 50%}
+/* álló rövid videó asztali gépen: 9:16-os doboz */
+.vmodal.port .vbox{width:min(460px, 100%, calc((100vh - 120px) * 9 / 16))}
+.vmodal.port .vf{aspect-ratio:9/16}
 /* telefonon a videó MP4-ként, a telefon saját lejátszójával megy: a modális ablak kitölti a kijelzőt, fekvő helyzetben a kép a teljes képernyőt kitölti */
 .vmodal.phone{padding:0; background:#000}
 .vmodal.phone .vbox{width:100vw; height:100vh; height:100dvh}
@@ -197,88 +212,61 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="#top"><i></i>Geotechnika <span>· BME ÉMK</span></a>
-  <nav><a href="#fejezetek">Fejezetek</a><a href="#kar">A kar</a><a href="#mi-ez">Mi ez?</a><a href="/ar-labor">AR Labor</a><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></nav>
+  <a class="brand" href="#top"><i></i>Mit építenél? <span>· BME ÉMK</span></a>
+  <nav><a href="#rovid">Rövid videók</a><a href="#szakiranyok">Szakirányok</a><a href="/ar-labor">AR Labor</a><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></nav>
 </div></header>
 <main id="top">
 <div class="hero"><div class="wrap">
   <div class="h-txt">
-    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 3:20</span></div>
-    <h1>Ami a felszín <em>alatt</em> van</h1>
-    <div class="motto">Geotechnika: a talaj, amire, amibe és amiből építünk</div>
-    <div class="ctas"><button class="btn pri" data-video type="button">▶ Nézd meg <small>3:20</small></button><a class="btn" href="#fejezetek">Fejezetek</a></div>
+    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 4:27</span></div>
+    <h1>Mit <em>építenél</em>?</h1>
+    <div class="motto">Két alapszak, hét specializáció, egyetlen városban</div>
+    <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>4:27</small></button><a class="btn" href="#rovid">Rövid videók</a></div>
   </div>
-  <button class="vcard" data-video type="button" aria-label="A bemutató animáció lejátszása">
-    <img src="img/poster.jpg?v=3" alt="Budapest éjjel drónról: a MOL Campus tornya, a Duna a hidakkal, háttérben a Gellért-hegy" width="1600" height="900">
+  <button class="vcard" data-video="kar" type="button" aria-label="A kari bemutató animáció lejátszása">
+    <img src="img/kar_poster.jpg?v=2" alt="Makettszerű városmetszet: ferdekábeles híd, toronyház cölöpalapon, metró, autópálya, vasút, víztorony, daru" width="1600" height="900">
     <span class="scan"></span><span class="corners"></span><span class="play"></span>
-    <span class="cap"><span>Hogyan áll meg egy ekkora épület?</span><span>▶ lejátszás</span></span>
+    <span class="cap"><span>Amit nap mint nap használsz, azt építőmérnök tervezte</span><span>▶ lejátszás</span></span>
   </button>
   <div class="h-lead">
-    <p class="lead">A 143 méteres toronyház, a metró, az árvízi gát és a családi ház is ugyanazon áll: a talajon. Magyarország egy medence alján fekszik, ezért itthon ritkán építesz sziklára – a lábad alatt lösz, homok, agyag és kavics van, sokszor több száz méter vastagon.</p>
-    <p class="lead">A geotechnikus kideríti, mi van a telek alatt, megméri, mit bír a talaj, kiszámolja, mi fog történni, és megtervezi, hogyan álljon meg az épület. Ez az animáció ezt mutatja meg, valós hazai helyszíneken: a Duna-parti toronyháztól a Tisza-gátig.</p>
+    <p class="lead">Minden híd, alagút és út mögött ott van a mérnöki elme. A videó egy makettszerű város metszetén mutatja meg, mit csinál az építőmérnök: a felszínen és alatta.</p>
+    <p class="lead">Két alapszak közül választhatsz: az Építőmérnök BSc (8 félév) öt, az új Földmérő és földrendező mérnök BSc (7 félév, 2027 szeptemberétől) két specializációt kínál.</p>
   </div>
 </div></div>
 
-<div class="stats"><div class="wrap">
-  <div class="stat"><b>39%</b><span>az ország területe sík – medence alján élünk</span></div>
-  <div class="stat"><b>1000 m</b><span>akár ilyen vastag a laza üledék az Alföld alatt</span></div>
-  <div class="stat"><b>1928</b><span>ekkor nyílt az első talajmechanikai labor a Műegyetemen</span></div>
-</div></div>
+<section id="rovid" class="kar"><div class="wrap">
+  <div class="sh"><div><div class="kick">Telefonra · 9:16</div><h2>Rövid videók</h2></div><p>Fél perc az egész szakmáról – Instagramra, TikTokra, story-ba.</p></div>
+  <div class="reels">
+    <article class="reel"><button class="vcard rcard" data-video="ra" type="button" aria-label="Rövid videó lejátszása: Mit építenél?"><img src="img/reel_a.jpg?v=1" alt="Álló rövid videó: „Te mit építenél?” felirat a felépülő város fölött" loading="lazy" width="720" height="1280"><span class="corners"></span><span class="play"></span></button>
+      <h3>Mit építenél?</h3><p>Villámvágások a szakma egészéről, a 7 specializáció és a kar · 0:31</p><a class="dl" href="video/reel_a.mp4?v=1" download="BME_EMK_Mit_epitenel.mp4">⬇ MP4 letöltése</a></article>
+    <article class="reel" id="reelB" hidden><button class="vcard rcard" data-video="rb" type="button" aria-label="Rövid videó lejátszása: Holnap te tervezed"><img src="img/reel_b.jpg?v=1" alt="Álló rövid videó: „Holnap te tervezed” felirat az esti város fölött" loading="lazy" width="720" height="1280"><span class="corners"></span><span class="play"></span></button>
+      <h3>Holnap te tervezed</h3><p>Egy nap a városban: csap, metró, híd, vonat, toronyház – és ki tervezte · 0:31</p><a class="dl" href="video/reel_b.mp4?v=1" download="BME_EMK_Holnap_te_tervezed.mp4">⬇ MP4 letöltése</a></article>
+    <article class="reel" id="reelC" hidden><button class="vcard rcard" data-video="rc" type="button" aria-label="Rövid videó lejátszása: Melyik a tiéd?"><img src="img/reel_c.jpg?v=1" alt="Álló rövid videó: „Melyik építőmérnök lennél?” felirat" loading="lazy" width="720" height="1280"><span class="corners"></span><span class="play"></span></button>
+      <h3>Melyik a tiéd?</h3><p>A 7 specializáció egyenként, egy-egy ütős mondattal · 0:43</p><a class="dl" href="video/reel_c.mp4?v=1" download="BME_EMK_Melyik_a_tied.mp4">⬇ MP4 letöltése</a></article>
+  </div>
+</div></section>
 
-<section id="kar" class="kar"><div class="wrap">
-  <div class="sh"><div><div class="kick">Másik videó <span class="bdg">Új · 4:27</span></div><h2>Mit építenél? – Az Építőmérnöki Kar</h2></div><p>Két alapszak, hét specializáció, egyetlen városban.</p></div>
+<section id="szakiranyok"><div class="wrap">
+  <div class="sh"><div><div class="kick">Szakirány-videók</div><h2>Specializációk közelről</h2></div><p>Minden specializációról külön videó – elsőként a geotechnika.</p></div>
   <div class="k-top">
-    <button class="vcard" data-video="kar" type="button" aria-label="A kari bemutató animáció lejátszása">
-      <img src="img/kar_poster.jpg?v=2" alt="Makettszerű városmetszet: ferdekábeles híd, toronyház cölöpalapon, metró, autópálya, vasút, víztorony, daru" loading="lazy" width="1600" height="900">
+    <button class="vcard" data-video="geo" type="button" aria-label="A geotechnika-videó lejátszása">
+      <img src="img/poster.jpg?v=3" alt="Budapest éjjel drónról: a MOL Campus tornya, a Duna a hidakkal, háttérben a Gellért-hegy" loading="lazy" width="1600" height="900">
       <span class="scan"></span><span class="corners"></span><span class="play"></span>
-      <span class="cap"><span>Mit építenél, ha nem lennének határok?</span><span>▶ lejátszás</span></span>
+      <span class="cap"><span>Hogyan áll meg egy ekkora épület?</span><span>▶ lejátszás</span></span>
     </button>
     <div class="k-txt">
-      <p class="lead">Minden híd, alagút és út mögött ott van a mérnöki elme. A videó egy makettszerű város metszetén mutatja meg, mit csinál az építőmérnök: a felszínen és alatta.</p>
-      <p class="lead">Két alapszak közül választhatsz: az Építőmérnök BSc (8 félév) öt, az új Földmérő és földrendező mérnök BSc (7 félév, 2027 szeptemberétől) két specializációt kínál.</p>
-      <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>4:27</small></button></div>
+      <div class="kick">Geotechnika <span class="bdg">3:20</span></div>
+      <h3 class="st">Ami a felszín <em>alatt</em> van</h3>
+      <p class="lead">A 143 méteres toronyház, a metró, az árvízi gát és a családi ház is ugyanazon áll: a talajon. Magyarország egy medence alján fekszik, ezért itthon ritkán építesz sziklára.</p>
+      <p class="lead">A geotechnikus kideríti, mi van a telek alatt, megméri, mit bír a talaj, és megtervezi, hogyan álljon meg az épület – valós hazai helyszíneken, a Duna-parti toronyháztól a Tisza-gátig.</p>
+      <div class="ctas"><button class="btn pri" data-video="geo" type="button">▶ Nézd meg <small>3:20</small></button></div>
     </div>
   </div>
-  <h3 class="kh">Építőmérnök BSc <span>8 félév · 5 specializáció</span></h3>
-  <div class="chapters c3">
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Tartószerkezetek"><img src="img/kar_1.jpg?v=2" alt="Tartószerkezetek – ferdekábeles híd a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Tartószerkezetek</h3><p class="rag">Hidak és tornyok, amelyek évszázadokig állnak: ferdekábeles híd, toronyház szélben.</p><div class="tm">1:27–1:45</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geotechnika"><img src="img/kar_2.jpg?v=2" alt="Geotechnika – mélygarázs cölöpökkel a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Geotechnika</h3><p class="rag">Ami a felszín alatt van: cölöpök, résfal, talajrétegek.</p><div class="tm">1:45–2:02</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Építéstechnológia és építményinformációs menedzsment"><img src="img/kar_6.jpg?v=2" alt="Építéstechnológia és építményinformációs menedzsment – épülő ház daruval a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>Építéstechnológia és építményinformációs menedzsment</h3><p class="rag">Előbb virtuálisan épül fel, aztán a valóságban: BIM, 4D ütemterv, energia-szimuláció.</p><div class="tm">2:02–2:20</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Közlekedési létesítmények"><img src="img/kar_3.jpg?v=2" alt="Közlekedési létesítmények – fúrópajzs a metróalagútban a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Közlekedési létesítmények</h3><p class="rag">Utak, vasutak, alagutak: útrétegek, vasúti pálya, fúrópajzs.</p><div class="tm">2:20–2:37</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Vízmérnöki"><img src="img/kar_5.jpg?v=2" alt="Vízmérnöki – víz- és szennyvízhálózat a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Vízmérnöki</h3><p class="rag">Árvízvédelem, ivóvíz, szennyvíz: a gáttól a csapig.</p><div class="tm">2:37–2:55</div></div></article>
-  </div>
-  <h3 class="kh">Földmérő és földrendező mérnök BSc <span>7 félév · 2 specializáció · új szak, 2027 szeptemberétől</span></h3>
-  <div class="chapters c3">
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Geoinformatika"><img src="img/kar_4.jpg?v=2" alt="Geoinformatika – pontfelhő a városról a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Geoinformatika</h3><p class="rag">Drón, lézerszkenner, műholdak: pontfelhő, térképek, adatbázisok.</p><div class="tm">3:01–3:19</div></div></article>
-    <article class="ch"><button class="im" data-video="kar" type="button" aria-label="Lejátszás: Földrendező"><img src="img/kar_7.jpg?v=2" alt="Földrendező – parcellák birtokrendezése a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Földrendező</h3><p class="rag">Szétaprózott parcellákból ésszerű birtokok, távérzékelés, fenntartható földhasználat.</p><div class="tm">3:19–3:36</div></div></article>
-  </div>
-</div></section>
-
-<section id="fejezetek"><div class="wrap">
-  <div class="sh"><div><div class="kick">A videó</div><h2>Fejezetek</h2></div><p>Nyolc rész, összesen 3:20 – hang nélkül is érthető.</p></div>
-  <div class="chapters">
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Hogyan áll meg egy ekkora épület?"><img src="img/nyitas.jpg?v=3" alt="Hogyan áll meg egy ekkora épület? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">0</span><span class="pl"></span></button><div class="tx"><h3>Hogyan áll meg?</h3><p class="rag">Házak, hidak, alagutak, gátak – mind a talajon múlnak. Aztán Budapest éjjel, a MOL Campus tornya, és a talajszkenner a föld alá lát.</p><div class="tm">0:00–0:32</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Hazai geológiai adottságok"><img src="img/medence.jpg" alt="Hazai geológiai adottságok – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">1</span><span class="pl"></span></button><div class="tx"><h3>Hazai geológiai adottságok</h3><p class="rag">Miért talajon építünk itthon? Talajtérkép és a medence feltöltődése.</p><div class="tm">0:32–0:52</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Mit csinál a geotechnikus?"><img src="img/felderit.jpg" alt="Mit csinál a geotechnikus? – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">2</span><span class="pl"></span></button><div class="tx"><h3>Mit csinál a geotechnikus?</h3><p class="rag">Öt szint egy dunaparti telken: felderít, triaxiális vizsgálattal mér, modellez, tervez, műszerekkel figyel.</p><div class="tm">0:52–1:27</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: A helye"><img src="img/helye.jpg?v=4" alt="A helye – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">3</span><span class="pl"></span></button><div class="tx"><h3>A helye</h3><p class="rag">Földben, földre, földből – híd, autópálya, vasút, metró, gát: minden szakág alatt ott van.</p><div class="tm">1:27–1:42</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Nagyobb hazai projektek"><img src="img/itthon.jpg?v=4" alt="Nagyobb hazai projektek – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">4</span><span class="pl"></span></button><div class="tx"><h3>Nagyobb hazai projektek</h3><p class="rag">Tisza-gát, Tomori Pál Duna-híd, M4 a Duna alatt, Fővám tér, Paks II.</p><div class="tm">1:42–2:32</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Iskola"><img src="img/iskola.jpg" alt="Iskola – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">5</span><span class="pl"></span></button><div class="tx"><h3>Iskola</h3><p class="rag">1928, Műegyetem: Jáky József és a K<sub>0</sub> képlet.</p><div class="tm">2:32–2:45</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Neked való, ha…"><img src="img/neked.jpg" alt="Neked való, ha… – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">6</span><span class="pl"></span></button><div class="tx"><h3>Neked való, ha…</h3><p class="rag">Terep, labor, modellezés – és ha szereted a változatosságot.</p><div class="tm">2:45–3:00</div></div></article>
-    <article class="ch"><button class="im" data-video type="button" aria-label="Lejátszás: Zárás"><img src="img/zaras.jpg?v=3" alt="Zárás – képkocka a videóból" loading="lazy" width="960" height="540"><span class="n">✓</span><span class="pl"></span></button><div class="tx"><h3>Zárás</h3><p class="rag">Mindenki a tornyot fotózza – te azt, ami megtartja. Minden a mélyben kezdődik.</p><div class="tm">3:00–3:20</div></div></article>
-  </div>
-</div></section>
-
-<section id="mi-ez" style="padding-top:0"><div class="wrap">
-  <div class="sh"><div><div class="kick">Három szó</div><h2>Mi az a geotechnika?</h2></div><p>Minden építmény a talajjal dolgozik együtt – a geotechnikus érti, hogyan.</p></div>
-  <div class="three">
-    <article class="tri"><div class="ic a"><span class="s"></span><span class="g"></span><span class="t"></span></div><h3>Föld<em>ben</em></h3><p>Alagút, metróállomás, mélygarázs: a föld alatti tér, amelyet a talaj és a talajvíz nyomása ellen meg kell támasztani.</p><div class="ex">Fővám tér · Kőbánya · M4</div></article>
-    <article class="tri"><div class="ic b"><span class="s"></span><span class="g"></span><span class="h"></span><span class="f"></span></div><h3>Föld<em>re</em></h3><p>Alapozás: lemez, cölöp vagy talajjavítás – hogy a ház, a híd és a torony ne süllyedjen meg és ne billenjen meg.</p><div class="ex">Toronyház · híd · családi ház</div></article>
-    <article class="tri"><div class="ic c"><span class="s"></span><span class="g"></span><span class="w"></span><span class="d"></span></div><h3>Föld<em>ből</em></h3><p>Gát, töltés, útalap: amikor maga a talaj az építőanyag, és neki kell ellenállnia az árvíznek és a forgalomnak.</p><div class="ex">Tisza-gát · autópálya · vasút</div></article>
-  </div>
+  <div class="soon"><b>Hamarosan</b><span>Tartószerkezetek</span><span>Építéstechnológia és BIM</span><span>Közlekedési létesítmények</span><span>Vízmérnöki</span><span>Geoinformatika</span><span>Földrendező</span></div>
 </div></section>
 </main>
 <footer><div class="wrap">
-  <div><p><b>Geotechnika specializáció</b></p><p>BME Építőmérnöki Kar · BSc-n a 4. félév után választható. Saját 3D animációk – 2026. november: „Ami a felszín alatt van” és „Mit építenél?”.</p><p class="cred">Zene: valódi hangszerek felvett mintáiból – Salamander Grand Piano (Alexander Holm), tonejs-instruments (VSCO2, Karoryfer, Iowa, Freesound), CC BY 3.0.</p></div>
+  <div><p><b>BME Építőmérnöki Kar</b></p><p>Saját 3D animációk, 2026. november: „Mit építenél?” kari bemutató, három rövid videó telefonra és „Ami a felszín alatt van” geotechnika-videó.</p><p class="cred">Zene: valódi hangszerek felvett mintáiból – Salamander Grand Piano (Alexander Holm), tonejs-instruments (VSCO2, Karoryfer, Iowa, Freesound), CC BY 3.0.</p></div>
   <div class="r"><p><a href="https://epito.bme.hu" target="_blank" rel="noopener">epito.bme.hu ↗</a></p></div>
 </div></footer>
 
@@ -300,7 +288,11 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const isPhone = isIOS || /Android.+Mobile|Mobile.+Firefox|Windows Phone/i.test(ua) || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 820);
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar")
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
-    kar: { html: 'video/epitokar.html?v=9', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 4:27 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=2' } };
+    kar: { html: 'video/epitokar.html?v=9', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 4:27 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=2' },
+    // álló rövid videók (csak MP4)
+    ra: { port: true, mp4: 'video/reel_a.mp4?v=1', title: 'Mit építenél? · rövid videó · 0:31 · Esc: bezárás', poster: 'img/reel_a.jpg?v=1' },
+    rb: { port: true, mp4: 'video/reel_b.mp4?v=1', title: 'Holnap te tervezed · rövid videó · 0:31 · Esc: bezárás', poster: 'img/reel_b.jpg?v=1' },
+    rc: { port: true, mp4: 'video/reel_c.mp4?v=1', title: 'Melyik a tiéd? · rövid videó · 0:43 · Esc: bezárás', poster: 'img/reel_c.jpg?v=1' } };
   let cur = VIDS.geo, phoneMode = false, htmlMode = false, htmlPlaying = true;
   const cmd = (c) => { try { f.contentWindow.postMessage('vcmd:' + c, '*'); } catch (er) {} };
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
@@ -317,17 +309,19 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   $('#vcPlay').addEventListener('click', () => { if (htmlMode) cmd('toggle'); else if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause(); showCtl(); });
   $('#vcRate').addEventListener('click', () => { ri = (ri + 1) % RATES.length; if (htmlMode) cmd('rate:' + RATES[ri]); else v.playbackRate = RATES[ri]; $('#vcRate').textContent = fmtR(RATES[ri]); showCtl(); });
   const phoneFS = () => { if (!htmlMode && isIOS && v.webkitEnterFullscreen) { try { v.webkitEnterFullscreen(); return; } catch (er) {} } if (fsEl()) exitAnyFS(); else if (reqFS(m)) lockLandSoon(); };
-  const lockLandSoon = () => setTimeout(() => { if (fsEl() && innerHeight > innerWidth) lockLand(); }, 300);
+  const lockLandSoon = () => setTimeout(() => { if (fsEl() && innerHeight > innerWidth && !cur.port) lockLand(); }, 300);
   $('#vcFs').addEventListener('click', () => { phoneFS(); showCtl(); });
   v.addEventListener('play', syncPlay); v.addEventListener('pause', syncPlay); v.addEventListener('ratechange', () => { const k = RATES.indexOf(v.playbackRate); if (k >= 0) { ri = k; $('#vcRate').textContent = fmtR(v.playbackRate); } });
   m.addEventListener('touchstart', () => { if (phoneMode) showCtl(); }, { passive: true }); m.addEventListener('mousemove', () => { if (phoneMode) showCtl(); });
   // fordítás fekvőbe: a kép a teljes kijelzőt kitölti (ahol a böngésző engedi, valódi teljes képernyővel)
-  const onRot = () => { if (m.hidden || !phoneMode) return; const land = innerWidth > innerHeight;
+  const onRot = () => { if (m.hidden || !phoneMode || cur.port) return; const land = innerWidth > innerHeight;
     if (land && !htmlMode && isIOS && v.webkitEnterFullscreen && !v.webkitDisplayingFullscreen && !v.paused) { try { v.webkitEnterFullscreen(); } catch (er) {} }
     if (land && !isIOS && !fsEl()) reqFS(m); };
   addEventListener('orientationchange', () => setTimeout(onRot, 250)); try { matchMedia('(orientation: landscape)').addEventListener('change', () => setTimeout(onRot, 250)); } catch (er) {}
   const open = (e) => { const key = (e && e.currentTarget && e.currentTarget.dataset.video) || 'geo'; cur = VIDS[key] || VIDS.geo;
-    last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; $('#vmTitle').textContent = cur.title;
+    last = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; $('#vmTitle').textContent = cur.title; m.classList.toggle('port', !!cur.port);
+    // álló rövid videó asztali gépen: a saját lejátszó egy 9:16-os dobozban
+    if (cur.port && !isPhone) { phoneMode = false; htmlMode = false; m.classList.remove('phone'); ctl.hidden = true; f.hidden = true; v.hidden = false; v.poster = cur.poster; if (v.getAttribute('src') !== cur.mp4) v.src = cur.mp4; try { v.currentTime = 0; } catch (er) {} v.playbackRate = 1; const p = v.play(); if (p && p.catch) p.catch(() => {}); return; }
     const useVid = !!(cur.mp4 && (isPhone || noElFS)); phoneMode = useVid || isPhone; htmlMode = phoneMode && !useVid; htmlPlaying = true;
     // telefon, de ehhez a videóhoz még nincs MP4: a HTML-lejátszó tölti ki a kijelzőt, a felső gombok azt vezérlik
     if (htmlMode) { m.classList.add('phone'); v.hidden = true; f.hidden = false; ctl.hidden = false; $('#vcFs').hidden = !!(isIOS || noElFS); ri = 0; $('#vcRate').textContent = fmtR(1); syncPlay(); showCtl();
@@ -347,7 +341,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const host = () => { try { f.contentWindow.postMessage('vfs-host', '*'); } catch (er) {} }; f.addEventListener('load', () => { host(); setTimeout(host, 1500); setTimeout(host, 4000); });
   const enterFS = () => { setPseudo(true); const req = m.requestFullscreen || m.webkitRequestFullscreen; if (!req) return; try { const pr = req.call(m); if (pr && pr.then) pr.then(lockLand).catch(() => {}); } catch (er) {} };
   const exitFS = () => { exitAnyFS(); real = false; setPseudo(false); };
-  const close = () => { htmlMode = false; exitAnyFS(); try { if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen(); } catch (er) {} setPseudo(false); m.classList.remove('phone'); phoneMode = false; ctl.hidden = true; m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
+  const close = () => { htmlMode = false; exitAnyFS(); try { if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen(); } catch (er) {} setPseudo(false); m.classList.remove('phone', 'port'); phoneMode = false; ctl.hidden = true; m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $('#vcClose').addEventListener('click', close);
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
