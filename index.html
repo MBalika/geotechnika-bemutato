@@ -196,7 +196,9 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
   .three{grid-template-columns:1fr}
   .sh{flex-direction:column; align-items:flex-start}
   footer .wrap{grid-template-columns:1fr} footer .r{text-align:left}
-  .top nav{display:none}
+  .top .wrap{height:auto; flex-wrap:wrap; padding-top:12px; padding-bottom:10px; row-gap:10px}
+  .top nav{width:100%; gap:18px; overflow-x:auto; white-space:nowrap; font-size:14px; padding-bottom:2px; scrollbar-width:none}
+  .top nav a[target]{display:none}
 }
 @media (max-width: 560px){
   :root{--pad:16px}
