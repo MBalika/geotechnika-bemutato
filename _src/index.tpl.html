@@ -290,7 +290,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const isPhone = isIOS || /Android.+Mobile|Mobile.+Firefox|Windows Phone/i.test(ua) || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 820);
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar")
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
-    kar: { html: 'video/epitokar.html?v=9', mp4: null, title: 'Mit építenél? – Építőmérnöki Kar · 4:27 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=2' },
+    kar: { html: 'video/epitokar.html?v=9', mp4: 'video/epitokar.mp4?v=1', title: 'Mit építenél? – Építőmérnöki Kar · 4:27 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=2' },
     // álló rövid videók (csak MP4)
     ra: { port: true, mp4: 'video/reel_a.mp4?v=1', title: 'Mit építenél? · rövid videó · 0:31 · Esc: bezárás', poster: 'img/reel_a.jpg?v=1' },
     rb: { port: true, mp4: 'video/reel_b.mp4?v=1', title: 'Holnap te tervezed · rövid videó · 0:31 · Esc: bezárás', poster: 'img/reel_b.jpg?v=1' },
