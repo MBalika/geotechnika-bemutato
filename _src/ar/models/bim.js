@@ -1,74 +1,55 @@
-// Épülő ház BIM-modellel (Építéstechnológia és építményinformációs menedzsment) – a kész épület digitális ikre „hologramként” áll a telken,
-// a valóság szintről szintre utoléri: födémek és pillérek, a daru emeli az elemeket, aztán jön a gépészet (csövek, légcsatornák), végül a homlokzat.
-import { THREE, Batch, mat, C, SPEC, tree, label, node, trackPos, trackQuat, trackScale, person } from '../lib/common.js';
+// BIM-mel épülő középület (Építéstechnológia és építményinformációs menedzsment): a Néprajzi Múzeum a Városligetben (Napur Architect, megnyílt 2022-ben).
+// Két ívesen emelkedő szárny, a tetejükön bejárható tetőkert; az épület nagy része a föld alatt van; az üveghomlokzat előtt néprajzi motívumokból
+// szerkesztett fém raszter. A modell elöl a talajt és a pinceszinteket metszi. Animáció (22 s): a BIM-modell ütemei szerint épül fel – résfalas
+// munkagödör és alaplemez, pinceszintek, a két szárny vasbeton szerkezete, homlokzat, tetőkert –, közben két toronydaru dolgozik.
+// A méretek (hossz kb. 240 m, a szárnyvégek magassága kb. 22 m) és a belső szerkezet arányos becslések, nem tervadatok.
+import { THREE, Batch, mat, C, SPEC, label, node, trackScale, person } from '../lib/common.js';
+import { at, sideExtrude, towerCrane, tree2, lamp, plaque } from '../lib/kit2.js';
 export const FILE = 'bim-epitkezes';
-const K = 1 / 150;
-const S0 = [0.001, 0.001, 0.001], S1 = [1, 1, 1], SY0 = [1, 0.001, 1];
+const K = 1 / 480;
 
 export function build({ lang }) {
-  const root = new THREE.Group(); root.name = 'bim';
-  const B = new Batch('telek'); const tracks = [], T = 24;
+  const hu = lang !== 'en', root = new THREE.Group(); root.name = 'neprajzi';
+  const B = new Batch('liget'), tracks = [], T = 22, X0 = -150, X1 = 150, Z0 = -70, ZF = 30, YB = -16, L = 120, W = 54, HT = 22, XC = 18, BD = -10.5;
   const box = (b, m, xa, xb, ya, yb, za, zb) => { if (xb > xa && yb > ya && zb > za) b.box(xb - xa, yb - ya, zb - za, m, (xa + xb) / 2, (ya + yb) / 2, (za + zb) / 2); };
-  const X0 = -34, X1 = 34, Z0 = -26, Z1 = 26;
-  for (const [ya, yb, col] of [[-8, -3, C.clay], [-3, -0.8, C.sand], [-0.8, 0, C.fill]]) box(B, mat(col), X0, X1, ya, yb, Z0, Z1);
-  box(B, mat('#b8a98c'), X0, X1, 0, 0.2, Z0, Z1); box(B, mat(C.grass), X0, X1, 0, 0.25, Z1 - 5, Z1); box(B, mat(C.asphalt), X0, X1, 0, 0.3, Z1 - 4.2, Z1 - 0.4);
-  for (let x = X0 + 1; x < X1; x += 2.6) box(B, mat('#e9e6df'), x, x + 2.3, 0.2, 2.2, Z1 - 5.4, Z1 - 5.3); // kerítés
-  // konténerirodák, anyagdepó
-  for (let k = 0; k < 3; k++) { B.boxB(6, 2.6, 2.4, mat(k === 1 ? '#2f6db5' : C.white), -26, 0.2 + (k === 2 ? 2.6 : 0), -18 + (k === 1 ? 2.6 : 0) + (k === 2 ? 1.3 : 0)); }
-  for (let k = 0; k < 4; k++) B.boxB(7, 0.3, 3, mat(C.concrete), 22, 0.2 + k * 0.32, -16);
-  const FX0 = -12, FX1 = 12, FZ0 = -9, FZ1 = 9, FH = 3.4, NF = 6; // az épület: 24 × 18 m, 6 szint
-  box(B, mat(C.concreteDark), FX0 - 0.5, FX1 + 0.5, 0, 0.5, FZ0 - 0.5, FZ1 + 0.5); // alaplemez
-  // ---- a BIM-modell: áttetsző lila „hologram” + élek ----
-  const holo = node(root, 'bim_modell'); const hb = new Batch('holo'); const hm = mat(SPEC.eti, { op: 0.07, em: SPEC.eti, ei: 0.5, ds: true });
-  box(hb, hm, FX0, FX1, 0.5, 0.5 + NF * FH, FZ0, FZ1); const em = mat(SPEC.eti, { em: SPEC.eti, ei: 0.9 });
-  for (let f = 0; f <= NF; f++) { const y = 0.5 + f * FH; for (const [a, b] of [[[FX0, y, FZ0], [FX1, y, FZ0]], [[FX1, y, FZ0], [FX1, y, FZ1]], [[FX1, y, FZ1], [FX0, y, FZ1]], [[FX0, y, FZ1], [FX0, y, FZ0]]]) hb.rod(a, b, 0.07, em, 4); }
-  for (const x of [FX0, FX1]) for (const z of [FZ0, FZ1]) hb.rod([x, 0.5, z], [x, 0.5 + NF * FH, z], 0.07, em, 4);
-  hb.build(holo); const tH = 1.4 + NF * 2.0 + 0.4 + 2.4 + 2.4; // a homlokzat után a modell „feloldódik”: a valóság utolérte
-  tracks.push(trackScale(holo, [0, 0.4, 1.2, tH, tH + 0.8, T], [SY0, SY0, S1, S1, SY0, SY0])); holo.scale.set(...SY0);
-  // ---- a valós épület szintenként ----
-  const tF = (f) => 1.4 + f * 2.0;
-  for (let f = 0; f < NF; f++) { const y0 = 0.5 + f * FH; const n = node(root, 'szint', [0, y0, 0]); const fb = new Batch('szint');
-    for (let x = FX0 + 0.4; x <= FX1; x += 6) for (let z = FZ0 + 0.4; z <= FZ1; z += 6) box(fb, mat('#9e9a93'), x - 0.3, x + 0.3, 0, FH - 0.3, z - 0.3, z + 0.3);
-    box(fb, mat('#b3aea5'), FX0, FX1, FH - 0.3, FH, FZ0, FZ1); box(fb, mat(C.concreteDark), -2.5, 2.5, 0, FH, -1.5, 3); // födém, lépcsőház-mag
-    fb.build(n); tracks.push(trackScale(n, [0, tF(f) - 0.01, tF(f), tF(f) + 1.2, T - 0.4, T], [S0, S0, SY0, S1, S1, S0])); }
-  const tM = tF(NF) + 0.4; // gépészet
-  const mep = node(root, 'gepeszet'); const mb = new Batch('mep');
-  for (let f = 0; f < NF; f++) { const y = 0.5 + f * FH + FH - 0.75; mb.rod([FX0 + 1, y, -6], [FX1 - 1, y, -6], 0.32, mat('#4f8dff'), 8); mb.rod([FX0 + 1, y - 0.1, 6], [FX1 - 1, y - 0.1, 6], 0.25, mat('#e0523f'), 8);
-    box(mb, mat('#c0c7cf', { m: 0.4 }), FX0 + 1, FX1 - 1, y - 0.3, y + 0.3, -0.9, 0.1); box(mb, mat('#f4c430'), FX0 + 1, FX1 - 1, y + 0.25, y + 0.38, 7.5, 7.8); }
-  for (const [x, z, c] of [[8, -6, '#4f8dff'], [8, 6, '#e0523f'], [9.5, -0.4, '#c0c7cf']]) mb.rod([x, 0.5, z], [x, 0.5 + NF * FH, z], 0.3, mat(c), 8);
-  mb.build(mep); tracks.push(trackScale(mep, [0, tM - 0.01, tM, tM + 1.6, T - 0.4, T], [S0, S0, SY0, S1, S1, S0]));
-  const tG = tM + 2.4; // homlokzat
-  const fac = node(root, 'homlokzat'); const gb = new Batch('fac'); const gl = mat('#7fa6c8', { op: 0.55, r: 0.15, m: 0.2 }), fr = mat('#3a3f46');
-  for (let f = 0; f < NF; f++) { const y0 = 0.5 + f * FH; box(gb, gl, FX0, FX1, y0 + 0.1, y0 + FH - 0.35, FZ1 - 0.05, FZ1 + 0.05); box(gb, gl, FX1 - 0.05, FX1 + 0.05, y0 + 0.1, y0 + FH - 0.35, FZ0, FZ1); box(gb, gl, FX0 - 0.05, FX0 + 0.05, y0 + 0.1, y0 + FH - 0.35, FZ0, FZ1); box(gb, gl, FX0, FX1, y0 + 0.1, y0 + FH - 0.35, FZ0 - 0.05, FZ0 + 0.05); }
-  for (let x = FX0; x <= FX1; x += 3) box(gb, fr, x - 0.08, x + 0.08, 0.5, 0.5 + NF * FH, FZ1 - 0.1, FZ1 + 0.12);
-  { const yT = 0.5 + NF * FH; box(gb, mat('#cfcac0'), FX0, FX1, yT, yT + 0.2, FZ0, FZ1); for (const [xa, xb, za, zb] of [[FX0 - 0.3, FX1 + 0.3, FZ0 - 0.3, FZ0 + 0.2], [FX0 - 0.3, FX1 + 0.3, FZ1 - 0.2, FZ1 + 0.3], [FX0 - 0.3, FX0 + 0.2, FZ0, FZ1], [FX1 - 0.2, FX1 + 0.3, FZ0, FZ1]]) box(gb, mat(SPEC.eti), xa, xb, yT, yT + 0.8, za, zb); }
-  gb.build(fac); tracks.push(trackScale(fac, [0, tG - 0.01, tG, tG + 2.0, T - 0.4, T], [S0, S0, SY0, S1, S1, S0]));
-  // ---- toronydaru: a gém elfordul a depó és az épület között, a horog emeli az elemet ----
-  const CX = 18, CZ = 6, CH = 30; B.boxB(1.6, CH, 1.6, mat(C.yellow), CX, 0.2, CZ); B.boxB(4, 0.8, 4, mat(C.concreteDark), CX, 0.2, CZ);
-  const slew = node(root, 'gem', [CX, CH + 0.2, CZ]); const sb = new Batch('gem'); sb.box(40, 1.1, 1.1, mat(C.yellow), 8, 0.6, 0); sb.boxB(6, 2.4, 2.6, mat(C.concreteDark), -9, 0, 0); sb.boxB(2.2, 2.2, 2.2, mat(C.glassDark), 0.8, -2.4, 1.5); sb.boxB(1.4, 4, 1.4, mat(C.yellow), 0, 1.1, 0); sb.build(slew);
-  const trolley = node(slew, 'futomacska', [16, 0, 0]); const tb2 = new Batch('fm'); tb2.box(1.6, 0.6, 1.6, mat(C.dark), 0, -0.1, 0); tb2.build(trolley);
-  const hookN = node(trolley, 'horog', [0, -10, 0]); const kb = new Batch('horog'); kb.box(0.5, 0.6, 0.5, mat(C.dark), 0, 0, 0); kb.box(6, 0.35, 2.6, mat(C.concrete), 0, -0.8, 0); kb.build(hookN);
-  const rope = node(trolley, 'kotel'); const rm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 1, 4), mat(C.dark)); rm.position.y = -0.5; rope.add(rm);
-  // a gém szöge: a depó (22, −16) és az épület (0, 0) iránya; körönként 2 s
-  const ang = (x, z) => Math.atan2(-(z - CZ), x - CX); const aD = ang(22, -16), aB = ang(0, 0); const rD = Math.hypot(22 - CX, -16 - CZ), rB = Math.hypot(CX, CZ);
-  const ts = [], qs = [], tp = [], hp = [], rp = [];
-  for (let f = 0; f <= NF; f++) { const t0 = tF(f) - 2.0 + 0.2; if (t0 < 0) { ts.push(0); qs.push([0, aB, 0]); tp.push([rB, 0, 0]); hp.push([0, -6, 0]); rp.push([1, 6, 1]); continue; }
-    const yTop = 0.5 + f * FH - (CH + 0.2) + 2.5; // az épület aktuális teteje a gémhez képest
-    ts.push(t0, t0 + 0.5, t0 + 0.8, t0 + 1.4, t0 + 1.7); qs.push([0, aB, 0], [0, aD, 0], [0, aD, 0], [0, aB, 0], [0, aB, 0]); tp.push([rB, 0, 0], [rD, 0, 0], [rD, 0, 0], [rB, 0, 0], [rB, 0, 0]);
-    hp.push([0, -8, 0], [0, -8, 0], [0, -(CH - 1.4), 0], [0, -8, 0], [0, yTop, 0]); rp.push([1, 8, 1], [1, 8, 1], [1, CH - 1.4, 1], [1, 8, 1], [1, -yTop, 1]); }
-  ts.push(T); qs.push([0, aB, 0]); tp.push([rB, 0, 0]); hp.push([0, -6, 0]); rp.push([1, 6, 1]);
-  tracks.push(trackQuat(slew, ts, qs), trackPos(trolley, ts, tp), trackPos(hookN, ts, hp), trackScale(rope, ts, rp));
-  slew.rotation.y = aB; trolley.position.set(rB, 0, 0); hookN.position.set(0, -6, 0); rope.scale.set(1, 6, 1);
-  // emberek: egy építésvezető tablettel (rajta a BIM-modell), két munkás
-  person(B, 6, 14, Math.PI + 0.4, { tablet: true, y: 0.2, vest: '#c6f432' }); person(B, -15, 11, 0.5, { y: 0.2 }); person(B, 20, -12, -2, { y: 0.2 });
-  for (const [x, z] of [[-30, 22], [-22, 22.5], [26, 22], [31, 21.5]]) tree(B, x, z, 5, 0.25);
+  const S1 = [1, 1, 1], SY = [1, 0.001, 1], S0 = [0.001, 0.001, 0.001], stage = (n, t0, t1, from = SY) => { tracks.push(trackScale(n, [0, t0, t1, T], [from, from, S1, S1])); };
+  const roofY = (x) => HT * Math.pow(Math.max(0, (Math.abs(x) - XC) / (L - XC)), 1.7);
+  const wedge = (s, dTop, dBot, w, xa = XC, xb = L) => { const pts = [], N = 14; for (let i = 0; i <= N; i++) { const x = xa + (xb - xa) * i / N; pts.push([s * x, Math.max(0, roofY(x) + dTop)]); } for (let i = N; i >= 0; i--) { const x = xa + (xb - xa) * i / N; pts.push([s * x, Math.max(0, roofY(x) + dBot)]); } if (s < 0) pts.reverse(); return sideExtrude(pts, w); };
+  // ---- talaj (elöl metszve), a Liget gyepe, sétányok, fák ----
+  for (const [ya, yb, col] of [[YB, -9, '#77706a'], [-9, -3, C.gravel], [-3, 0, '#a08d77']]) { box(B, mat(col), X0, X1, ya, yb, Z0, -W / 2 - 1); box(B, mat(col), X0, -L - 5, ya, yb, -W / 2 - 1, ZF); box(B, mat(col), L + 5, X1, ya, yb, -W / 2 - 1, ZF); if (ya < BD - 1.2) box(B, mat(col), -L - 5, L + 5, ya, Math.min(yb, BD - 1.2), -W / 2 - 1, ZF); }
+  box(B, mat('#8fbf6a', { r: 1 }), X0, X1, 0, 0.15, Z0, -W / 2 - 1); box(B, mat('#8fbf6a', { r: 1 }), X0, -L - 5, 0, 0.15, -W / 2 - 1, ZF); box(B, mat('#8fbf6a', { r: 1 }), L + 5, X1, 0, 0.15, -W / 2 - 1, ZF); box(B, mat('#d3cdbf', { r: 0.95 }), X0, X1, 0.15, 0.2, -W / 2 - 9, -W / 2 - 3);
+  let sd = 3; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647; for (let i = 0; i < 46; i++) { const x = X0 + 6 + rnd() * (X1 - X0 - 12), z = Z0 + 4 + rnd() * (-W / 2 - 14 - Z0); tree2(B, x, z, 11 + rnd() * 6, 0.15, { c1: rnd() < 0.5 ? '#4f8a40' : '#5a9647' }); }
+  for (const x of [-136, 138]) for (const z of [-10, 12]) tree2(B, x, z, 12, 0.15); for (let x = -140; x <= 140; x += 28) lamp(B, x, -W / 2 - 2.4, 0.2, 6);
   B.build(root);
-  const clips = [new THREE.AnimationClip('bim', T, tracks)];
-  const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
-    label(G, hu ? 'BIM-modell: az épület\ndigitális ikre' : 'BIM model: the digital\ntwin of the building', [FX0, 0.5 + NF * FH, FZ1], [FX0 - 8, 0.5 + NF * FH + 8, FZ1 + 6], SPEC.eti, K);
-    label(G, hu ? 'Gépészet: csövek, légcsatornák' : 'Building services: pipes and ducts', [FX1, 8, 6], [FX1 + 9, 12, 14], '#4f8dff', K);
-    label(G, hu ? 'Toronydaru' : 'Tower crane', [CX, CH, CZ], [CX + 8, CH + 6, CZ + 8], C.yellow, K);
-    label(G, hu ? 'Tablettel a helyszínen' : 'Tablet on site', [6, 1.9, 14], [12, 6, 20], '#c6f432', K);
+  // ---- 1. ütem: résfalas munkagödör, alaplemez ----
+  const conc = mat('#d5d1c8', { r: 0.9 }), concD = mat('#b9b5ad', { r: 0.9 }), glass = mat('#7fb0c8', { r: 0.12, m: 0.4, op: 0.82 }), lace = mat('#cfc3a4', { r: 0.5, m: 0.5 });
+  { const n = node(root, 'utem1_godor', [0, BD - 1.2, 0]), b = new Batch('godor'); box(b, concD, -L - 5, L + 5, 0, 1.2, -W / 2 - 1, ZF); box(b, concD, -L - 5, L + 5, 1.2, -BD + 1.2, -W / 2 - 1, -W / 2); for (const s of [-1, 1]) box(b, concD, s > 0 ? L + 4 : -L - 5, s > 0 ? L + 5 : -L - 4, 1.2, -BD + 1.2, -W / 2, ZF); b.build(n); stage(n, 0.4, 2.6); }
+  // ---- 2. ütem: pinceszintek (födémek, pillérek, kiállítóterek a metszetben) ----
+  { const n = node(root, 'utem2_pince', [0, BD, 0]), b = new Batch('pince'); for (const y of [5.0, -BD - 0.5]) box(b, conc, -L - 4, L + 4, y, y + 0.5, -W / 2, ZF); for (let x = -L; x <= L; x += 12) for (const z of [ZF - 1, 12, -6]) for (const y0 of [0, 5.5]) box(b, conc, x - 0.4, x + 0.4, y0, y0 + 4.9, z - 0.4, z + 0.4);
+    for (let x = -L + 6; x < L; x += 24) { box(b, mat(['#c98a2e', '#b33a2e', '#2f6db5', '#5a6a3a'][Math.abs(Math.round(x / 24)) % 4], { r: 0.8 }), x - 3, x + 3, 0, 2.6, 16, 22); box(b, mat('#f2f3f1'), x + 5, x + 6.5, 5.5, 8.2, 14, 20); } box(b, mat('#e9e4d8'), -L - 4, L + 4, 0, -BD, -W / 2 + 0.02, -W / 2 + 0.3);
+    for (const [x, z, r] of [[-70, 24, 1], [-40, 18, 2.5], [10, 25, 0.4], [60, 20, 4]]) person(b, x, z, r, { y: 0, vest: '#3a5f8a', helmet: '#5a4632', shirt: '#3a5f8a' }); b.build(n); stage(n, 2.8, 5.6); }
+  // ---- 3. ütem: a két szárny vasbeton szerkezete (födémek az ív alatt, pillérek), a középső tér burkolata ----
+  for (const s of [-1, 1]) { const n = node(root, 'utem3_szerkezet'), b = new Batch('szerk'); b.mesh(wedge(s, -0.9, -1.5, W - 2), conc, [0, 0, ZF - W / 2]);
+    for (let f = 1; f * 4.4 < HT - 2; f++) { const y = f * 4.4, xs = XC + (L - XC) * Math.pow((y + 2.2) / HT, 1 / 1.7); box(b, conc, s > 0 ? xs : -L + 1, s > 0 ? L - 1 : -xs, y - 0.25, y + 0.25, ZF - W + 1.5, ZF - 1.5); }
+    for (let x = XC + 14; x < L; x += 12) for (const z of [ZF - 2.5, ZF - W / 2, ZF - W + 2.5]) box(b, conc, s * x - 0.45, s * x + 0.45, 0, Math.max(0.2, roofY(x) - 1.2), z - 0.45, z + 0.45); box(b, concD, s > 0 ? L - 1.2 : -L, s > 0 ? L : -L + 1.2, 0, HT - 1, ZF - W + 1, ZF - 1); b.build(n); stage(n, 5.8, 10); }
+  { const n = node(root, 'utem3_ter'), b = new Batch('ter'); box(b, mat('#cfc9bb', { r: 0.95 }), -L - 4, L + 4, 0, 0.25, -W / 2, ZF); b.build(n); stage(n, 5.6, 6.2); }
+  // ---- 4. ütem: üveghomlokzat és a fém raszter (a szárnyak oldalán és végén) ----
+  for (const s of [-1, 1]) { const n = node(root, 'utem4_homlokzat'), b = new Batch('homl'); b.mesh(wedge(s, -1.5, -200, W - 0.6), glass, [0, 0, ZF - W / 2]); b.mesh(wedge(s, -0.7, -4.6, W + 0.3), lace, [0, 0, ZF - W / 2]);
+    for (let x = XC + 8; x < L; x += 4) { const hh = roofY(x) - 4.6; if (hh > 1) for (const z of [ZF + 0.12, ZF - W - 0.12]) box(b, lace, s * x - 0.12, s * x + 0.12, 0.25, hh, z - 0.06, z + 0.06); }
+    box(b, glass, s > 0 ? L - 0.3 : -L, s > 0 ? L : -L + 0.3, 0.25, HT - 1.5, ZF - W + 0.3, ZF - 0.3); for (let z = ZF - W + 3; z < ZF - 1; z += 4) box(b, lace, s * L - 0.1, s * L + 0.1, 0.25, HT - 1, z - 0.1, z + 0.1); b.build(n); stage(n, 10.2, 13.4); }
+  // ---- 5. ütem: tetőkert (gyep, lépcsős sétány, korlát), fák a téren, látogatók ----
+  for (const s of [-1, 1]) { const n = node(root, 'utem5_tetokert'), b = new Batch('teto'); b.mesh(wedge(s, 0.25, -0.9, W), mat('#86b862', { r: 1 }), [0, 0, ZF - W / 2]); b.mesh(wedge(s, 0.32, 0.2, 5), mat('#d9d3c5', { r: 0.95 }), [0, 0, ZF - W / 2]);
+    for (const z of [ZF - 0.3, ZF - W + 0.3]) b.mesh(wedge(s, 1.3, 1.2, 0.1), mat('#3a3f45'), [0, 0, z]); for (const [x, z, r] of [[50, 6, 1], [72, 10, 2], [95, 2, 3], [104, 14, 0.5], [60, -8, 4]]) person(b, s * x, z, r, { y: roofY(x) + 0.3, vest: s > 0 ? '#b33a2e' : '#2f6db5', helmet: '#5a4632', shirt: '#8a5a3a' }); b.build(n); stage(n, 13.6, 16.4); }
+  { const n = node(root, 'utem5_ter'), b = new Batch('terfak'); for (const [x, z] of [[-8, -14], [8, -14], [0, 6], [-12, 16], [12, 18]]) tree2(b, x, z, 7, 0.25); for (const [x, z, r, c] of [[-4, 10, 1, '#3a5f8a'], [5, 12, 2.5, '#b33a2e'], [2, -6, 0.5, '#5a6a3a'], [-10, 2, 4, '#6a4a8a']]) person(b, x, z, r, { y: 0.25, vest: c, shirt: c, helmet: '#5a4632' }); b.build(n); stage(n, 16.6, 17.6, S0); }
+  // ---- toronydaruk (csak építés közben) ----
+  for (const [x, z, ry] of [[-70, -W / 2 - 12, 0.5], [78, -W / 2 - 12, 2.4]]) { const n = node(root, 'daru'), b = new Batch('daru'); towerCrane(at(b, x, 0.15, z, ry), { H: 44, J: 46, T: 28, HY: 26 }); b.build(n); tracks.push(trackScale(n, [0, 0.2, 0.8, 17.4, 18.2, T], [S0, S0, S1, S1, S0, S0])); n.scale.set(...S0); }
+  plaque(root, hu ? 'Néprajzi Múzeum · Városliget, Budapest' : 'Museum of Ethnography · City Park, Budapest', X0 + 3, YB + 1.4, ZF + 0.1, K, { h: 0.021 });
+  const clips = [new THREE.AnimationClip('epites', T, tracks)];
+  const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const h = lg === 'hu';
+    label(G, h ? 'Két ívesen emelkedő szárny,\na tetejükön bejárható tetőkert' : 'Two wings rising in an arc,\nwith a walkable roof garden on top', [84, roofY(84) + 0.4, 6], [96, 44, 14], '#86b862', K);
+    label(G, h ? 'Az épület nagy része a föld alatt van' : 'Most of the building is below ground', [-30, -5, ZF], [-70, -26, ZF + 10], '#d5d1c8', K);
+    label(G, h ? 'Üveghomlokzat fém raszterrel:\nnéprajzi motívumok pixelekből' : 'Glass façade behind a metal lattice:\nethnographic motifs made of pixels', [-96, 8, ZF], [-148, 34, ZF + 8], '#cfc3a4', K);
+    label(G, h ? 'BIM: az épület digitális modellje\nütemenként követi az építést' : 'BIM: the digital model of the building\nfollows construction stage by stage', [0, 0.3, 4], [-20, 40, 10], SPEC.eti, K);
     return G; };
-  return { root, labels, clips, k: K, posterView: [30, 24], posterT: 8.5, labelT: 21 };
+  return { root, labels, clips, k: K, posterView: [24, 22], posterT: T - 1, labelT: T - 1 };
 }

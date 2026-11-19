@@ -1,64 +1,68 @@
-// Felhőkarcoló szélben, hangolt tömegcsillapítóval (Tartószerkezetek) – a szél lengésbe hozza a 300 m-es tornyot; a csúcsban
-// függő óriás inga (TMD) előbb rögzítve van, majd „bekapcsolják”: az inga ellenfázisban leng, a torony kilengése a töredékére csökken.
-// A kilengés szemléltetésre erősen felnagyítva.
-import { THREE, Batch, mat, C, SPEC, label, node, trackPos, trackQuat } from '../lib/common.js';
+// Magas építmény a szélben (Szerkezet-építőmérnöki): a pécsi tévétorony a Misina-tetőn (535 m), Magyarország legmagasabb épülete.
+// A vasbeton torony a szélben kileng (a csúcsán viharban akár fél métert is); a modellen a kilengés erősen felnagyítva látszik.
+// A toronyban nincs lengéscsillapító: a hangolt tömegcsillapító elvét külön, a parkolóban álló szemléltető eszköz mutatja (ellenfázisban lengő tömeg).
+// Adatok: 197 m (1995 óta, eredetileg 191 m), átadás 1973; külső vasbeton henger 12 m átmérővel 92 m-ig, belső 5 m átmérővel 135 m-ig;
+// presszó 75 m-en, nyitott kilátóterasz 80 m-en; 22 m átmérőjű, 4 m vastag alaplemez (Wikipedia, epiteszforum.hu, tvtoronypecs.hu).
+// A torony részletei (a kosár szintjei, a talpépület, a hegytető elrendezése) fényképek emléke alapján egyszerűsítettek.
+import { THREE, Batch, mat, C, SPEC, label, node, trackPos, trackQuat, person } from '../lib/common.js';
+import { at, car2, bus2, tree2, lamp, plaque } from '../lib/kit2.js';
+import { slope } from '../lib/bme.js';
 export const FILE = 'felhokarcolo-tmd';
-const K = 1 / 1000;
+const K = 1 / 450;
 
 export function build({ lang }) {
-  const root = new THREE.Group(); root.name = 'felhokarcolo';
-  const B = new Batch('varos'); const tracks = [], T = 20, FPS = 15;
-  const box = (b, m, xa, xb, ya, yb, za, zb) => { if (xb > xa && yb > ya && zb > za) b.box(xb - xa, yb - ya, zb - za, m, (xa + xb) / 2, (ya + yb) / 2, (za + zb) / 2); };
-  // ---- város alap ----
-  const L = 100; for (const [ya, yb, col] of [[-30, -12, C.clay], [-12, -4, C.gravel], [-4, 0, C.fill]]) box(B, mat(col), -L, L, ya, yb, -L, L);
-  box(B, mat('#5a5f66'), -L, L, 0, 0.5, -L, L); // utcák
-  let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const bc = ['#f4f3ef', '#dfe6ee', '#e8dccb', '#cfd8e3', '#f2e3c4', '#d9e6d2'];
-  for (let i = -4; i < 4; i++) for (let j = -4; j < 4; j++) { const x0 = i * 25 + 3, z0 = j * 25 + 3; if (Math.abs(x0 + 9.5) < 30 && Math.abs(z0 + 9.5) < 30) continue;
-    if ((i * 7 + j * 3) % 9 === 0) { box(B, mat(C.grass), x0, x0 + 19, 0.5, 1.0, z0, z0 + 19); for (let k = 0; k < 3; k++) { const tx = x0 + 4 + rnd() * 11, tz = z0 + 4 + rnd() * 11; B.cyl(0.6, 0.8, 4, mat(C.trunk), tx, 3, tz, [0, 0, 0], 6); B.mesh(new THREE.IcosahedronGeometry(4, 0), mat(C.tree), [tx, 8, tz]); } continue; }
-    for (const [dx, dz] of [[0, 0], [10, 0], [0, 10], [10, 10]]) { const hh = 8 + rnd() * (Math.hypot(i, j) < 3 ? 55 : 30); B.boxB(8.5, hh, 8.5, mat(bc[Math.floor(rnd() * bc.length)]), x0 + dx + 4.5, 0.5, z0 + dz + 4.5); } }
-  box(B, mat('#d9d6cf'), -26, 26, 0.5, 1.2, -26, 26); // tér a torony körül
-  for (const [x, z] of [[-20, 20], [20, 20], [-20, -20], [20, -20], [0, 22], [22, 0]]) { B.cyl(0.6, 0.8, 4, mat(C.trunk), x, 3, z, [0, 0, 0], 6); B.mesh(new THREE.IcosahedronGeometry(3.4, 0), mat(C.tree), [x, 7.5, z]); }
+  const hu = lang !== 'en', root = new THREE.Group(); root.name = 'tevetorony';
+  const B = new Batch('hegy'), tracks = [], T = 16, PER = 4;
+  const conc = mat('#d9d5cb', { r: 0.9 }), concD = mat('#bdb8ad', { r: 0.9 }), glass = mat('#3c5f78', { r: 0.15, m: 0.5 }), dark = mat('#2b2f33'), red = mat('#d8452f', { r: 0.6 }), white = mat('#f2f3f1', { r: 0.6 });
+  // ---- a Misina-tető: erdős hegykúp, a tetején burkolt tér, parkoló, út ----
+  const ringP = (r, n = 28, sq = 1) => Array.from({ length: n }, (_, i) => { const a = -i / n * Math.PI * 2, w = 1 + 0.06 * Math.sin(3 * a + r); return [Math.cos(a) * r * w, Math.sin(a) * r * w * sq]; });
+  const RR = [34, 46, 62, 80, 96], HY = [0, -5, -13, -23, -34], forest = mat('#528a44', { r: 1 }), soilM = mat('#8c7a62', { r: 1 });
+  for (let i = 0; i < 4; i++) slope(B, i % 2 ? mat('#5a934a', { r: 1 }) : forest, ringP(RR[i + 1]), HY[i + 1], ringP(RR[i]), HY[i]);
+  B.cyl(RR[4] * 1.0, RR[4] * 1.0, 6, soilM, 0, HY[4] - 3, 0, [0, 0, 0], 28); B.cyl(RR[0] + 0.5, RR[0] + 2, 0.4, mat('#cfc9bb', { r: 0.95 }), 0, -0.2, 0, [0, 0, 0], 28);
+  B.cyl(15, 15, 0.12, mat('#4a4e55'), 16, 0.06, 14, [0, 0, 0], 20); B.box(60, 0.3, 7, mat('#4a4e55'), 52, -4.6, 22, [0, -0.18, -0.17]); B.box(40, 0.3, 7, mat('#4a4e55'), 82, -17, 34, [0, -0.5, -0.3]);
+  let sd = 5; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 130; i++) { const a = rnd() * Math.PI * 2, t = rnd(), r = 38 + t * 54, y = HY[0] + (HY[4] - HY[0]) * Math.pow((r - 34) / 62, 1.25); const x = Math.cos(a) * r, z = Math.sin(a) * r; if (x > 30 && z > 8 && z < 44) continue; tree2(B, x, z, 8 + rnd() * 5, y - 0.6, { c1: rnd() < 0.5 ? '#4f8a40' : '#5a9647', c2: '#6aa653' }); }
+  for (const [x, z] of [[-26, 14], [-22, -20], [6, -30], [-30, -4]]) tree2(B, x, z, 9, 0);
+  // talpépület a torony körül, lépcső, autók, busz, emberek
+  B.cyl(13, 13, 5.2, conc, 0, 2.6, 0, [0, 0, 0], 24); B.cyl(13.6, 13.6, 0.5, concD, 0, 5.45, 0, [0, 0, 0], 24); for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; if (Math.abs(a - Math.PI / 4) < 0.2) continue; B.box(1.6, 2.2, 0.2, glass, Math.sin(a) * 13.02, 2.8, Math.cos(a) * 13.02, [0, a, 0]); }
+  B.box(3, 2.8, 0.3, dark, Math.sin(Math.PI / 4) * 13.05, 1.4, Math.cos(Math.PI / 4) * 13.05, [0, Math.PI / 4, 0]);
+  for (const [x, z, r, c] of [[10, 22, 0.3, '#b33a2e'], [15, 23.5, 0.3, '#e9ecef'], [20, 22.5, 0.3, '#2f6db5'], [25, 19, 1.2, '#3a3f46'], [27, 13, 1.5, '#c8ccd0']]) car2(at(B, x, 0.12, z, r), c, { lite: true }); bus2(at(B, 16, 0.12, 7.5, 0.1), '#e9ecef');
+  for (const [x, z, r, v] of [[12, 14, 1, '#3a5f8a'], [13.2, 14.6, 2.5, '#b33a2e'], [8, 17, 0.5, '#5a6a3a'], [20, 15, 4, '#8a5a3a'], [-16, 8, 1.5, '#6a4a8a']]) person(B, x, z, r, { y: 0.1, vest: v, helmet: '#5a4632', shirt: v });
+  for (const [x, z] of [[4, 20], [26, 26], [30, 6]]) lamp(B, x, z, 0, 6);
+  // alaplemez a metszett hegy belsejében nem látszik: a torony tövénél jelzés
   B.build(root);
-  // ---- a lengés (egyszerű modell): kilengés a csúcson, rögzített, majd bekapcsolt TMD ----
-  const w = 2 * Math.PI / 4.2, tOn = 9.5, A0 = 22, A1 = 4, R0 = 7.5;
-  const Au = (t) => t < 1 ? A0 * t : t < tOn ? A0 : A1 + (A0 - A1) * Math.exp(-(t - tOn) / 1.3);
-  const u = (t) => Au(t) * Math.sin(w * t); // a csúcs kilengése (m)
-  const r = (t) => t < tOn ? 0 : R0 * Math.min(1, (t - tOn) / 1.4) * Math.sin(w * t - Math.PI / 2 - Math.PI / 2); // az inga a toronyhoz képest, ellenfázisban
-  const times = []; for (let i = 0; i <= T * FPS; i++) times.push(i / FPS);
-  // ---- a torony: 10 szegmens, mindegyik dől és eltolódik (konzol alakú lengés) ----
-  const H = 300, N = 10, SH = H / N, Y0 = 1.2; const phi = (y) => Math.pow(y / H, 2);
-  const glass = mat('#7fa6c8', { r: 0.18, m: 0.25 }), fin = mat('#e9edf1'), acc = mat(SPEC.tart);
-  const width = (y) => 44 - 16 * (y / H); // enyhén karcsúsodik
-  for (let i = 0; i < N; i++) { const ya = i * SH, yb = ya + SH, wa = width(ya), wb = width(yb), wm = (wa + wb) / 2;
-    const n = node(root, 'torony', [0, Y0 + ya, 0]); const b = new Batch('t');
-    b.mesh(new THREE.CylinderGeometry(wb / Math.SQRT2, wa / Math.SQRT2, SH, 4, 1, i === N - 1), i === N - 1 ? mat('#9cc2e0', { op: 0.32, r: 0.1, ds: true }) : glass, [0, SH / 2, 0], [0, Math.PI / 4, 0]);
-    for (let f = 0; f < SH; f += 6) b.mesh(new THREE.CylinderGeometry(width(ya + f) / Math.SQRT2 + 0.6, width(ya + f) / Math.SQRT2 + 0.6, 0.8, 4, 1), fin, [0, f + 0.4, 0], [0, Math.PI / 4, 0]);
-    for (const [sx, sz] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) b.rod([sx * wa / 2, 0, sz * wa / 2], [sx * wb / 2, SH, sz * wb / 2], 1.4, acc, 6);
-    if (i === N - 1) { // a csúcsszint: elöl nyitott „kirakat”, benne az inga
-      b.mesh(new THREE.CylinderGeometry(wb / Math.SQRT2 + 1, wb / Math.SQRT2 + 1, 2, 4, 1), fin, [0, SH + 1, 0], [0, Math.PI / 4, 0]);
-      b.mesh(new THREE.CylinderGeometry(0.8, 1.6, 40, 8), mat(C.steel, { m: 0.5, r: 0.4 }), [0, SH + 22, 0]); }
-    b.build(n);
-    tracks.push(trackPos(n, times, times.map(t => [u(t) * phi(ya), Y0 + ya, 0])), trackQuat(n, times, times.map(t => [0, 0, -Math.atan2(u(t) * (phi(yb) - phi(ya)), SH)]))); }
-  // ---- az inga: arany gömb kötélen; a csúcs belsejében függ, kívülről a „kirakaton” át látszik ----
-  const yP = Y0 + H - 2, LP = 16; // felfüggesztési pont és kötélhossz
-  const pend = node(root, 'inga', [0, yP, 0]); const pb = new Batch('inga');
-  pb.mesh(new THREE.SphereGeometry(6.2, 20, 14), mat('#e2b53b', { m: 0.7, r: 0.25 }), [0, -LP, 0]);
-  for (const a of [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2]) pb.rod([Math.cos(a) * 1.2, 0, Math.sin(a) * 1.2], [Math.cos(a) * 2.5, -LP + 3.5, Math.sin(a) * 2.5], 0.35, mat(C.dark));
-  pb.build(pend);
-  tracks.push(trackPos(pend, times, times.map(t => [u(t) * phi(H - 2), yP, 0])), trackQuat(pend, times, times.map(t => [0, 0, Math.asin(Math.max(-0.6, Math.min(0.6, r(t) / LP)))])));
-  // ---- szél: fehér csíkok fújnak át balról jobbra ----
-  for (let k = 0; k < 22; k++) { const y = 40 + rnd() * 290, z = -60 + rnd() * 120, len = 16 + rnd() * 18, ph = rnd();
-    const nd = node(root, 'szel'); const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, len, 5), mat('#ffffff', { op: 0.55, em: '#ffffff', ei: 0.3 })); m.rotation.z = Math.PI / 2; m.name = 'szelcsik'; nd.add(m);
-    const xa = -110, xb = 110, per = T / (6 + Math.floor(rnd() * 4)); const xs = (t) => xa + (xb - xa) * (((t / per) + ph) % 1);
-    const tt = [0], vv = [xs(0)]; for (let c = (1 - ph) * per; c < T - 0.01; c += per) { tt.push(c - 0.001, c); vv.push(xb, xa); } tt.push(T); vv.push(xs(0));
-    tracks.push(trackPos(nd, tt, vv.map(x => [x, y, z])));
-    nd.position.set(xs(0), y, z); }
+  // ---- a torony négy, egymásra épülő szakasza (a kilengéshez láncba fűzve) ----
+  const SEG = [[0, 0.004], [72, 0.006], [92, 0.012], [135, 0.02]], nodes = []; let parent = root, y0 = 0;
+  SEG.forEach(([y, amp], i) => { const n = node(parent, 'torony' + i, [0, y - y0, 0]); nodes.push(n); parent = n; y0 = y;
+    const tt = [], ee = []; for (let t = 0; t <= T + 1e-6; t += 0.5) { tt.push(t); ee.push([0, 0, -amp * 2.2 * (0.35 + Math.sin(t / PER * Math.PI * 2)) * (0.75 + 0.25 * Math.sin(t / T * Math.PI * 2))]); } tracks.push(trackQuat(n, tt, ee)); });
+  { const b = new Batch('torzs'); b.cyl(6, 6.6, 72, conc, 0, 36, 0, [0, 0, 0], 24); for (const a of [0, 2.1, 4.2]) b.box(0.5, 62, 0.12, dark, Math.sin(a) * 6.3, 36, Math.cos(a) * 6.3, [0, a, 0]); for (let y = 12; y < 70; y += 12) b.cyl(6.35, 6.35, 0.25, concD, 0, y, 0, [0, 0, 0], 24); b.build(nodes[0]); }
+  { const b = new Batch('kosar');                                                                                                        // 72–92 m: presszó, kilátóterasz, műszaki szintek
+    b.cyl(9.5, 6.2, 3, conc, 0, 0.5, 0, [0, 0, 0], 24); b.cyl(10.4, 10.4, 3.4, glass, 0, 3.7, 0, [0, 0, 0], 28); b.cyl(11.6, 11.2, 0.7, conc, 0, 5.75, 0, [0, 0, 0], 28); b.cyl(10.8, 10.8, 0.25, concD, 0, 1.95, 0, [0, 0, 0], 28);
+    for (let i = 0; i < 28; i++) { const a = i / 28 * Math.PI * 2; b.box(0.12, 3.4, 0.2, concD, Math.sin(a) * 10.45, 3.7, Math.cos(a) * 10.45, [0, a, 0]); b.box(0.08, 1.2, 0.08, dark, Math.sin(a) * 11.3, 6.7, Math.cos(a) * 11.3); }
+    b.mesh(new THREE.TorusGeometry(11.3, 0.06, 5, 28), dark, [0, 7.3, 0], [Math.PI / 2, 0, 0]);
+    b.cyl(7.4, 7.4, 6.5, conc, 0, 9.3, 0, [0, 0, 0], 24); for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2; b.box(0.5, 6.5, 0.7, concD, Math.sin(a) * 7.6, 9.3, Math.cos(a) * 7.6, [0, a, 0]); }
+    b.cyl(9.2, 8.8, 0.8, conc, 0, 12.9, 0, [0, 0, 0], 24); b.cyl(6.4, 6.4, 6.4, conc, 0, 16.5, 0, [0, 0, 0], 24); b.cyl(7.6, 7.2, 0.6, concD, 0, 19.9, 0, [0, 0, 0], 24);
+    for (const [a, y] of [[0.4, 15], [2.2, 16.5], [3.9, 15.5], [5.3, 17]]) b.mesh(new THREE.CylinderGeometry(1.5, 1.5, 0.5, 14), white, [Math.sin(a) * 6.9, y, Math.cos(a) * 6.9], [Math.PI / 2, 0, -a]);
+    for (const [x, z, r] of [[9, 4, 1], [-8, 6, 2], [3, -10, 4]]) person(b, x, z, r, { y: 6.1, vest: '#b33a2e', helmet: '#3a3f46', shirt: '#b33a2e' }); b.build(nodes[1]); }
+  { const b = new Batch('felso'); b.cyl(2.5, 2.9, 43, conc, 0, 21.5, 0, [0, 0, 0], 16); for (const y of [13, 28, 42.6]) { b.cyl(4.2, 4.2, 0.4, concD, 0, y, 0, [0, 0, 0], 16); b.mesh(new THREE.TorusGeometry(4.1, 0.05, 5, 16), dark, [0, y + 1.2, 0], [Math.PI / 2, 0, 0]); }
+    for (const [a, y] of [[1, 8], [4, 20], [2.5, 34]]) b.box(1.2, 2.4, 0.6, white, Math.sin(a) * 3.1, y, Math.cos(a) * 3.1, [0, a, 0]); b.build(nodes[2]); }
+  { const b = new Batch('antenna'); for (let i = 0; i < 8; i++) b.cyl(1.0 - (i + 1) * 0.07, 1.0 - i * 0.07, 7.6, i % 2 ? white : red, 0, 3.8 + i * 7.6, 0, [0, 0, 0], 10); b.cyl(0.08, 0.08, 1.4, dark, 0, 61.5, 0, [0, 0, 0], 5); b.mesh(new THREE.SphereGeometry(0.4, 8, 6), mat('#e8452c', { em: '#e8452c', ei: 0.9 }), [0, 61, 0]); b.build(nodes[3]); }
+  // ---- szél: sodródó felhők ----
+  for (const [y, z, ph, s] of [[150, -40, 0, 1], [120, 46, 0.4, 0.8], [176, 20, 0.7, 0.7]]) { const n = node(root, 'felho'), b = new Batch('felho'), m = mat('#ffffff', { op: 0.85, r: 1 }); for (const [dx, dy, r] of [[0, 0, 9], [9, 1, 7], [-9, 0.5, 6.5], [3, 4, 6]]) b.mesh(new THREE.IcosahedronGeometry(r * s, 1), m, [dx * s, dy * s, 0], [0, 0, 0], [1.4, 0.7, 1]); b.build(n);
+    const xa = -95, xb = 95, tw = (1 - ph) * T; tracks.push(trackPos(n, [0, tw - 0.001, tw, T], [[xa + (xb - xa) * ph, y, z], [xb, y, z], [xa, y, z], [xa + (xb - xa) * ph, y, z]])); n.position.set(xa + (xb - xa) * ph, y, z); }
+  // ---- a hangolt tömegcsillapító elve: szemléltető eszköz a parkolóban (keret + inga, ellenfázisban leng) ----
+  { const fx = 30, fz = 30, b = new Batch('demo'), st = mat('#3a3f45'); for (const s of [-1, 1]) { b.rod([fx + s * 3, 0.1, fz - 1.5], [fx, 9, fz], 0.14, st, 6); b.rod([fx + s * 3, 0.1, fz + 1.5], [fx, 9, fz], 0.14, st, 6); } b.box(7, 0.25, 4, concD, fx, 0.22, fz); b.build(root);
+    const pn = node(root, 'inga', [fx, 9, fz]), pb = new Batch('inga'); pb.rod([0, 0, 0], [0, -5.6, 0], 0.07, st, 5); pb.mesh(new THREE.SphereGeometry(1.1, 14, 10), mat(SPEC.tart, { r: 0.4, m: 0.3 }), [0, -6.2, 0]); pb.build(pn);
+    const tt = [], ee = []; for (let t = 0; t <= T + 1e-6; t += 0.5) { tt.push(t); ee.push([0, 0, 0.42 * Math.sin(t / PER * Math.PI * 2 + Math.PI / 2)]); } tracks.push(trackQuat(pn, tt, ee)); }
+  plaque(root, hu ? 'Pécsi tévétorony · Misina-tető' : 'Pécs TV Tower · Misina Hill', -26, HY[4] - 5.6, RR[4] + 0.6, K, { h: 0.021 });
   const clips = [new THREE.AnimationClip('szel', T, tracks)];
-  const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const hu = lg === 'hu';
-    label(G, hu ? 'Hangolt tömegcsillapító:\nóriás inga a csúcsban' : 'Tuned mass damper:\na giant pendulum at the top', [0, yP - LP, 0], [70, yP - 10, 40], '#e2b53b', K);
-    label(G, hu ? 'A szél lengésbe hozza\na 300 m-es tornyot' : 'Wind makes the\n300 m tower sway', [-60, 230, 0], [-95, 260, 30], '#9fb7cc', K);
-    label(G, hu ? 'Vasbeton mag, acél\nsarokoszlopok' : 'Concrete core,\nsteel corner columns', [16, 120, 16], [70, 140, 50], SPEC.tart, K);
+  const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const h = lg === 'hu';
+    label(G, h ? '197 m: Magyarország legmagasabb épülete (1973)' : '197 m: the tallest building in Hungary (1973)', [0, 196, 0], [14, 204, 10], '#d8452f', K);
+    label(G, h ? 'A csúcs viharban akár fél métert is kileng\n(a modellen erősen felnagyítva)' : 'In a storm the tip sways by up to half a metre\n(greatly exaggerated in the model)', [1, 150, 0], [26, 158, 10], SPEC.tart, K);
+    label(G, h ? 'Presszó 75 m-en, kilátóterasz 80 m-en' : 'Café at 75 m, open viewing deck at 80 m', [11, 78, 3], [30, 92, 12], '#3c5f78', K);
+    label(G, h ? 'Vasbeton törzs: kívül 12 m,\nbelül 5 m átmérő' : 'Reinforced-concrete shaft: 12 m outer,\n5 m inner diameter', [-6, 40, 2], [-78, 62, 12], '#d9d5cb', K);
+    label(G, h ? 'A hangolt lengéscsillapító elve\n(a toronyban nincs ilyen)' : 'Principle of a tuned mass damper\n(the tower has none)', [30, 3, 30], [44, 22, 40], SPEC.tart, K);
+    label(G, h ? 'Misina-tető, 535 m' : 'Misina Hill, 535 m', [-30, 0, 14], [-84, 20, 30], '#5f9a4a', K);
     return G; };
-  return { root, labels, clips, k: K, posterView: [24, 14], posterT: 5.25, labelT: 16 };
+  return { root, labels, clips, k: K, posterView: [24, 14], posterT: 1, labelT: 1 };
 }
