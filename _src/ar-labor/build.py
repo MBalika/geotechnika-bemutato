@@ -17,11 +17,11 @@ HU = {
     'brand': 'AR Labor', 'brand2': 'Mit építenél?',
     'nav_models': 'Modellek', 'nav_specs': 'Specializációk', 'nav_back': 'Geotechnika bemutató', 'nav_aula': 'Aula mód',
     'prev': 'Előző modell', 'next': 'Következő modell', 'hint': 'Forgasd · nagyíts · próbáld ki a gombot',
-    'ar': 'Nézd meg a szobádban', 'pause': 'Szünet', 'labels': 'Feliratok', 'rotate': 'Körbeforgatás', 'fullscreen': 'Teljes képernyő',
-    'abrand': '<b>BME Építőmérnöki Kar</b> · AR Labor', 'aqr_t': 'Próbáld ki AR-ben!', 'aqr_s': 'Olvasd be, és tedd le a modellt az asztalra.',
+    'ar': 'Nézd meg térben', 'close': 'Bezárás', 'ars_t': 'Nézd meg térben', 'xr_exit': 'Kilépés', 'xr_move': 'Áthelyezés', 'xr_reset': 'Eredeti méret', 'xr_lbl': 'Feliratok', 'pause': 'Szünet', 'labels': 'Feliratok', 'rotate': 'Körbeforgatás', 'fullscreen': 'Teljes képernyő',
+    'abrand': '<b>BME Építőmérnöki Kar</b> · AR Labor', 'aqr_t': 'Nézd meg térben!', 'aqr_s': 'Olvasd be a telefonoddal: a modell megjelenik előtted az asztalon vagy a padlón.',
     'aula_exit': 'Kilépés az aula módból',
     'models_h': 'Válassz <em>modellt!</em>',
-    'qr_t': 'Vidd magaddal', 'qr_s': 'Olvasd be a telefonoddal, és nézd meg a modellt AR-ben a saját asztalodon.',
+    'qr_t': 'Nézd meg térben', 'qr_s': 'Olvasd be a telefonoddal: a modell megjelenik előtted az asztalon vagy a padlón, és körbejárhatod.',
     'specs_h': 'Melyik <em>a tiéd?</em>',
     'foot': 'BME Építőmérnöki Kar · AR Labor. A modellek oktatási célú, egyszerűsített makettek.',
     'foot_link': 'Vissza a geotechnika-bemutatóhoz',
@@ -30,6 +30,11 @@ HU = {
   'T': {
     'all': 'Mind', 'soon': 'Hamarosan', 'learn': 'Ezt tanulod', 'play': 'Lejátszás', 'pause': 'Szünet',
     'manual': 'Te irányítasz · {s} mp múlva továbblépek', 'fsHint': 'F: teljes képernyő · ←/→: léptetés',
+    'arGo': 'Indítás', 'arCopy': 'Link másolása', 'arCopied': 'Kimásolva – illeszd be a böngészőbe',
+    'arNo': 'Ebben a böngészőben nem indul a térbeli nézet. Nyisd meg az oldalt Chrome-ban (Android) vagy Safariban (iPhone): a menüben válaszd a „Megnyitás böngészőben” pontot, vagy másold ki a linket.',
+    'arSteps': {'xr': ['Nézz a padlóra vagy egy asztalra, és mozgasd lassan a telefont.', 'Megjelenik egy zöld keret: ekkora lesz a modell, és oda kerül. Koppints, ha jó a hely.', 'Két ujjal nagyíthatod és forgathatod, el is távolodhatsz tőle, és körbejárhatod.'],
+                'ql': ['Nézz a padlóra vagy egy asztalra, és mozgasd lassan a telefont.', 'A modell leül az első felismert felületre, egy ujjal odébb húzhatod.', 'Két ujjal nagyíthatod és forgathatod, el is távolodhatsz tőle, és körbejárhatod.']},
+    'xr': {'scan': 'Mozgasd lassan a telefont, és nézz a padlóra vagy egy asztalra', 'aim': 'Koppints: ide kerül a modell', 'placed': 'Két ujjal nagyíts és forgass · járd körbe!', 'loading': 'Betöltés…', 'loadErr': 'A modell nem töltődött be', 'dec': ','},
   },
   'BSC': {
     'ep': {'n': 'Építőmérnök BSc', 'd': '8 félév · 5 specializáció'},
@@ -135,18 +140,23 @@ EN_S = {
     'brand': 'AR Lab', 'brand2': 'What would you build?',
     'nav_models': 'Models', 'nav_specs': 'Specialisations', 'nav_back': 'Geotechnics showcase', 'nav_aula': 'Hall mode',
     'prev': 'Previous model', 'next': 'Next model', 'hint': 'Rotate · zoom · try the button',
-    'ar': 'View it in your room', 'pause': 'Pause', 'labels': 'Labels', 'rotate': 'Rotate', 'fullscreen': 'Full screen',
-    'abrand': '<b>BME Faculty of Civil Engineering</b> · AR Lab', 'aqr_t': 'Try it in AR!', 'aqr_s': 'Scan the code and put the model on the table.',
+    'ar': 'See it in AR', 'close': 'Close', 'ars_t': 'See it in AR', 'xr_exit': 'Exit', 'xr_move': 'Move', 'xr_reset': 'Original size', 'xr_lbl': 'Labels', 'pause': 'Pause', 'labels': 'Labels', 'rotate': 'Rotate', 'fullscreen': 'Full screen',
+    'abrand': '<b>BME Faculty of Civil Engineering</b> · AR Lab', 'aqr_t': 'See it in AR!', 'aqr_s': 'Scan it with your phone: the model appears in front of you on the table or the floor.',
     'aula_exit': 'Exit hall mode',
     'models_h': 'Pick a <em>model!</em>',
-    'qr_t': 'Take it with you', 'qr_s': 'Scan it with your phone and view the model in AR on your own desk.',
+    'qr_t': 'See it in AR', 'qr_s': 'Scan it with your phone: the model appears in front of you on the table or the floor, and you can walk around it.',
     'specs_h': 'Which one <em>is yours?</em>',
     'foot': 'BME Faculty of Civil Engineering · AR Lab. The models are simplified, for teaching purposes.',
     'foot_link': 'Back to the geotechnics showcase',
     'langsw': '<span class="lang"><a href="/ar-labor" id="langLink" hreflang="hu">HU</a><span>EN</span></span>',
 }
 EN_T = {'all': 'All', 'soon': 'Coming soon', 'learn': 'You study this', 'play': 'Play', 'pause': 'Pause',
-        'manual': 'You’re in control · moving on in {s} s', 'fsHint': 'F: full screen · ←/→: browse'}
+        'manual': 'You’re in control · moving on in {s} s', 'fsHint': 'F: full screen · ←/→: browse',
+        'arGo': 'Start', 'arCopy': 'Copy link', 'arCopied': 'Copied – paste it into your browser',
+        'arNo': 'This browser can’t start the AR view. Open the page in Chrome (Android) or Safari (iPhone): choose “Open in browser” in the menu, or copy the link.',
+        'arSteps': {'xr': ['Point the phone at the floor or a table and move it slowly.', 'A green frame appears: that is where the model goes and how big it will be. Tap when the spot is right.', 'Pinch to zoom and twist to rotate, step back from it and walk around it.'],
+                    'ql': ['Point the phone at the floor or a table and move it slowly.', 'The model sits down on the first surface found; drag it with one finger to move it.', 'Pinch to zoom and twist to rotate, step back from it and walk around it.']},
+        'xr': {'scan': 'Move the phone slowly and look at the floor or a table', 'aim': 'Tap: the model goes here', 'placed': 'Pinch to zoom, twist to rotate · walk around it!', 'loading': 'Loading…', 'loadErr': 'The model could not be loaded', 'dec': '.'}}
 EN_BSC = {'ep': {'n': 'Civil Engineering BSc', 'd': '8 semesters · 5 specialisations'},
           'fm': {'n': 'Surveying and Land Management Engineering BSc', 'd': '7 semesters · from September 2027'}}
 EN_SPECS = {
@@ -235,10 +245,10 @@ NEW_HU = {
     'hook': 'Két egyforma épületmodell egy rázóasztalon – az egyik gumisarukon áll.',
     'facts': [['2', 'azonos épületmodell'], ['5', 'szint'], ['gumisaru', 'szeizmikus szigetelés']],
     'info': 'A szerkezetvizsgáló laborban hidraulikus munkahenger rázza az asztalt úgy, ahogy a talaj mozog földrengéskor. A mereven lekötött modell szintjei egyre nagyobbat lengenek, a szinteltolódás a szerkezetet terheli. A gumisarukra állított, szeizmikusan szigetelt modell alatt az asztal szinte „kicsúszik”: maga az épület alig mozdul. A mozgást gyorsulásmérők és kamerák rögzítik. A tartószerkezet-tervező mérnök így ellenőrzi, mit bír ki az épület. (A csarnok általános szemléltető labor, a mozgás felnagyított.)'},
-  'birtokrendezes': {'name': 'Birtokrendezés – Tihanyi-félsziget', 'act': 'Rendezd a birtokot!', 'orbit': '16deg 54deg 85%', 'labelT': 12,
-    'hook': 'Elszórt, keskeny sávokból összefüggő táblák – ez a földrendező mérnök munkája.',
-    'facts': [['5', 'tulajdonos'], ['54', 'keskeny sáv előtte'], ['5', 'összefüggő tábla utána']],
-    'info': 'Öröklések és adásvételek során a föld egyre keskenyebb, szétszórt sávokra aprózódik: nehéz megközelíteni és gazdaságosan művelni. A birtokrendezés során a földrendező mérnök felméri a területet és a tulajdoni viszonyokat, majd úgy osztja újra, hogy mindenki ugyanannyi értékű, de egybefüggő táblát kapjon, új dűlőutakkal. A modell a Tihanyi-félszigetet mutatja a Belső-tóval, a Külső-tóval és az apátsággal; a parcellák kitaláltak, csak az elvet szemléltetik (a félsziget nagy része védett terület).'},
+  'birtokrendezes': {'name': 'Birtokrendezés – Tihany, Belső-tó', 'act': 'Rendezd a birtokot!', 'orbit': '-14deg 52deg 82%', 'labelT': 1,
+    'hook': 'Keskeny, szétszórt csíkokból összefüggő táblák – ez a földrendező mérnök munkája.',
+    'facts': [['12', 'keskeny csík ma'], ['5', 'tulajdonos'], ['5', 'tábla a rendezés után']],
+    'info': 'A Belső-tótól nyugatra a dűlők ma is keskeny, egymás melletti csíkokból állnak, bennük levendula, szőlő és gyep váltakozik. Öröklések és adásvételek során egy-egy gazda földje több, egymástól távoli csíkra aprózódik, amelyeket nehéz megközelíteni és gazdaságosan művelni. A birtokrendezés során a földrendező mérnök felméri a területet és a tulajdoni viszonyokat, majd úgy osztja újra, hogy mindenki ugyanakkora területű, de egybefüggő táblát kapjon, és minden tábla útról megközelíthető legyen. A modellen a tó, a nádas, a földutak, az erdők, a házak és a mai csíkok a térkép és a műholdkép szerint vannak; a tulajdonosok és az új táblák kitaláltak, csak az elvet szemléltetik. Térképalap: © OpenStreetMap-közreműködők.'},
   'autopalya-csomopont': {'name': 'M1–M7 elágazás, Budaörs', 'act': 'Indítsd a forgalmat!', 'orbit': '14deg 58deg 75%', 'labelT': 4,
     'hook': 'Itt válik szét a Bécs és a Balaton felé vezető autópálya.',
     'facts': [['M1', 'Győr, Bécs felé'], ['M7', 'a Balaton felé'], ['1:8000', 'a modell méretaránya']],
@@ -286,9 +296,9 @@ NEW_EN = {
   'foldrenges-razoasztal': ('An earthquake in the lab', 'Shake it!', 'Two identical building models on one shake table – one of them stands on rubber bearings.',
     [['2', 'identical building models'], ['5', 'storeys'], ['rubber bearings', 'base isolation']],
     'In the structures laboratory a hydraulic actuator shakes the table the way the ground moves in an earthquake. The storeys of the rigidly fixed model sway more and more, and the storey drift strains the structure. Under the base-isolated model on rubber bearings the table almost slides away: the building itself hardly moves. Accelerometers and cameras record the motion. This is how the structural engineer checks what a building can withstand. (The hall is a generic illustrative lab and the motion is exaggerated.)'),
-  'birtokrendezes': ('Land consolidation – Tihany Peninsula', 'Consolidate the land!', 'From scattered, narrow strips to compact blocks – the work of the land management engineer.',
-    [['5', 'owners'], ['54', 'narrow strips before'], ['5', 'compact blocks after']],
-    'Through inheritance and sales, land breaks up into ever narrower, scattered strips that are hard to reach and uneconomical to farm. In land consolidation the land management engineer surveys the area and the ownership, then redistributes it so that everyone receives land of the same value in one compact block, with new farm tracks. The model shows the Tihany Peninsula with the Inner Lake, the Outer Lake and the abbey; the parcels are invented and only illustrate the principle (most of the peninsula is protected land).'),
+  'birtokrendezes': ('Land consolidation – Tihany, Inner Lake', 'Consolidate the land!', 'From scattered, narrow strips to compact blocks – the work of the land management engineer.',
+    [['12', 'narrow strips today'], ['5', 'owners'], ['5', 'blocks after consolidation']],
+    'West of the Inner Lake the fields still consist of narrow strips side by side, with lavender, vines and grass alternating. Through inheritance and sales one farmer’s land ends up in several strips far from each other, which are hard to reach and uneconomical to farm. In land consolidation the land management engineer surveys the area and the ownership, then redistributes it so that everyone receives the same area in one compact block, and every block can be reached from a track. The lake, the reed bed, the farm tracks, the woods, the houses and today’s strips follow the map and the satellite image; the owners and the new blocks are invented and only illustrate the principle. Map data: © OpenStreetMap contributors.'),
   'autopalya-csomopont': ('M1–M7 motorway split, Budaörs', 'Start the traffic!', 'This is where the motorways to Vienna and to Lake Balaton part ways.',
     [['M1', 'towards Győr and Vienna'], ['M7', 'towards Lake Balaton'], ['1:8000', 'scale of the model']],
     'From Budapest the M1 and the M7 start on a shared carriageway and split between Budaörs and Törökbálint. At such a junction the transport engineer designs the number of lanes, the curves and the slip roads so that heavy traffic divides safely and without congestion. The landscape model also shows Kő-hegy hill with its chapel, the Törökugrató rock, the stores along the motorway, Budaörs airfield and the railway. Heights are exaggerated and the vehicles are enlarged for visibility.'),
@@ -330,5 +340,12 @@ def page(L, out):
     s = s.replace('/*DATA*/null', json.dumps(data, ensure_ascii=False)).replace('/*GUARD*/', guard.strip())
     (root / 'ar-labor' / out).write_text(s, encoding='utf-8'); print(out, len(s))
 
+import shutil; shutil.copy(here / 'xr.js', root / 'ar-labor' / 'xr.js')
 page(HU, 'index.html')
 page(EN, 'en.html')
+
+# nyomtatható QR-lap (A4): címlap az alkalmazás kódjával, utána modellenként egy kártya (?m=…&ar=1: a telefonon rögtön az AR-indító nyílik meg)
+SITE = 'https://bme-epitomernok.vercel.app'
+qd = {'site': SITE, 'M': [{'id': m['id'], 'name': m['name'], 'hook': m['hook'], 'img': m.get('img') or m['id'], 'sp': HU['SPECS'][m['sp']]['short'], 'c': SPEC_C[m['sp']]} for m in HU['M']]}
+q = (here / 'qr.tpl.html').read_text(encoding='utf-8'); assert '/*DATA*/null' in q
+(root / 'ar-labor' / 'qr.html').write_text(q.replace('/*DATA*/null', json.dumps(qd, ensure_ascii=False)), encoding='utf-8'); print('qr.html', len(qd['M']), 'modell')

@@ -1,49 +1,85 @@
-// Birtokrendezés (Földmérő- és földrendező mérnöki): a Tihanyi-félsziget a Balatonban, OpenStreetMap szerinti partvonallal (észak hátul):
-// a Belső-tó és a Külső-tó, keleten Tihany az apátsággal, a déli csúcson a rév. A félsziget belsejében egy mezőgazdasági terület mutatja a
-// birtokrendezés elvét. Animáció (20 s): a szétaprózott, keskeny, öt tulajdonos között elszórt parcellákból tulajdonosonként egy-egy összefüggő
-// tábla lesz, új dűlőutakkal; közben a komp átkel Szántód felé.
-// SZEMLÉLTETŐ PÉLDA: a parcellák kitaláltak, nem a valós tihanyi birtokviszonyokat mutatják (a félsziget nagy része védett terület).
-// Méretarány 1:14 000; a dombok kb. háromszoros túlemeléssel, az apátság, a házak és a komp felnagyítva.
-import { THREE, Batch, mat, C, SPEC, label, node, trackPos, trackScale } from '../lib/common.js';
+// Birtokrendezés (Földmérő- és földrendező mérnöki): Tihany, a Belső-tó és a tőle nyugatra fekvő dűlők.
+// Alap: OpenStreetMap (a tó, a nádas, a földutak, az utcák, az épületek, az erdők) és a műholdkép (a mai táblák, csíkok, fák helye),
+// lásd data/tihany_data.js és data/tihany_gen.js (a /home/claude/tihany/gen.py készíti). Észak hátul (−z), a néző délről nézi.
+// A birtokrendezés a tótól nyugatra, három, földutakkal határolt blokkban történik: ma 12 keskeny csík (levendula, szőlő, gyep),
+// öt tulajdonos között szétszórva; utána mindenki egy összefüggő táblát kap, ugyanakkora területtel. A tulajdonosok kitaláltak (szemléltető példa),
+// a csíkok helye és művelési ága a műholdképről való.
+// Animáció (20 s): ma → kié melyik csík (színek) → rendezés után (színek) → az új táblák, új határjelekkel → ma.
+// Méretarány 1:1800, domborzat nélkül; a fák és a házak valós helyükön, jelzésszerű méretben.
+import { THREE, Batch, mat, label, node, trackPos, trackScale, soilBlock } from '../lib/common.js';
 import { planPrism, plaque } from '../lib/kit2.js';
+import { ribbon, house } from '../lib/terep.js';
+import { G } from '../data/tihany_gen.js';
 export const FILE = 'birtokrendezes';
-const K = 1 / 14000;
+const K = 1 / 1800;
+const OWN = { A: '#d6b04e', B: '#cf7a4e', C: '#5d8fc4', D: '#9579bd', E: '#4ea58c' };
+const KIND = { szolo: '#7f9a55', lev: '#8f93a8', gyep: '#a9b97c', parlag: '#b7ad83' };
+
+function inPoly(x, z, poly) { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, zi] = poly[i], [xj, zj] = poly[j]; if ((zi > z) !== (zj > z) && x < (xj - xi) * (z - zi) / (zj - zi) + xi) c = !c; } return c; }
+const prism = (B, polys, y0, y1, m) => { for (const p of polys) if (p.length > 2) B.add(planPrism(p, y0, y1), m); };
+const rows = (B, segs, y, h, w, m) => { for (const [x0, z0, x1, z1] of segs) { const L = Math.hypot(x1 - x0, z1 - z0); B.box(L, h, w, m, (x0 + x1) / 2, y + h / 2, (z0 + z1) / 2, [0, -Math.atan2(z1 - z0, x1 - x0), 0]); } };
 
 export function build({ lang }) {
   const hu = lang !== 'en', root = new THREE.Group(); root.name = 'tihany';
-  const B = new Batch('taj'), tracks = [], T = 20, S = 18.7, P = (px, py) => [(px - 300) * S, (py - 235) * S], X0 = -3180, X1 = 3180, Z0 = -4020, Z1 = 4020, BOT = -260, LY = 22;
-  const land = mat('#b4cf86', { r: 1 }), forest = mat('#5f9a4a', { r: 1 }), forestD = mat('#4f8a40', { r: 1 });
-  B.box(X1 - X0, -BOT - 60, Z1 - Z0, mat('#9a8a6a', { r: 1 }), 0, (BOT - 60) / 2, 0); B.box(X1 - X0, 60, Z1 - Z0, mat(C.water, { op: 0.86, r: 0.12 }), 0, -30, 0);
-  const PEN = [[240, 185], [275, 172], [310, 200], [350, 212], [400, 240], [425, 280], [428, 330], [440, 372], [415, 430], [380, 432], [330, 420], [290, 395], [255, 360], [240, 320], [236, 270], [245, 225], [232, 200]].map(([a, b]) => P(a, b));
-  const MAIN = [[130, 270], [170, 235], [232, 200], [240, 185], [275, 172], [300, 150], [350, 100], [400, 60], [470, 40], [470, 20], [130, 20]].map(([a, b]) => P(a, b)).map(([x, z]) => [Math.max(X0, Math.min(X1, x)), Math.max(Z0, Math.min(Z1, z))]);
-  for (const poly of [PEN, MAIN]) { B.add(planPrism(poly, -58, LY), land); B.add(planPrism(poly, -59, 1), mat('#d9cfa8', { r: 1 })); }
-  // dombok (túlemelve) és erdők; a két tó
-  const dome = (px, py, r, hh, m) => { const [x, z] = P(px, py); B.mesh(new THREE.SphereGeometry(r, 16, 6, 0, Math.PI * 2, 0, Math.PI / 2), m, [x, LY - 2, z], [0, px, 0], [1, hh / r, 0.85]); };
-  for (const [px, py, r, hh, f] of [[247, 338, 520, 300, 1], [280, 365, 430, 230, 1], [320, 385, 420, 220, 1], [362, 388, 400, 260, 1], [345, 297, 330, 230, 0], [398, 262, 250, 190, 0], [410, 320, 300, 180, 1], [262, 290, 300, 160, 1], [415, 392, 260, 150, 1], [200, 120, 700, 260, 1], [330, 60, 800, 300, 1], [160, 190, 420, 180, 1]]) dome(px, py, r, hh, f ? (px % 2 ? forest : forestD) : land);
-  { const [x, z] = P(300, 281); B.mesh(new THREE.CylinderGeometry(1, 1, 3, 24), mat(C.water, { r: 0.1 }), [x, LY + 1, z], [0, 0.3, 0], [430, 1, 300]); const [x2, z2] = P(262, 232); B.mesh(new THREE.CylinderGeometry(1, 1, 3, 24), mat('#7fb39a', { r: 0.6 }), [x2, LY + 1, z2], [0, -0.4, 0], [520, 1, 330]); B.mesh(new THREE.CylinderGeometry(1, 1, 3.4, 20), mat(C.water, { r: 0.1 }), [x2 + 40, LY + 1, z2 + 20], [0, -0.4, 0], [250, 1, 130]); }
-  // Tihany házai a keleti parton, az apátság a dombon (felnagyítva), rév a déli csúcson, Balatonfüred jelzésszerűen
-  let sd = 4; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647; const houses = (px, py, rx, ry, n) => { for (let i = 0; i < n; i++) { const [x, z] = P(px + (rnd() - 0.5) * rx, py + (rnd() - 0.5) * ry), a = rnd() * 3; B.box(70, 34, 46, mat('#f4f1e6', { r: 0.9 }), x, LY + 60 + 17, z, [0, a, 0]); B.box(76, 16, 52, mat(i % 2 ? '#a65a40' : '#9c4f38'), x, LY + 60 + 42, z, [0, a, 0]); } };
-  dome(392, 285, 330, 60, land); houses(392, 288, 28, 44, 34); houses(408, 420, 16, 14, 8); houses(232, 250, 10, 20, 8); { for (let i = 0; i < 40; i++) { const [x, z] = P(330 + rnd() * 120, 40 + rnd() * 70); if (z > P(0, 150 - (x / S + 300 - 300) * 0)[1]) continue; B.box(80, 40, 56, mat('#f4f1e6'), x, LY + 20, z, [0, rnd() * 3, 0]); B.box(86, 16, 62, mat('#9c4f38'), x, LY + 48, z, [0, rnd(), 0]); } }
-  { const [x, z] = P(401, 264), y = LY + 185, w = mat('#f6f1de', { r: 0.9 }), rf = mat('#a65a40'); B.box(260, 130, 110, w, x - 40, y + 65, z, [0, 0.2, 0]); B.box(270, 50, 120, rf, x - 40, y + 150, z, [0, 0.2, 0]); for (const s of [-1, 1]) { B.box(56, 250, 56, w, x + 100, y + 125, z + s * 42 - 22, [0, 0.2, 0]); B.mesh(new THREE.SphereGeometry(34, 10, 8), mat('#6f9a86', { m: 0.3 }), [x + 100, y + 262, z + s * 42 - 22], [0, 0, 0], [1, 1.3, 1]); B.mesh(new THREE.ConeGeometry(16, 70, 8), mat('#6f9a86', { m: 0.3 }), [x + 100, y + 330, z + s * 42 - 22]); }
-    B.box(330, 90, 260, mat('#efe6cf'), x - 60, y + 45, z + 190, [0, 0.2, 0]); B.box(340, 30, 270, rf, x - 60, y + 100, z + 190, [0, 0.2, 0]); }
-  { const [x, z] = P(408, 431); B.box(160, 14, 50, mat('#cfc6b4'), x + 30, LY - 16, z + 60, [0, 1.2, 0]); }
+  const [X0, X1, Z0, Z1] = G.AREA, B = new Batch('taj'), tracks = [], T = 20, Y = 0.3, flat = () => 0;
+  let sd = 9; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  // alap: talajtömb, a teteje gyep
+  const BOT = -soilBlock(B, X0, X1, Z0, Z1, [[2.5, '#6b5640'], [16, '#cbb07a'], [22, '#b09a7c']], '#9fb06a', Y);
+  // mezők, gyepek, erdők talaja (a műholdkép szerinti színekkel), sorok a szőlőkben
+  for (const f of G.MEZO) prism(B, f.p, Y, f.k === 'erdo' ? 0.7 : 0.8, mat(f.c, { r: 1 }));
+  rows(B, G.ROWS.szolo, 0.8, 0.9, 1.3, mat('#4b6f35', { r: 1 }));
+  rows(B, G.ROWS.lev, 0.8, 0.8, 1.5, mat('#8d88b8', { r: 1 }));
+  // a falu kertjei, a Külső-tó nádasa, a Belső-tó nádasa, vize és szigete
+  prism(B, G.FALU, Y, 0.75, mat('#a7b487', { r: 1 }));
+  const reedM = mat('#8f975a', { r: 1 }), tuftM = mat('#a3a866', { r: 1 }), tuftD = mat('#7d8749', { r: 1 });
+  prism(B, G.KULSO, Y, 1.0, reedM); for (const [o, hs] of G.NADASH) B.add(planPrism(o, Y, 1.4, hs), reedM);
+  const tufts = (polys, n, y, holes = []) => { for (const p of polys) { let x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9; for (const [x, z] of p) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); z0 = Math.min(z0, z); z1 = Math.max(z1, z); }
+      let k = 0, tries = 0; const want = Math.round(n * Math.max(0, Math.abs(area(p)) - holes.reduce((a, h) => a + Math.abs(area(h)), 0)) / 10000); while (k < want && tries++ < want * 30) { const x = x0 + rnd() * (x1 - x0), z = z0 + rnd() * (z1 - z0); if (!inPoly(x, z, p) || holes.some(h => inPoly(x, z, h))) continue; k++;
+        B.mesh(new THREE.ConeGeometry(2.2 + rnd() * 1.5, 3.5 + rnd() * 2.5, 5), rnd() < 0.5 ? tuftM : tuftD, [x, y + 2.2, z], [0, rnd() * 6, 0]); } } };
+  const area = (p) => { let a = 0; for (let i = 0, j = p.length - 1; i < p.length; j = i++) a += (p[j][0] + p[i][0]) * (p[j][1] - p[i][1]); return a / 2; };
+  for (const [o, hs] of G.NADASH) tufts([o], 28, 1.4, hs); tufts(G.KULSO, 10, 1.0);
+  prism(B, [G.VIZ], 0, 0.9, mat('#5a9270', { r: 0.42 })); if (G.SZIGET) prism(B, [G.SZIGET], 0, 1.7, mat('#d9d2bd', { r: 1 }));
+  // utak: földutak és a falu utcái
+  for (const l of G.UTAK) ribbon(B, flat, l, 3.6, mat('#cdb98f', { r: 1 }), 0.92);
+  for (const l of G.UTCAK) ribbon(B, flat, l, 6, mat('#8f8e89', { r: 0.9 }), 0.98);
+  // házak az OSM-épületek helyén, az utcához igazítva
+  const walls = ['#efe9dc', '#f3efe4', '#e8e0cf'], roofs = ['#b5563b', '#a24a33', '#8d4b3a', '#9b5a43'];
+  G.HAZ.forEach(([x, z, a], i) => { if (x < X0 + 10 || x > X1 - 10 || z < Z0 + 10 || z > Z1 - 10) return; house(B, x, z, a, 11 + (i % 3) * 2, 8.5, 4.6, walls[i % 3], roofs[i % 4], 0.75); });
+  // fák a műholdképen látható fakoronák helyén
+  const crowns = [mat('#4d7d3a', { r: 1 }), mat('#5a8a43', { r: 1 }), mat('#43703a', { r: 1 })], ico = new THREE.IcosahedronGeometry(1, 0); { // sima normálisok, uv nélkül: így a csúcsok összevonhatók (kisebb USDZ)
+    const ps = ico.attributes.position; ico.setAttribute('normal', ps.clone()); ico.attributes.normal.normalized = false; for (let i = 0; i < ps.count; i++) { const v = new THREE.Vector3().fromBufferAttribute(ps, i).normalize(); ico.attributes.normal.setXYZ(i, v.x, v.y, v.z); } ico.deleteAttribute('uv'); }
+  G.FAK.forEach(([x, z, h], i) => { const r = h * 0.4; B.mesh(ico, crowns[i % 3], [x, 0.8 + h * 0.62, z], [0, i, 0], [r, r * 0.85, r]); });
   B.build(root);
-  // ---- a birtokrendezés területe: előtte (szétaprózott sávok) és utána (tulajdonosonként egy tábla) ----
-  const OWN = ['#f2c417', '#e0703a', '#7fb3e6', '#c9a0dc', '#f4f1c9'], [ax, az] = P(302, 208), [bx, bz] = P(386, 258), W = bx - ax, D = bz - az, YF = LY + 2, cnt = [0, 0, 0, 0, 0];
-  const before = node(root, 'elotte'), bb = new Batch('savok'); for (let cx = 0; cx < 3; cx++) for (let cz = 0; cz < 2; cz++) { const n = 9, horiz = (cx + cz) % 2, x0 = ax + cx * W / 3, z0 = az + cz * D / 2, w = W / 3 - 30, d = D / 2 - 30; for (let i = 0; i < n; i++) { const o = Math.floor(rnd() * 5); cnt[o]++; const m = mat(OWN[o], { r: 1 });
-        if (horiz) bb.box(w, 14, d / n - 5, m, x0 + 15 + w / 2, YF + 7, z0 + 15 + (i + 0.5) * d / n); else bb.box(w / n - 5, 14, d, m, x0 + 15 + (i + 0.5) * w / n, YF + 7, z0 + 15 + d / 2); } }
-  bb.box(W, 4, D, mat('#8a7f5a', { r: 1 }), ax + W / 2, YF + 2, az + D / 2); bb.build(before);
-  const after = node(root, 'utana'), ab = new Batch('tablak'), tot = cnt.reduce((a, b) => a + b, 0); { let x = ax; const order = [0, 1, 2, 3, 4], halfs = [[0, 1], [2, 3, 4]]; let zc = az; for (const grp of halfs) { const gs = grp.reduce((a, o) => a + cnt[o], 0), dd = D * gs / tot; let xx = ax; for (const o of grp) { const ww = W * cnt[o] / gs; ab.box(ww - 34, 14, dd - 34, mat(OWN[o], { r: 1 }), xx + ww / 2, YF + 7, zc + dd / 2); for (let k = 1; k < 6; k++) ab.box(ww - 60, 15, 4, mat('#00000022'.slice(0, 7) === '#000000' ? '#b9a85a' : '#b9a85a', { r: 1 }), xx + ww / 2, YF + 7.4, zc + 17 + k * (dd - 34) / 6); xx += ww; } zc += dd; }
-    ab.box(W, 5, D, mat('#cdbb92', { r: 1 }), ax + W / 2, YF + 2.5, az + D / 2); for (let i = 0; i < 16; i++) ab.mesh(new THREE.IcosahedronGeometry(26, 0), mat('#4f8a40'), [ax + 20 + i * (W - 40) / 15, YF + 34, az - 8]); ab.build(after); }
-  const S1 = [1, 1, 1], SY = [1, 0.001, 1]; tracks.push(trackScale(before, [0, 6, 8, 17, 19, T], [S1, S1, SY, SY, S1, S1]), trackScale(after, [0, 7.5, 9.5, 16.5, 18, T], [SY, SY, S1, S1, SY, SY])); before.scale.set(...SY);
-  // ---- komp a rév és Szántód között ----
-  { const nd = node(root, 'komp'), b = new Batch('komp'); b.box(190, 26, 70, mat('#f2f3f1'), 0, 8, 0); b.box(70, 30, 50, mat('#2f6db5'), -30, 36, 0); b.box(200, 6, 76, mat('#3a3f45'), 0, -4, 0); b.build(nd); const [x0, z0] = P(410, 436), [x1, z1] = P(430, 449); nd.rotation.y = -Math.atan2(z1 - z0, x1 - x0); tracks.push(trackPos(nd, [0, 8, 10, 18, T], [[x0, 4, z0 + 60], [x1, 4, z1], [x1, 4, z1], [x0, 4, z0 + 60], [x0, 4, z0 + 60]])); nd.position.set((x0 + x1) / 2, 4, (z0 + z1) / 2 + 30); }
-  plaque(root, hu ? 'Tihanyi-félsziget · Balaton' : 'Tihany Peninsula · Lake Balaton', X0 + 120, BOT + 40, Z1 + 10, K, { h: 0.021 });
+
+  // ---- a birtokrendezés: négy réteg, ki-be süllyesztve ----
+  const layer = (name) => node(root, name);
+  const mai = layer('ma'), tul = layer('tulajdon'), ujt = layer('uj_tulajdon'), uj = layer('utana');
+  { const b = new Batch('ma'); for (const s of G.MAI) prism(b, s.p, Y, 0.95, mat(s.c, { r: 1 }));
+    rows(b, G.MROWS.szolo, 0.95, 0.9, 1.3, mat('#4b6f35', { r: 1 })); rows(b, G.MROWS.lev, 0.95, 0.8, 1.6, mat('#8d88b8', { r: 1 })); b.build(mai); }
+  const ownLayer = (nd, list, nm) => { const b = new Batch(nm); for (const s of list) prism(b, s.pi, Y, 2.3, mat(OWN[s.o], { r: 0.9 })); b.build(nd);
+    list.forEach((s, i) => { let cx = 0, cz = 0, n = 0; for (const p of s.pi) for (const [x, z] of p) { cx += x; cz += z; n++; } if (!n) return; const off = list.length > 6 ? (i % 2 ? 45 : -45) : 0; // keskeny csíkoknál a címkék váltakozva, a csík mentén eltolva
+      const t = label(nd, s.o, null, [cx / n + 0.563 * off, 2.4, cz / n + 0.826 * off], OWN[s.o], K, { h: 0.0095 }); t.name = nm + '_' + s.o + '_' + i; }); };
+  ownLayer(tul, G.MAI, 'tul'); ownLayer(ujt, G.UJ, 'ujt');
+  { const b = new Batch('utana'), kc = {}; for (const s of G.MAI) kc[s.k.replace('2', '')] ??= s.c; for (const s of G.UJ) prism(b, s.p, Y, 0.95, mat(kc[s.k] || KIND[s.k] || KIND.gyep, { r: 1 }));
+    rows(b, G.UROWS.szolo, 0.95, 0.9, 1.3, mat('#4b6f35', { r: 1 })); rows(b, G.UROWS.lev, 0.95, 0.8, 1.6, mat('#8d88b8', { r: 1 }));
+    // új határjelek a táblák sarkain (fehér cövek piros fejjel)
+    for (const s of G.UJ) for (const p of s.p) for (const [x, z] of p) { b.box(2.6, 8, 2.6, mat('#f4f3ef'), x, 4.9, z); b.box(3.0, 2.6, 3.0, mat('#d8432f'), x, 10.2, z); }
+    b.build(uj); }
+  const ON = [0, 0, 0], OFF = [0, -4, 0], S1 = [1, 1, 1], S0 = [1, 0.001, 1];
+  const vis = (nd, t, v) => { tracks.push(trackPos(nd, t, v.map(a => a ? ON : OFF)), trackScale(nd, t, v.map(a => a ? S1 : S0))); const a = v[0]; nd.position.set(...(a ? ON : OFF)); nd.scale.set(...(a ? S1 : S0)); };
+  vis(mai, [0, 6.5, 7.5, 17.5, 18.5, T], [1, 1, 0, 0, 1, 1]);
+  vis(tul, [0, 2.5, 3.5, 7, 8, T], [0, 0, 1, 1, 0, 0]);
+  vis(ujt, [0, 7.5, 8.5, 12, 13, T], [0, 0, 1, 1, 0, 0]);
+  vis(uj, [0, 12.5, 13.5, 17, 18, T], [0, 0, 1, 1, 0, 0]);
+  plaque(root, hu ? 'Tihany · Belső-tó' : 'Tihany · Inner Lake', X0 + 24, BOT + 4, Z1 + 0.6, K, { h: 0.017 });
   const clips = [new THREE.AnimationClip('rendezes', T, tracks)];
-  const labels = (lg) => { const G = new THREE.Group(); G.name = 'feliratok'; const q = lg === 'hu', L = (t, px, py, y, p, c) => { const [x, z] = P(px, py); label(G, t, [x, y, z], p, c, K); };
-    L(q ? 'Birtokrendezés után: tulajdonosonként\negy tábla, új dűlőutakkal (szemléltető példa)' : 'After land consolidation: one block per owner,\nwith new farm tracks (illustrative example)', 344, 233, LY + 20, [-2900, 900, -1700], SPEC.foldr);
-    L(q ? 'Tihanyi apátság (alapítva 1055-ben)' : 'Tihany Abbey (founded in 1055)', 401, 264, LY + 500, [1500, 1100, -200], '#f6f1de'); L(q ? 'Belső-tó' : 'Inner Lake', 300, 281, LY + 4, [-2900, 500, 600], C.waterDeep); L(q ? 'Külső-tó' : 'Outer Lake', 262, 232, LY + 4, [-3000, 620, -700], '#7fb39a');
-    L(q ? 'Balaton' : 'Lake Balaton', 180, 380, 2, [-2900, 300, 3000], C.waterDeep); L(q ? 'Komp Szántód felé' : 'Ferry to Szántód', 420, 442, 30, [900, 420, 3700], '#2f6db5'); L(q ? 'Balatonfüred' : 'Balatonfüred', 400, 70, LY + 40, [1700, 700, -3500], '#f4f1e6');
-    return G; };
-  return { root, labels, clips, k: K, posterView: [16, 36], posterT: 12, labelT: 12 };
+  const labels = (lg) => { const Gr = new THREE.Group(); Gr.name = 'feliratok'; const q = lg === 'hu', L = (t, a, p, c) => label(Gr, t, a, p, c, K);
+    L(q ? 'Birtokrendezés: a szétszórt keskeny csíkokból\ntulajdonosonként egy tábla (szemléltető példa)' : 'Land consolidation: scattered narrow strips become\none block per owner (illustrative example)', [20, 3, 140], [-120, 170, -90], '#c6f432');
+    L(q ? 'Belső-tó' : 'Inner Lake', [720, 1, 120], [760, 90, 150], '#4f8f78');
+    L(q ? 'Külső-tó, nádas' : 'Outer Lake, reed bed', [-175, 1, -470], [-120, 90, -470], '#8f975a');
+    L(q ? 'Tihany' : 'Tihany village', [960, 6, -440], [960, 110, -440], '#e6dccb');
+    L(q ? 'Levendula' : 'Lavender', [8, 2, 46], [-175, 70, 120], '#8d88b8');
+    L(q ? 'Szőlő' : 'Vineyard', [-22, 2, 67], [-175, 40, 230], '#4b6f35');
+    return Gr; };
+  return { root, labels, clips, k: K, posterView: [-14, 40], posterT: 1, labelT: 1 };
 }
