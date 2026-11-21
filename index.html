@@ -177,6 +177,10 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 .vmodal.phone .vf{aspect-ratio:auto; width:100%; height:100%; border-radius:0; box-shadow:none}
 .vmodal.phone .vbox video{object-fit:contain}
 .vmodal.phone .vbar{display:none}
+.vbig{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); z-index:3; white-space:nowrap; display:flex; flex-direction:column; align-items:center; gap:14px; background:none; border:0; color:#fff; font:800 18px/1 'BarlowC', 'Barlow Condensed', sans-serif; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.vbig span{width:96px; height:96px; border-radius:50%; background:#c6f432; box-shadow:0 0 40px rgba(198,244,50,.6); position:relative}
+.vbig span::after{content:""; position:absolute; left:38px; top:28px; border-style:solid; border-width:20px 0 20px 32px; border-color:transparent transparent transparent #0b0e12}
+.vbig[hidden]{display:none}
 .vctl{position:absolute; z-index:3; top:calc(10px + env(safe-area-inset-top)); left:0; right:0; display:flex; justify-content:center; flex-wrap:wrap; gap:8px; padding:0 calc(10px + env(safe-area-inset-right)) 0 calc(10px + env(safe-area-inset-left)); transition:opacity .35s}
 .vctl[hidden]{display:none}
 .vctl.idle{opacity:0; pointer-events:none}
@@ -271,7 +275,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 
 <div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-label="Ami a felszín alatt van – animáció">
   <div class="vbox">
-    <div class="vf"><iframe id="vmFrame" title="Ami a felszín alatt van – geotechnika bemutató animáció" allow="autoplay; fullscreen" allowfullscreen></iframe><video id="vmVideo" playsinline controls preload="none" poster="img/poster.jpg?v=3" hidden></video><div class="vctl" id="vmCtl" hidden><button type="button" id="vcBack" aria-label="Vissza 10 másodpercet">−10 s</button><button type="button" id="vcPlay" aria-label="Lejátszás vagy szünet">❚❚</button><button type="button" id="vcFwd" aria-label="Előre 10 másodpercet">+10 s</button><button type="button" id="vcRate" aria-label="Lejátszási sebesség">1×</button><button type="button" id="vcFs" aria-label="Teljes képernyő">⛶</button><button type="button" class="x" id="vcClose" aria-label="Bezárás">✕</button></div></div>
+    <div class="vf"><iframe id="vmFrame" title="Ami a felszín alatt van – geotechnika bemutató animáció" allow="autoplay; fullscreen" allowfullscreen></iframe><video id="vmVideo" playsinline controls preload="none" poster="img/poster.jpg?v=3" hidden></video><button type="button" class="vbig" id="vmBig" hidden aria-label="Lejátszás"><span></span>Koppints a lejátszáshoz</button><div class="vctl" id="vmCtl" hidden><button type="button" id="vcBack" aria-label="Vissza 10 másodpercet">−10 s</button><button type="button" id="vcPlay" aria-label="Lejátszás vagy szünet">❚❚</button><button type="button" id="vcFwd" aria-label="Előre 10 másodpercet">+10 s</button><button type="button" id="vcRate" aria-label="Lejátszási sebesség">1×</button><button type="button" id="vcFs" aria-label="Teljes képernyő">⛶</button><button type="button" class="x" id="vcClose" aria-label="Bezárás">✕</button></div></div>
     <div class="vbar"><span id="vmTitle">Ami a felszín alatt van · 3:20 · Esc: bezárás</span><button id="vmClose" type="button">Bezárás ✕</button></div>
   </div>
 </div>
@@ -282,7 +286,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
 { const m = $('#vmodal'), f = $('#vmFrame'); let last = null;
   // telefonon (iPhone, Android, bármely érintőképernyős telefon) a videó MP4-ként, a telefon saját lejátszójával megy: így megy teljes képernyőre,
   // fordításra kitölti a kijelzőt, megállítható, tekerhető, gyorsítható; asztali gépen az interaktív (HTML) lejátszó
-  const v = $('#vmVideo'), ctl = $('#vmCtl'), ua = navigator.userAgent, noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  const v = $('#vmVideo'), big = $('#vmBig'), ctl = $('#vmCtl'), ua = navigator.userAgent, noElFS = !(document.fullscreenEnabled || document.webkitFullscreenEnabled);
   const isIOS = /iPhone|iPod/.test(ua) || (navigator.maxTouchPoints > 1 && !/Android/.test(ua) && /Mac|iP/.test(navigator.platform || ''));
   const isPhone = isIOS || /Android.+Mobile|Mobile.+Firefox|Windows Phone/i.test(ua) || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 820);
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar")
@@ -308,6 +312,9 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const phoneFS = () => { if (!htmlMode && isIOS && v.webkitEnterFullscreen) { try { v.webkitEnterFullscreen(); return; } catch (er) {} } if (fsEl()) exitAnyFS(); else if (reqFS(m)) lockLandSoon(); };
   const lockLandSoon = () => setTimeout(() => { if (fsEl() && innerHeight > innerWidth && !cur.port) lockLand(); }, 300);
   $('#vcFs').addEventListener('click', () => { phoneFS(); showCtl(); });
+  // ha a böngésző nem engedi az automatikus indítást (pl. a plakát QR-kódjáról nyitva), nagy lejátszógomb jelenik meg a kép közepén
+  big.addEventListener('click', () => { big.hidden = true; const p = v.play(); if (p && p.catch) p.catch(() => { big.hidden = false; }); if (!isIOS && !noElFS) reqFS(m); });
+  v.addEventListener('play', () => { big.hidden = true; });
   v.addEventListener('play', syncPlay); v.addEventListener('pause', syncPlay); v.addEventListener('ratechange', () => { const k = RATES.indexOf(v.playbackRate); if (k >= 0) { ri = k; $('#vcRate').textContent = fmtR(v.playbackRate); } });
   m.addEventListener('touchstart', () => { if (phoneMode) showCtl(); }, { passive: true }); m.addEventListener('mousemove', () => { if (phoneMode) showCtl(); });
   // fordítás fekvőbe: a kép a teljes kijelzőt kitölti (ahol a böngésző engedi, valódi teljes képernyővel)
@@ -324,7 +331,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
     if (htmlMode) { m.classList.add('phone'); v.hidden = true; f.hidden = false; ctl.hidden = false; $('#vcFs').hidden = !!(isIOS || noElFS); ri = 0; $('#vcRate').textContent = fmtR(1); syncPlay(); showCtl();
       f.src = cur.html + '#autoplay'; if (!isIOS && !noElFS) reqFS(m); return; }
     if (phoneMode) { $('#vcFs').hidden = false; m.classList.add('phone'); f.hidden = true; v.hidden = false; ctl.hidden = false; v.poster = cur.poster; if (v.getAttribute('src') !== cur.mp4) v.src = cur.mp4; try { v.currentTime = 0; } catch (er) {}
-      ri = 0; v.playbackRate = 1; v.defaultPlaybackRate = 1; $('#vcRate').textContent = fmtR(1); const p = v.play(); if (p && p.catch) p.catch(() => {}); syncPlay(); showCtl();
+      ri = 0; v.playbackRate = 1; v.defaultPlaybackRate = 1; $('#vcRate').textContent = fmtR(1); const p = v.play(); if (p && p.catch) p.catch(() => { big.hidden = false; }); syncPlay(); showCtl();
       // Androidon (és ahol az elem mehet teljes képernyőre) a koppintással rögtön teljes képernyő: fordításra a kép kitölti a kijelzőt
       if (!isIOS && !noElFS) reqFS(m);
       return; }
@@ -338,9 +345,11 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const host = () => { try { f.contentWindow.postMessage('vfs-host', '*'); } catch (er) {} }; f.addEventListener('load', () => { host(); setTimeout(host, 1500); setTimeout(host, 4000); });
   const enterFS = () => { setPseudo(true); const req = m.requestFullscreen || m.webkitRequestFullscreen; if (!req) return; try { const pr = req.call(m); if (pr && pr.then) pr.then(lockLand).catch(() => {}); } catch (er) {} };
   const exitFS = () => { exitAnyFS(); real = false; setPseudo(false); };
-  const close = () => { htmlMode = false; exitAnyFS(); try { if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen(); } catch (er) {} setPseudo(false); m.classList.remove('phone', 'port'); phoneMode = false; ctl.hidden = true; m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
+  const close = () => { big.hidden = true; htmlMode = false; exitAnyFS(); try { if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen(); } catch (er) {} setPseudo(false); m.classList.remove('phone', 'port'); phoneMode = false; ctl.hidden = true; m.hidden = true; try { v.pause(); } catch (er) {} f.src = 'about:blank'; document.body.style.overflow = ''; if (last) last.focus(); };
   $('#vcClose').addEventListener('click', close);
   $$('[data-video]').forEach(b => b.addEventListener('click', open)); $('#vmClose').addEventListener('click', close);
+  // közvetlen link egy videóra (pl. a plakát QR-kódja): /?v=kar → az oldal betöltése után rögtön a kari bemutató nyílik meg
+  { const q = new URLSearchParams(location.search).get('v'); if (q && VIDS[q]) setTimeout(() => open({ currentTarget: { dataset: { video: q } } }), 350); }
   m.addEventListener('click', (e) => { if (e.target === m) close(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) close(); });
   addEventListener('message', (e) => { if ((e.data === 'vclose' || e.data === 'ka-close-video') && !m.hidden) close(); if (e.data === 'vfs-hello') host(); if (e.data === 'vfs') { if (phoneMode) { if (!isIOS && !noElFS) { fsEl() ? exitAnyFS() : reqFS(m); } } else (pseudo || fsEl()) ? exitFS() : enterFS(); }
