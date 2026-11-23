@@ -226,7 +226,7 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 <main id="top">
 <div class="hero"><div class="wrap">
   <div class="h-txt">
-    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 2:17</span></div>
+    <div class="kick">BME Építőmérnöki Kar</div>
     <h1>Mit <em>építenél</em>?</h1>
     <div class="motto">Két alapszak, hét specializáció, egyetlen városban</div>
     <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>2:17</small></button><a class="btn" href="#rovid">Rövid videó</a></div>
@@ -245,8 +245,8 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 <section id="rovid" class="kar"><div class="wrap">
   <div class="sh"><div><h2>Rövid videó</h2></div></div>
   <div class="reels one">
-    <article class="reel"><button class="vcard rcard" data-video="ra" type="button" aria-label="Rövid videó lejátszása: Mit építenél?"><img src="img/reel_a.jpg?v=2" alt="Álló rövid videó: „Te mit építenél?” felirat a felépülő város fölött" loading="lazy" width="720" height="1280"><span class="corners"></span><span class="play"></span></button>
-      <h3>Mit építenél?</h3><p>Villámvágások a szakma egészéről, a 7 specializáció és a kar · 0:35</p><a class="dl" href="video/reel_a.mp4?v=2" download="BME_EMK_Mit_epitenel.mp4">⬇ MP4 letöltése</a></article>
+    <article class="reel"><button class="vcard rcard" data-video="ra" type="button" aria-label="Rövid videó lejátszása: Mit építenél?"><img src="img/reel_a.jpg?v=3" alt="Álló rövid videó: „Te mit építenél?” felirat a felépülő város fölött" loading="lazy" width="720" height="1280"><span class="corners"></span><span class="play"></span></button>
+      <h3>Mit építenél?</h3><a class="dl" href="video/reel_a.mp4?v=3" download="BME_EMK_Mit_epitenel.mp4">⬇ MP4 letöltése</a></article>
   </div>
 </div></section>
 
@@ -294,7 +294,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
     kar: { html: 'video/epitokar.html?v=13', mp4: 'video/epitokar.mp4?v=5', title: 'Építőmérnöki Kar · 2:17 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=3' },
     // álló rövid videók (csak MP4)
-    ra: { port: true, mp4: 'video/reel_a.mp4?v=2', title: 'Mit építenél? · rövid videó · 0:35 · Esc: bezárás', poster: 'img/reel_a.jpg?v=2' } };
+    ra: { port: true, mp4: 'video/reel_a.mp4?v=3', title: 'Mit építenél? · rövid videó · 0:37 · Esc: bezárás', poster: 'img/reel_a.jpg?v=3' } };
   let cur = VIDS.geo, phoneMode = false, htmlMode = false, htmlPlaying = true;
   const cmd = (c) => { try { f.contentWindow.postMessage('vcmd:' + c, '*'); } catch (er) {} };
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
