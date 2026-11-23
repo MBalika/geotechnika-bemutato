@@ -226,10 +226,10 @@ footer .r{text-align:right} footer .r a{color:var(--lime); font:800 20px/1 var(-
 <main id="top">
 <div class="hero"><div class="wrap">
   <div class="h-txt">
-    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 2:13</span></div>
+    <div class="kick">BME Építőmérnöki Kar <span class="bdg">Új · 2:17</span></div>
     <h1>Mit <em>építenél</em>?</h1>
     <div class="motto">Két alapszak, hét specializáció, egyetlen városban</div>
-    <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>2:13</small></button><a class="btn" href="#rovid">Rövid videó</a></div>
+    <div class="ctas"><button class="btn pri" data-video="kar" type="button">▶ Nézd meg <small>2:17</small></button><a class="btn" href="#rovid">Rövid videó</a></div>
   </div>
   <button class="vcard" data-video="kar" type="button" aria-label="A kari bemutató animáció lejátszása">
     <img src="img/kar_poster.jpg?v=3" alt="A Műegyetem környéke makettszerű metszetben: Szabadság híd, a BME K épülete, a MOL Campus tornya, alatta mélygarázs, cölöpök és a metró" width="1600" height="900">
@@ -292,7 +292,7 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Arr
   const isPhone = isIOS || /Android.+Mobile|Mobile.+Firefox|Windows Phone/i.test(ua) || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 820);
   // két videó: a geotechnika (alap) és a kari bemutató (data-video="kar")
   const VIDS = { geo: { html: 'video/geotechnika.html?v=11', mp4: 'video/geotechnika.mp4?v=1', title: 'Ami a felszín alatt van · 3:20 · Esc: bezárás', poster: 'img/poster.jpg?v=3' },
-    kar: { html: 'video/epitokar.html?v=12', mp4: 'video/epitokar.mp4?v=4', title: 'Építőmérnöki Kar · 2:13 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=3' },
+    kar: { html: 'video/epitokar.html?v=13', mp4: 'video/epitokar.mp4?v=5', title: 'Építőmérnöki Kar · 2:17 · Esc: bezárás', poster: 'img/kar_poster.jpg?v=3' },
     // álló rövid videók (csak MP4)
     ra: { port: true, mp4: 'video/reel_a.mp4?v=2', title: 'Mit építenél? · rövid videó · 0:35 · Esc: bezárás', poster: 'img/reel_a.jpg?v=2' } };
   let cur = VIDS.geo, phoneMode = false, htmlMode = false, htmlPlaying = true;
